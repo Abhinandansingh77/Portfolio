@@ -172,6 +172,7 @@ const projectItems = [
 ];
 
 const discoveryPlusCaseStudy = {
+  behanceVisualsUrl: "https://www.behance.net/gallery/184130255/OTT-Design",
   projectTitle: "Discovery+ OTT Experience Redesign",
   projectTagline:
     "Reimagining content discovery and cross-device streaming experiences for a global entertainment platform.",
