@@ -305,8 +305,6 @@ body.cursor-hidden .cursor-ring {
   height: 40px;
   border-radius: 50%;
   background: var(--accent);
-  box-shadow: 0 10px 22px rgba(243, 107, 44, 0.3);
-  animation: pulseFloat 4.5s ease-in-out infinite;
 }
 
 .header-actions {
@@ -1695,27 +1693,36 @@ body.cursor-hidden .cursor-ring {
   line-height: 1.7;
 }
 
-.contact-link,
-.contact-call {
-  display: inline-flex;
-  width: fit-content;
-  font-size: clamp(1rem, 1.2vw, 1.12rem);
-  font-weight: 500;
-  line-height: 1.5;
-  transition: transform 220ms var(--ease-premium), color 220ms ease;
+.contact-get-in-touch {
+  display: grid;
+  gap: 8px;
 }
 
-.contact-link {
+.contact-touch-heading {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
   color: var(--accent);
 }
 
-.contact-call {
-  color: #111111;
+.contact-touch-icon {
+  flex-shrink: 0;
+  color: var(--accent);
 }
 
-.contact-link:hover,
-.contact-call:hover {
-  transform: translateX(4px);
+.contact-detail {
+  font-size: clamp(1rem, 1.2vw, 1.12rem);
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--text);
+  transition: color 220ms ease;
+}
+
+.contact-detail:hover {
+  color: var(--accent);
 }
 
 .contact-resume-cta {
@@ -1825,6 +1832,7 @@ body.cursor-hidden .cursor-ring {
   font-weight: 650;
   line-height: 1.4;
   letter-spacing: -0.01em;
+  white-space: nowrap;
 }
 
 .timeline-block {
@@ -2117,6 +2125,78 @@ body.cursor-hidden .cursor-ring {
   font-size: 0.76rem;
 }
 
+.impact-block {
+  display: grid;
+  grid-template-columns: minmax(180px, 280px) minmax(0, 860px);
+  column-gap: 60px;
+  align-items: start;
+}
+
+.impact-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+.impact-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 20px 16px;
+  text-align: center;
+}
+
+.impact-value {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.impact-label {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.82rem;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.skills-categories {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 36px 48px;
+}
+
+.skill-category h3 {
+  font-size: 0.92rem;
+  font-weight: 700;
+  margin: 0 0 14px;
+  color: var(--text);
+}
+
+.skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.skill-tag {
+  display: inline-block;
+  padding: 6px 14px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-soft);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+}
+
+.tools-block {
+  align-items: start;
+}
+
 .projects-list {
   display: grid;
   gap: 82px;
@@ -2218,17 +2298,8 @@ body.cursor-hidden .cursor-ring {
     transform 720ms var(--ease-premium);
 }
 
-.project-row:hover .project-preview-wrap {
-  transform: translateY(-6px);
-  box-shadow: var(--shadow-lift);
-}
-
-.project-row:hover .project-preview-image {
-  transform: scale(1.055);
-}
-
-.project-row:hover .project-title-image {
-  transform: translateY(-2px);
+.project-row:hover .text-link {
+  color: var(--accent);
 }
 
 @keyframes pageFade {
@@ -2445,6 +2516,20 @@ body.cursor-hidden .cursor-ring {
   .project-link-row {
     width: 100%;
   }
+
+  .impact-block {
+    grid-template-columns: 1fr;
+    row-gap: 24px;
+  }
+
+  .impact-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .skills-categories {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
 }
 
 @media (min-width: 641px) and (max-width: 1024px) {
@@ -2577,6 +2662,29 @@ body.cursor-hidden .cursor-ring {
     max-width: 100%;
     grid-template-columns: repeat(3, minmax(90px, 1fr));
     gap: 28px 16px;
+  }
+
+  .impact-block {
+    grid-template-columns: 1fr;
+    row-gap: 20px;
+  }
+
+  .impact-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .impact-value {
+    font-size: 1.4rem;
+  }
+
+  .impact-card {
+    padding: 16px 12px;
+  }
+
+  .skills-categories {
+    grid-template-columns: 1fr;
+    gap: 24px;
   }
 
   .project-quick-info,

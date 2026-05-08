@@ -35,19 +35,19 @@ const navItems = [
 
 const valuePillars = [
   {
-    title: "UX Research & Strategy",
+    title: "Product Strategy & UX",
     description:
-      "User interviews, usability testing, competitive benchmarking, information architecture, and heuristic evaluation.",
+      "User research, workflow analysis, information architecture, usability testing, product discovery, and UX optimization.",
   },
   {
-    title: "UI Design & Prototyping",
+    title: "Product Design & Systems",
     description:
-      "High-fidelity UI design, interactive prototypes, and responsive design across web, mobile, and TV platforms.",
+      "End-to-end product design across web, mobile, TV, dashboards, and scalable design systems.",
   },
   {
-    title: "Design Systems & Handoff",
+    title: "AI-Enabled Design Workflow",
     description:
-      "Scalable component libraries in Figma, Zeplin handoff, and WCAG 2.1 AA accessibility compliance.",
+      "AI-assisted ideation, prompt engineering, research synthesis, content generation, workflow acceleration, and design exploration.",
   },
 ];
 
@@ -55,44 +55,44 @@ const experienceItems = [
   {
     range: "Mar 2024 - Present",
     company: "Cardinal Health",
-    role: "Senior UX/UI Designer",
+    role: "Senior Product Designer",
     logo: cardinalHealthLogo,
     description:
-      "Leading end-to-end product design for Order Express, a B2B healthcare e-commerce platform serving hospitals and pharmacies across the U.S. Responsibilities span UX research, dashboard design, transactional flow design, component library management in Figma, and WCAG 2.1 AA accessibility compliance. Working within Agile sprint cycles with cross-functional teams of PMs and engineers.",
-    highlights: ["28% ↑ order completion", "35% ↓ handoff time", "WCAG 2.1 AA compliant"],
+      "Leading UX/product design for Order Express, a large-scale healthcare procurement platform used by hospitals and pharmacies. Designed ordering workflows, dashboards, inventory systems, financial tracking experiences, and scalable design systems.",
+    highlights: ["+28% order completion", "-35% developer handoff time", "WCAG 2.1 AA compliance"],
   },
   {
     range: "Sep 2022 - Jan 2024",
-    company: "Robosoft Technology",
-    role: "Lead UX/UI Designer",
+    company: "Robosoft Technologies",
+    role: "Senior UX Designer",
     logo: robosoftLogo,
     description:
-      "Designed OTT and premium lifestyle platforms for global audiences including Discovery+, Willow TV, and Al Maha Island Lusail. Delivered cohesive cross-device experiences across TV, mobile, and desktop, from research and IA through to scalable UI frameworks and developer handoff.",
-    highlights: ["40% ↓ new screen design time via reusable UI frameworks"],
+      "Designed OTT and consumer digital products including Discovery+, Willow TV, and Al Maha Island. Led cross-device UX across TV, mobile, and desktop ecosystems.",
+    highlights: ["+40% faster new screen design", "Improved discovery & engagement flows"],
   },
   {
     range: "Oct 2021 - Sep 2022",
-    company: "Deloitte (Contract)",
+    company: "Deloitte",
     role: "UX/UI Designer",
     logo: deloitteLogo,
     description:
-      "Proficient in creating prototypes, gathering client feedback, finalising designs on Zeplin, and collaborating with international teams. Skilled in understanding diverse cultural nuances and adapting designs accordingly.",
+      "Designed enterprise dashboards and workflow systems for Fortune 500 environments, translating business complexity into usable product experiences.",
   },
   {
     range: "Jan 2020 - Oct 2021",
-    company: "Eclerx Pvt. Ltd",
-    role: "Senior Analyst",
+    company: "eClerx",
+    role: "Senior Analyst — UX/UI",
     logo: eclerxLogo,
     description:
-      "Visual Designer skilled in creating production-ready assets for clients like Radisson, DFS, Sephora, and Dell. Specialises in tailored social media ads and collaborative content creation.",
+      "Created digital experiences for Dell, Sephora, DFS, and Radisson across campaign, landing page, and dashboard ecosystems.",
   },
   {
     range: "Jan 2018 - Dec 2019",
-    company: "Burda Druck Pvt. Ltd",
-    role: "Jr. Creative Designer",
+    company: "Burda Druck",
+    role: "Graphic Designer",
     logo: burdaLogo,
     description:
-      "Responsive for magazine cover pages and ads, with expertise in creating graphic user interfaces for desktop browsers and mobile devices. Collaborated closely with product managers and software engineers for seamless integration of designs.",
+      "Started in visual design before transitioning into digital product design.",
   },
 ];
 
@@ -117,15 +117,53 @@ const educationItems = [
   },
 ];
 
-const skillItems = [
-  { name: "Figma", caption: "UI Design, Prototyping", logo: figmaLogo },
-  { name: "Adobe XD", caption: "UI Design, Prototyping", logo: xdLogo },
-  { name: "Miro", caption: "UX Design, Brainstorming", logo: miroLogo },
-  { name: "Photoshop", caption: "Graphic Elements", logo: photoshopLogo },
-  { name: "Illustrator", caption: "Logo, Icon Design", logo: illustratorLogo },
-  { name: "Keynote", caption: "Design Presentation", logo: keynoteLogo },
-  { name: "HTML 5", caption: "Structural Design", logo: htmlLogo },
-  { name: "CSS 3", caption: "Style Design", logo: cssLogo },
+const skillCategories = [
+  {
+    category: "Product Design",
+    items: ["Product Thinking", "User Journey Mapping", "UX Strategy", "Information Architecture", "Interaction Design", "Workflow Optimization", "Product Discovery"],
+  },
+  {
+    category: "UX Research",
+    items: ["User Interviews", "Usability Testing", "A/B Testing", "Competitive Benchmarking", "Heuristic Evaluation", "Journey Mapping"],
+  },
+  {
+    category: "Design Systems",
+    items: ["Component Libraries", "Design Tokens", "Responsive Systems", "Figma Dev Handoff", "Documentation", "Accessibility (WCAG 2.1 AA)"],
+  },
+  {
+    category: "Enterprise UX",
+    items: ["Dashboard Design", "Complex Workflows", "Multi-role Systems", "B2B Product Design", "Data-heavy Interfaces"],
+  },
+  {
+    category: "AI Design & Product Skills",
+    items: ["AI Workflow Design", "AI Content Ideation", "AI-Assisted UX Research", "Prompt Engineering", "Rapid Design Exploration", "AI Feature Concepting", "Conversational UX", "Human-AI Interaction Thinking"],
+  },
+];
+
+const toolCategories = [
+  {
+    category: "Design",
+    items: ["Figma", "Miro", "Photoshop", "Illustrator", "Keynote"],
+  },
+  {
+    category: "Prototyping",
+    items: ["Figma Prototyping", "Interactive Flows", "Motion Concepts"],
+  },
+  {
+    category: "Dev Collaboration",
+    items: ["Figma Dev Mode", "Zeplin", "Design Specs", "Component Documentation"],
+  },
+  {
+    category: "AI Stack",
+    items: ["ChatGPT", "Claude", "Cursor", "Gemini", "Perplexity", "Figma AI", "Midjourney"],
+  },
+];
+
+const impactMetrics = [
+  { value: "+28%", label: "Order Completion" },
+  { value: "+35%", label: "Faster Handoff" },
+  { value: "+40%", label: "UI Production Speed" },
+  { value: "1.5M+", label: "Platform Audience Reach" },
 ];
 
 const projectItems = [
@@ -179,7 +217,7 @@ const discoveryPlusCaseStudy = {
   heroSubtitle:
     "Led UX/UI design exploration for mobile, TV, and web interfaces focused on discoverability, retention, and binge-worthy viewing journeys.",
   quickInfo: [
-    { label: "Role", value: "Senior UX/UI Designer" },
+    { label: "Role", value: "Senior Product Designer" },
     { label: "Platform", value: "Smart TV, Mobile App, Responsive Web" },
     { label: "Industry", value: "Media / OTT / Streaming" },
     { label: "Scope", value: "Product UX, UI Systems, Navigation, Content Discovery" },
@@ -281,7 +319,7 @@ const alMahaCaseStudy = {
   heroSubtitle:
     "Designed a mobile-first booking journey focused on faster decisions, reduced drop-offs, and premium brand presentation.",
   quickInfo: [
-    { label: "Role", value: "Senior UX/UI Designer" },
+    { label: "Role", value: "Senior Product Designer" },
     { label: "Platform", value: "Mobile App (iOS / Android)" },
     { label: "Industry", value: "Events / Tourism / Entertainment" },
     { label: "Scope", value: "Booking Flow, Discovery, UX Systems, Payments" },
@@ -383,7 +421,7 @@ const mcdeliveryCaseStudy = {
   projectTagline:
     "Optimizing food ordering flows to improve speed, personalization, and conversion across mobile platforms.",
   quickInfo: [
-    { label: "Role", value: "Senior UX/UI Designer" },
+    { label: "Role", value: "Senior Product Designer" },
     { label: "Platform", value: "Mobile App, Responsive Web" },
     { label: "Industry", value: "Food Delivery / QSR" },
     { label: "Scope", value: "Ordering Flow, Personalization, UX Systems, Checkout Optimization" },
@@ -858,7 +896,7 @@ function SiteHeader({ menuOpen, setMenuOpen }) {
           <span className="brand-dot" />
           <span className="brand-copy">
             <span className="brand-name">Abhinandan Singh</span>
-            <span className="brand-tagline">Senior UX/UI Designer</span>
+            <span className="brand-tagline">Senior Product Designer</span>
           </span>
         </button>
 
@@ -922,7 +960,7 @@ function Footer() {
         <div>
           <h3>Follow Me</h3>
           <div className="socials">
-            <a aria-label="Behance" href="https://www.behance.net/" target="_blank" rel="noreferrer">
+            <a aria-label="Behance" href="https://www.behance.net/abhinandan77" target="_blank" rel="noreferrer">
               Be
             </a>
             <a aria-label="LinkedIn" href="https://www.linkedin.com/" target="_blank" rel="noreferrer">
@@ -960,7 +998,7 @@ function HomePage() {
           <Reveal className="intro" delay={200}>
             <h2>Hello!</h2>
             <p>
-              I&apos;m Abhinandan, a Senior UX/UI Designer with 6+ years shaping digital
+              I&apos;m Abhinandan, a Senior Product Designer with 6+ years shaping digital
               products across healthcare, OTT/media, e-commerce, and enterprise platforms.
               I design the kind of interfaces that feel obvious to use, are a joy to look
               at, and measurably move the needle for the businesses behind them.
@@ -999,25 +1037,28 @@ function ResumePage() {
           </div>
           <div className="about-resume-copy">
             <p>
-              I&apos;m a Senior UX/UI Designer based in Chandigarh, with over 6 years of
-              experience designing digital products that are intuitive, accessible, and
-              built to scale.
+              I&apos;m a Senior Product Designer with 6+ years of experience designing
+              scalable digital products across healthcare, OTT streaming, e-commerce,
+              enterprise systems, and consumer platforms.
             </p>
             <p>
-              My work spans B2B enterprise platforms, global OTT services, and consumer
-              apps, from designing Order Express for Cardinal Health (a procurement
-              platform used by U.S. hospitals and pharmacies) to shaping the Discovery+
-              streaming experience across TV, mobile, and desktop.
+              My work spans complex B2B healthcare workflows like Cardinal Health&apos;s
+              Order Express, global streaming experiences such as Discovery+, and
+              high-conversion mobile experiences in food ordering and entertainment
+              booking.
             </p>
             <p>
-              I&apos;m fluent in the full design cycle: user research and stakeholder
-              interviews, information architecture, wireframing and prototyping in Figma,
-              and pixel-perfect developer handoff via Zeplin. I&apos;m also a strong
-              advocate for accessibility, all my work is built to WCAG 2.1 AA standards.
+              I specialize in simplifying complexity through UX strategy, product thinking,
+              interaction design, and scalable design systems.
             </p>
             <p>
-              When I&apos;m not designing products, I&apos;m thinking about how to make the
-              next one better.
+              From user research and workflow mapping to high-fidelity execution and
+              developer handoff, I focus on building products that are intuitive,
+              accessible, and designed for measurable impact.
+            </p>
+            <p>
+              Today, I also integrate AI into design workflows for research acceleration,
+              ideation, content generation, and rapid problem solving.
             </p>
           </div>
         </Reveal>
@@ -1083,11 +1124,27 @@ function ResumePage() {
 
         <div className="section-divider" />
 
+        <Reveal className="impact-block">
+          <div className="section-label">
+            <h2>Selected Impact</h2>
+          </div>
+          <div className="impact-grid">
+            {impactMetrics.map((metric, index) => (
+              <Reveal as="article" key={metric.label} className="impact-card" delay={index * 70}>
+                <span className="impact-value">{metric.value}</span>
+                <span className="impact-label">{metric.label}</span>
+              </Reveal>
+            ))}
+          </div>
+        </Reveal>
+
+        <div className="section-divider" />
+
         <Reveal className="timeline-block">
           <div className="section-label">
             <h2>
               <span className="heading-line">Education &amp;</span>
-              <span className="heading-line">Certificates</span>
+              <span className="heading-line">Learning</span>
             </h2>
           </div>
           <div className="timeline-list">
@@ -1117,12 +1174,35 @@ function ResumePage() {
           <div className="section-label">
             <h2>Skills</h2>
           </div>
-          <div className="skills-grid">
-            {skillItems.map((skill, index) => (
-              <Reveal as="article" key={skill.name} className="skill-card" delay={index * 55}>
-                <img className="skill-image" src={skill.logo} alt={`${skill.name} logo`} />
-                <h3>{skill.name}</h3>
-                <p>{skill.caption}</p>
+          <div className="skills-categories">
+            {skillCategories.map((cat, index) => (
+              <Reveal as="article" key={cat.category} className="skill-category" delay={index * 60}>
+                <h3>{cat.category}</h3>
+                <div className="skill-tags">
+                  {cat.items.map((item) => (
+                    <span key={item} className="skill-tag">{item}</span>
+                  ))}
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </Reveal>
+
+        <div className="section-divider" />
+
+        <Reveal className="timeline-block tools-block">
+          <div className="section-label">
+            <h2>Tools</h2>
+          </div>
+          <div className="skills-categories">
+            {toolCategories.map((cat, index) => (
+              <Reveal as="article" key={cat.category} className="skill-category" delay={index * 60}>
+                <h3>{cat.category}</h3>
+                <div className="skill-tags">
+                  {cat.items.map((item) => (
+                    <span key={item} className="skill-tag">{item}</span>
+                  ))}
+                </div>
               </Reveal>
             ))}
           </div>
@@ -1197,13 +1277,21 @@ function ContactPage() {
             about it.
           </p>
 
-          <a className="contact-call" href="tel:+919097168852">
-            Call +91 9097168852
-          </a>
-
-          <a className="contact-link" href="mailto:abhinandansingh77@outlook.com">
-            Get in Touch → abhinandansingh77@outlook.com
-          </a>
+          <div className="contact-get-in-touch">
+            <h3 className="contact-touch-heading">
+              <svg className="contact-touch-icon" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
+                <path d="M22 6l-10 7L2 6" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              Get in Touch
+            </h3>
+            <a className="contact-detail" href="tel:+919097168852">
+              +91 9097168852
+            </a>
+            <a className="contact-detail" href="mailto:abhinandansingh77@outlook.com">
+              abhinandansingh77@outlook.com
+            </a>
+          </div>
 
           <a className="hero-button hero-button-secondary contact-resume-cta" href={resumePdf} download>
             <DownloadResumeIcon />
@@ -1524,7 +1612,7 @@ export default function App() {
         <div className="entry-overlay-inner">
           <span className="entry-dot" />
           <p className="entry-name">Abhinandan Singh</p>
-          <p className="entry-role">Senior UX/UI Designer</p>
+          <p className="entry-role">Senior Product Designer</p>
         </div>
       </div>
 
