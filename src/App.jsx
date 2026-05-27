@@ -24,6 +24,9 @@ import mcdeliveryPreview from "../Assets/McDelivery Preview img.jpg";
 import cardinalHealthLogo from "../Assets/Cardinal health.svg";
 import cardinalHealthProjectLogo from "../Assets/cardinal-health-logo.svg";
 import cardinalHealthPreview from "../Assets/Cardinal health Preview img.jpg";
+import brightlineLogo from "../Assets/Brightline_Logo.svg.png";
+import brightlinePreview from "../Assets/Brightline Preview img.png";
+import brightlinePdf from "../Assets/Brightline.pdf";
 import resumePdf from "../Assets/Abhinandan_Singh_UX_Resume.pdf";
 
 const navItems = [
@@ -151,6 +154,16 @@ const projectItems = [
   },
   {
     index: "03",
+    slug: "brightline-future-travel",
+    titleImage: brightlineLogo,
+    titleAlt: "Brightline Future Mobility",
+    title: "Brightline Future Mobility",
+    description:
+      "Designed a future-ready mobility ecosystem connecting booking, smart stations, onboard services, and destination experiences into one seamless travel journey.",
+    preview: brightlinePreview,
+  },
+  {
+    index: "04",
     slug: "al-maha-island-lusail",
     titleImage: almahaLogo,
     titleAlt: "AL MAHA Island Lusail",
@@ -160,7 +173,7 @@ const projectItems = [
     preview: almahaPreview,
   },
   {
-    index: "04",
+    index: "05",
     slug: "mcdelivery-experience-design",
     titleImage: mcdeliveryLogo,
     titleAlt: "McDelivery Experience Design",
@@ -586,6 +599,114 @@ const cardinalHealthCaseStudy = {
     "This project demonstrates my ability to design complex enterprise systems where accuracy, efficiency, and scalability directly impact business operations. It highlights my strength in solving high-stakes UX problems beyond visual design.",
 };
 
+const brightlineCaseStudy = {
+  visualsPdf: brightlinePdf,
+  projectTitle: "Brightline Future Mobility Experience Design",
+  projectTagline:
+    "Designing a next-generation touchless travel ecosystem across booking, station interactions, onboard experiences, and post-travel journeys.",
+  heroSubtitle:
+    "Designed a connected mobility ecosystem transforming fragmented travel touchpoints into seamless digital experiences.",
+  quickInfo: [
+    { label: "Role", value: "Senior UX/UI Designer" },
+    { label: "Platform", value: "Mobile App, Responsive Web, Smart Kiosks, Connected Interfaces" },
+    { label: "Industry", value: "Transportation / Mobility / Travel Tech" },
+    { label: "Scope", value: "Service Design, Journey Mapping, Product Strategy, Experience Design" },
+    { label: "Skills", value: "Figma, UX Research, Journey Mapping, Information Architecture, Prototyping" },
+  ],
+  sectionHeading:
+    "Designing connected travel ecosystems that transform journeys into seamless digital experiences.",
+  highlightMetrics: [
+    { value: "4", label: "Journey Stages", secondLine: "Plan • Station • Travel • Post Travel" },
+    { value: "20+", label: "Features", secondLine: "Connected Experience Modules" },
+    { value: "5+", label: "Touchpoints", secondLine: "Mobile, Kiosk, NFC, Voice, In-station" },
+    { value: "End-to-End", label: "Journey Ecosystem", secondLine: "Design", primaryValue: true },
+    { value: "Touchless UX", label: "Future-ready", secondLine: "Mobility Experience", primaryValue: true },
+    { value: "Multi-Channel", label: "Connected Service", secondLine: "Architecture", primaryValue: true },
+  ],
+  overview:
+    "Brightline’s future mobility concept explored how modern transportation can evolve into a fully connected, touchless, and intelligent digital ecosystem. Rather than designing a standalone booking app, the challenge was to rethink the complete traveler experience across every stage of the journey—from planning and ticketing to in-station interactions, onboard services, and destination support. The focus was to create a seamless, digitally orchestrated experience that reduces friction, improves convenience, and enhances engagement.",
+  problemStatement:
+    "Traditional travel journeys are fragmented. Users often experience friction across multiple disconnected systems: booking and schedule planning, parking and first-mile transit, security and check-in, navigation inside stations, onboard services, and destination assistance. The challenge was to unify these touchpoints into one seamless experience.",
+  goals: [
+    "Create a touchless travel ecosystem",
+    "Reduce friction across journey stages",
+    "Integrate physical and digital experiences",
+    "Improve traveler convenience and engagement",
+    "Build a scalable future-ready mobility concept",
+  ],
+  roleItems: [
+    "Traveler journey mapping",
+    "Experience strategy and concept ideation",
+    "UX flows across multiple touchpoints",
+    "Service design for connected systems",
+    "Interaction design for mobile and smart interfaces",
+    "Feature architecture and ecosystem thinking",
+    "Cross-functional collaboration",
+  ],
+  process: [
+    {
+      title: "Traveler Research",
+      description:
+        "Mapped traveler types, behaviors, and journey expectations across business, leisure, and repeat travelers.",
+    },
+    {
+      title: "Journey Mapping",
+      description:
+        "Defined end-to-end touchpoints across Plan & Book, In Station, During Travel, and Post Travel stages.",
+    },
+    {
+      title: "Ecosystem Architecture",
+      description:
+        "Designed an integrated experience connecting booking, smart parking, connected transit, NFC ticketing, wayfinding, contactless payments, voice interactions, and loyalty systems.",
+    },
+    {
+      title: "Experience Prototyping",
+      description:
+        "Created concept flows demonstrating seamless movement between physical infrastructure and digital services.",
+    },
+  ],
+  improvements: [
+    {
+      title: "Unified Travel Experience",
+      description: "Connected previously fragmented touchpoints into a continuous ecosystem.",
+    },
+    {
+      title: "Touchless Interactions",
+      description:
+        "Introduced contactless flows including NFC identification, contactless payments, smart check-in, and automated support touchpoints.",
+    },
+    {
+      title: "Intelligent Mobility Assistance",
+      description:
+        "Designed features like smart parking, transit integrations, destination tracking, and personalized notifications.",
+    },
+    {
+      title: "Experience Personalization",
+      description:
+        "Added contextual interactions through loyalty rewards, personalized greetings, recommendations, and service prompts.",
+    },
+  ],
+  outcome:
+    "This concept reimagined transportation as a connected digital service rather than a transactional booking product.",
+  expectedImpact: [
+    "Reduced journey friction",
+    "Better operational efficiency",
+    "Higher traveler convenience",
+    "Increased digital engagement",
+    "Scalable mobility ecosystem thinking",
+  ],
+  galleryCaptions: [
+    "End-to-end journey stages with interaction points mapped across Plan, Station, Travel, and Post",
+    "Quick booking flow with integrated food ordering and seat selection",
+    "Connected transit system linking ride-share, parking, and metro rail",
+    "Smart parking with AR navigation and automated space detection",
+    "In-station NFC ticketing, biometric check-in, and telepresence support",
+    "During-travel services including pet monitoring, luggage tracking, and amenities",
+  ],
+  whyThisMatters:
+    "This project demonstrates my ability to think beyond screens and design complete service ecosystems where digital products interact with physical environments. It reflects strategic UX thinking, service design maturity, and systems-level problem solving.",
+};
+
 const homeActions = [
   { label: "Resume", href: "/resume" },
   { label: "Works", href: "/projects" },
@@ -656,6 +777,10 @@ function DownloadResumeIcon() {
 }
 
 function getRouteState() {
+  if (typeof window === "undefined") {
+    return { pathname: "/", projectSlug: null };
+  }
+
   const path = window.location.pathname.replace(/\/+$/, "") || "/";
   const projectMatch = path.match(/^\/projects\/([^/]+)$/);
   if (projectMatch) {
@@ -668,6 +793,10 @@ function getRouteState() {
 }
 
 function scrollToContact() {
+  if (typeof document === "undefined") {
+    return;
+  }
+
   document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
 }
 
@@ -680,6 +809,11 @@ function getNavigationEvent() {
 }
 
 function navigateTo(href, onDone) {
+  if (typeof window === "undefined") {
+    onDone?.();
+    return;
+  }
+
   if (href === "/#contact") {
     if (window.location.pathname !== "/" || window.location.hash) {
       window.history.pushState({}, "", "/");
@@ -700,7 +834,7 @@ function navigateTo(href, onDone) {
 }
 
 function getInteractiveTarget(target) {
-  if (!(target instanceof Element)) {
+  if (typeof Element === "undefined" || !(target instanceof Element)) {
     return null;
   }
 
@@ -714,7 +848,11 @@ function CustomCursor() {
   const ringRef = useRef(null);
 
   useEffect(() => {
-    if (window.matchMedia("(pointer: coarse)").matches) {
+    if (
+      typeof window === "undefined" ||
+      !window.matchMedia ||
+      window.matchMedia("(pointer: coarse)").matches
+    ) {
       return undefined;
     }
 
@@ -811,6 +949,11 @@ function Reveal({ as: Tag = "div", className = "", delay = 0, children }) {
   useEffect(() => {
     const node = ref.current;
     if (!node) {
+      return undefined;
+    }
+
+    if (typeof IntersectionObserver === "undefined") {
+      node.classList.add("is-visible");
       return undefined;
     }
 
@@ -1152,9 +1295,14 @@ function ProjectsPage() {
                 <p className="project-description">{item.description}</p>
               </div>
 
-              <div className="project-preview-wrap">
+              <button
+                type="button"
+                className="project-preview-wrap"
+                onClick={() => navigateTo(`/projects/${item.slug}`)}
+                aria-label={`View ${item.title} case study`}
+              >
                 <img className="project-preview-image" src={item.preview} alt={`${item.titleAlt} preview`} />
-              </div>
+              </button>
 
               <div className="project-link-row">
                 <span className="project-line" />
@@ -1217,11 +1365,12 @@ function ContactPage() {
   );
 }
 
-function ProjectDetailsPage({ project }) {
+function ProjectDetailsPage({ project, projectSlug, onOpenPdf }) {
   const isCardinalHealth = project?.slug === "cardinal-health-procurement-platform";
   const isDiscoveryPlus = project?.slug === "discovery-plus";
   const isAlMaha = project?.slug === "al-maha-island-lusail";
   const isMcDelivery = project?.slug === "mcdelivery-experience-design";
+  const isBrightline = project?.slug === "brightline-future-travel";
   const caseStudy = isCardinalHealth
     ? cardinalHealthCaseStudy
     : isDiscoveryPlus
@@ -1230,7 +1379,9 @@ function ProjectDetailsPage({ project }) {
         ? alMahaCaseStudy
         : isMcDelivery
           ? mcdeliveryCaseStudy
-          : null;
+          : isBrightline
+            ? brightlineCaseStudy
+            : null;
   const projectName = project?.title ?? "Work";
   const projectDescription = project?.description ?? "Work details will be updated soon.";
 
@@ -1241,7 +1392,25 @@ function ProjectDetailsPage({ project }) {
           Case Study
         </Reveal>
 
-        {!caseStudy ? (
+        {!project && projectSlug ? (
+          <Reveal className="project-detail-hero">
+            <div className="project-detail-copy">
+              <p className="project-detail-label">Project not found</p>
+              <h2>That case study is not available.</h2>
+              <p className="project-detail-tagline">
+                The project link may be outdated. Return to Works to choose an available case study.
+              </p>
+              <div className="project-detail-cta-row">
+                <button type="button" className="project-back-button" onClick={() => navigateTo("/projects")}>
+                  <span aria-hidden="true">←</span>
+                  Back to Works
+                </button>
+              </div>
+            </div>
+          </Reveal>
+        ) : null}
+
+        {!caseStudy && project ? (
           <Reveal className="project-detail-hero">
             <div className="project-detail-copy">
               <p className="project-detail-label">
@@ -1278,18 +1447,29 @@ function ProjectDetailsPage({ project }) {
                       Back to Works
                     </button>
                     {!caseStudy.hideVisualsLink ? (
-                      <a
-                        className="project-visuals-button"
-                        href={
-                          caseStudy.behanceVisualsUrl ??
-                          "https://www.behance.net/gallery/184033075/App-Design"
-                        }
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        View Visuals
-                        <span aria-hidden="true">↗</span>
-                      </a>
+                      caseStudy.visualsPdf ? (
+                        <button
+                          type="button"
+                          className="project-visuals-button"
+                          onClick={() => onOpenPdf(caseStudy.visualsPdf)}
+                        >
+                          View Visuals
+                          <span aria-hidden="true">↗</span>
+                        </button>
+                      ) : (
+                        <a
+                          className="project-visuals-button"
+                          href={
+                            caseStudy.behanceVisualsUrl ??
+                            "https://www.behance.net/gallery/184033075/App-Design"
+                          }
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          View Visuals
+                          <span aria-hidden="true">↗</span>
+                        </a>
+                      )
                     ) : null}
                   </div>
                 </div>
@@ -1455,7 +1635,7 @@ function ProjectDetailsPage({ project }) {
               </Reveal>
             </section>
           </>
-        ) : (
+        ) : project ? (
           <Reveal className="project-detail-grid">
             <article className="project-detail-card">
               <h3>Overview</h3>
@@ -1486,7 +1666,7 @@ function ProjectDetailsPage({ project }) {
               </p>
             </article>
           </Reveal>
-        )}
+        ) : null}
       </section>
 
       <Footer />
@@ -1498,6 +1678,7 @@ export default function App() {
   const [{ pathname, projectSlug }, setRouteState] = useState(getRouteState);
   const [menuOpen, setMenuOpen] = useState(false);
   const [isEntering, setIsEntering] = useState(true);
+  const [pdfSrc, setPdfSrc] = useState(null);
   const selectedProject = projectItems.find((item) => item.slug === projectSlug) ?? null;
 
   useEffect(() => {
@@ -1518,8 +1699,48 @@ export default function App() {
     return () => window.clearTimeout(timer);
   }, []);
 
+  useEffect(() => {
+    if (!pdfSrc || typeof document === "undefined") {
+      return undefined;
+    }
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        setPdfSrc(null);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [pdfSrc]);
+
   return (
     <div className={`page ${isEntering ? "app-entering" : "app-entered"}`.trim()}>
+      {pdfSrc ? (
+        <div className="pdf-viewer-overlay" role="dialog" aria-modal="true" aria-label="Project visuals PDF">
+          <button
+            type="button"
+            className="pdf-viewer-close"
+            onClick={() => setPdfSrc(null)}
+            aria-label="Close PDF viewer"
+          >
+            &times;
+          </button>
+          <iframe
+            className="pdf-viewer-frame"
+            src={`${pdfSrc}#toolbar=0&navpanes=0&scrollbar=1&view=Fit&zoom=page-fit`}
+            title="Project Visuals"
+          />
+        </div>
+      ) : null}
+
       <div className={`entry-overlay ${isEntering ? "entry-overlay-visible" : "entry-overlay-hidden"}`} aria-hidden="true">
         <div className="entry-overlay-inner">
           <span className="entry-dot" />
@@ -1535,7 +1756,13 @@ export default function App() {
         {pathname === "/" ? <HomePage /> : null}
         {pathname === "/resume" ? <ResumePage /> : null}
         {pathname === "/projects" ? <ProjectsPage /> : null}
-        {pathname === "/project-details" ? <ProjectDetailsPage project={selectedProject} /> : null}
+        {pathname === "/project-details" ? (
+          <ProjectDetailsPage
+            project={selectedProject}
+            projectSlug={projectSlug}
+            onOpenPdf={setPdfSrc}
+          />
+        ) : null}
         {pathname === "/contact" ? <ContactPage /> : null}
       </main>
     </div>
