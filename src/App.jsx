@@ -1832,6 +1832,347 @@ function ProjectDetailsPage({ project, onOpenPdf }) {
               </>
             ) : null}
 
+            {isDiscoveryPlus ? (
+              <>
+              <div className="project-summary-divider" aria-hidden="true" />
+              {/* ── User Research ── */}
+              <section className="discovery-section discovery-research">
+                <Reveal className="discovery-section-inner">
+                  <span className="discovery-section-label">User Research</span>
+                  <h3 className="discovery-section-heading">Understanding how viewers actually consume content</h3>
+                  <p className="discovery-section-description">
+                    Before wireframing a single screen, I conducted 18 user interviews and collected 112 survey
+                    responses across three viewer segments - casual, regular, and power users. Findings were
+                    synthesised into an affinity map, a competitive analysis matrix, and tagged interview quotes
+                    to align the team around real problems.
+                  </p>
+
+                  {/* Affinity map */}
+                  <span className="discovery-subsection-label">Affinity map - 6 research themes</span>
+                  <div className="discovery-affinity-stats">
+                    {[
+                      { value: "18", label: "User interviews" },
+                      { value: "112", label: "Survey responses" },
+                      { value: "6", label: "Usability sessions" },
+                      { value: "30", label: "Pain points synthesised" },
+                    ].map((s) => (
+                      <div key={s.label} className="discovery-affinity-stat">
+                        <span className="discovery-affinity-stat-value">{s.value}</span>
+                        <span className="discovery-affinity-stat-label">{s.label}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="discovery-affinity-grid">
+                    {[
+                      {
+                        title: "Content Discovery",
+                        color: "blue",
+                        items: [
+                          "Hard to find genre-specific shows",
+                          "No personalised home rail on first login",
+                          "Category tabs feel overwhelming",
+                          "Trending content buried below fold",
+                          "Search returns irrelevant Shorts",
+                        ],
+                      },
+                      {
+                        title: "Navigation Friction",
+                        color: "green",
+                        items: [
+                          "Bottom nav unclear on TV",
+                          "Back button inconsistent on Android",
+                          "Switching devices loses watch position",
+                          "TV remote navigation too many clicks",
+                          "No breadcrumb on show detail pages",
+                        ],
+                      },
+                      {
+                        title: "Video Playback",
+                        color: "orange",
+                        items: [
+                          "No auto-play after episode ends",
+                          "Quality toggle buried in settings",
+                          "Audio language not remembered",
+                          "Seeking on TV is sluggish",
+                          "Shorts auto-muted by default",
+                        ],
+                      },
+                      {
+                        title: "Subscription & Payment",
+                        color: "pink",
+                        items: [
+                          "Paywall appears mid-show without warning",
+                          "Plan comparison not visible upfront",
+                          "Google Pay and Apple Pay options unclear",
+                          "Annual savings not prominently shown",
+                          "Cancellation flow is confusing",
+                        ],
+                      },
+                      {
+                        title: "Personalisation",
+                        color: "purple",
+                        items: [
+                          "Interest selection skipped at onboarding",
+                          "Recommendations feel generic",
+                          "Continue watching rail gets cluttered",
+                          "No profile separation for kids",
+                          "Watchlist not synced across devices",
+                        ],
+                      },
+                      {
+                        title: "Cross-Device Experience",
+                        color: "cyan",
+                        items: [
+                          "Cast icon not discoverable on mobile",
+                          "TV app missing Shorts section",
+                          "Web lacks voice search",
+                          "Different UI patterns per platform",
+                          "Resuming on TV from mobile doesn't work",
+                        ],
+                      },
+                    ].map((theme) => (
+                      <div key={theme.title} className="discovery-affinity-card">
+                        <div className={`discovery-affinity-header theme-${theme.color}`}>
+                          <span className={`discovery-affinity-dot dot-${theme.color}`} />
+                          {theme.title}
+                        </div>
+                        <ul className="discovery-affinity-list">
+                          {theme.items.map((item) => (
+                            <li key={item}>{item}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Competitive landscape */}
+                  <span className="discovery-subsection-label">Competitive landscape</span>
+                  <div className="discovery-comp-table-wrap">
+                    <table className="discovery-comp-table">
+                      <thead>
+                        <tr>
+                          <th>Feature</th>
+                          <th className="discovery-comp-highlight">Discovery+</th>
+                          <th>Netflix</th>
+                          <th>Prime</th>
+                          <th>Hotstar</th>
+                          <th>SonyLIV</th>
+                          <th>ZEE5</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {[
+                          { feature: "Personalised home rail", values: ["yes", "yes", "yes", "yes", "yes", "partial"] },
+                          { feature: "Voice search", values: ["no", "yes", "no", "yes", "no", "no"] },
+                          { feature: "Multi-language content", values: ["yes", "partial", "partial", "yes", "yes", "yes"] },
+                          { feature: "Cross-device sync", values: ["partial", "yes", "yes", "partial", "partial", "no"] },
+                          { feature: "Offline downloads", values: ["no", "yes", "yes", "yes", "no", "no"] },
+                          { feature: "Short-form video", values: ["yes", "no", "no", "yes", "yes", "partial"] },
+                          { feature: "Kids section", values: ["yes", "yes", "partial", "yes", "yes", "no"] },
+                          { feature: "In-app subscription", values: ["yes", "yes", "yes", "yes", "yes", "yes"] },
+                          { feature: "WhatsApp share", values: ["yes", "no", "no", "no", "no", "no"] },
+                          { feature: "TV app (native)", values: ["yes", "yes", "partial", "yes", "partial", "no"] },
+                        ].map((row) => (
+                          <tr key={row.feature}>
+                            <td>{row.feature}</td>
+                            {row.values.map((v, i) => (
+                              <td key={i} className={i === 0 ? "discovery-comp-highlight" : ""}>
+                                <span className={`discovery-comp-icon discovery-comp-${v}`}>
+                                  {v === "yes" ? "✓" : v === "partial" ? "◔" : "–"}
+                                </span>
+                              </td>
+                            ))}
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  <div className="discovery-comp-insights">
+                    <div className="discovery-comp-insight insight-opportunity">
+                      <span className="discovery-comp-insight-label">Opportunity: Voice search</span>
+                      <p>Only Netflix offers voice search on mobile. Discovery+ can close this gap across all three platforms.</p>
+                    </div>
+                    <div className="discovery-comp-insight insight-strength">
+                      <span className="discovery-comp-insight-label">Strength: Multi-language content</span>
+                      <p>8-language support is best-in-class for a non-fiction platform - rivals average 4 languages.</p>
+                    </div>
+                    <div className="discovery-comp-insight insight-gap">
+                      <span className="discovery-comp-insight-label">Gap: Offline downloads</span>
+                      <p>Netflix, Prime and Hotstar all offer downloads. Users cited this as the #1 missing feature.</p>
+                    </div>
+                    <div className="discovery-comp-insight insight-unique">
+                      <span className="discovery-comp-insight-label">Unique: WhatsApp sharing</span>
+                      <p>One-tap WhatsApp share of Shorts is a uniquely Indian design decision no competitor has matched.</p>
+                    </div>
+                  </div>
+
+                  {/* User quotes */}
+                  <span className="discovery-subsection-label">What users told us</span>
+                  <div className="discovery-quotes-grid">
+                    {[
+                      {
+                        quote: "I watch Discovery on TV every night, but on the app I can't find the same shows. It feels like a completely different channel.",
+                        name: "Amit, 34",
+                        role: "Daily viewer",
+                        tag: "Pain: content gap",
+                        tagClass: "tag-pain",
+                      },
+                      {
+                        quote: "The Shorts are great but I have no idea how to share them. When I figured out the WhatsApp button my friends loved it - just needs to be more obvious.",
+                        name: "Priya, 27",
+                        role: "Casual viewer",
+                        tag: "Need: discoverability",
+                        tagClass: "tag-need",
+                      },
+                      {
+                        quote: "I started watching Man vs Wild on my phone, switched to TV, and it started from scratch. If Netflix can do this, why can't Discovery?",
+                        name: "Rohan, 31",
+                        role: "Multi-device user",
+                        tag: "Pain: sync failure",
+                        tagClass: "tag-pain",
+                      },
+                      {
+                        quote: "I didn't know there was a kids section called MindBlown until my nephew found it by accident. My kids would love it - it should be right upfront.",
+                        name: "Kavita, 38",
+                        role: "Parent",
+                        tag: "Need: feature visibility",
+                        tagClass: "tag-need",
+                      },
+                      {
+                        quote: "Every time I try to say a show name in voice search it just opens Google. I want to search inside the app - like Hotstar lets me do.",
+                        name: "Farhan, 29",
+                        role: "Tech-savvy user",
+                        tag: "Pain: voice search UX",
+                        tagClass: "tag-pain",
+                      },
+                      {
+                        quote: "I paid for a year subscription but the app still shows me the same generic home screen. It should feel different - like it knows me by now.",
+                        name: "Sunita, 42",
+                        role: "Premium subscriber",
+                        tag: "Need: personalisation",
+                        tagClass: "tag-need",
+                      },
+                    ].map((q) => (
+                      <div key={q.name} className="discovery-quote-card">
+                        <span className="discovery-quote-mark" aria-hidden="true">&ldquo;</span>
+                        <blockquote>{q.quote}</blockquote>
+                        <div className="discovery-quote-footer">
+                          <span className="discovery-quote-attribution"><strong>{q.name}</strong> &middot; {q.role}</span>
+                          <span className={`discovery-quote-tag ${q.tagClass}`}>{q.tag}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </Reveal>
+              </section>
+
+              <div className="project-summary-divider" aria-hidden="true" />
+              {/* ── User Personas ── */}
+              <section className="discovery-section discovery-personas">
+                <Reveal className="discovery-section-inner">
+                  <span className="discovery-section-label">User Personas</span>
+                  <h3 className="discovery-section-heading">Three viewers, three completely different watching habits</h3>
+                  <p className="discovery-section-description">
+                    Discovery+ serves a binge watcher who wants seamless continuation across devices, a parent
+                    who needs safe kids content at the surface, and a curious explorer who discovers content
+                    through Shorts and voice search. Designing well for all three required distinct feature
+                    priorities within one unified system.
+                  </p>
+
+                  <div className="discovery-persona-grid">
+                    {[
+                      {
+                        name: "Rohan, 28",
+                        role: "Software Engineer - Mumbai",
+                        archetype: "The Binge Watcher",
+                        color: "blue",
+                        emoji: "👨‍💻",
+                        goals: [
+                          "Watch full series uninterrupted",
+                          "Pick up exactly where he left off",
+                          "Discover similar shows automatically",
+                        ],
+                        frustrations: [
+                          "No auto-play after episode",
+                          "Watch position lost on TV switch",
+                          "Irrelevant recommendations on home",
+                        ],
+                        devices: ["Android phone", "Android TV"],
+                        quote: "I just want the next episode to start. Don't make me reach for the remote.",
+                      },
+                      {
+                        name: "Kavita, 39",
+                        role: "School Teacher - Pune",
+                        archetype: "The Family Planner",
+                        color: "green",
+                        emoji: "👩‍🏫",
+                        goals: [
+                          "Safe content for kids (MindBlown)",
+                          "Cast to TV for family viewing",
+                          "Hindi and Tamil options for parents",
+                        ],
+                        frustrations: [
+                          "Kids section hard to find",
+                          "Cast feature not obvious",
+                          "No parental PIN for premium content",
+                        ],
+                        devices: ["iPhone", "Smart TV (cast)"],
+                        quote: "My children love animals. I just need to know they won't stumble onto adult content.",
+                      },
+                      {
+                        name: "Farhan, 26",
+                        role: "Research Student - Delhi",
+                        archetype: "The Curious Explorer",
+                        color: "purple",
+                        emoji: "🔬",
+                        goals: [
+                          "Discover niche science & wildlife docs",
+                          "Share Shorts with study group",
+                          "Quick 5-min clips during breaks",
+                        ],
+                        frustrations: [
+                          "Voice search goes to Google instead",
+                          "Shorts share button not visible",
+                          "Science category not on home rail",
+                        ],
+                        devices: ["Android phone", "Web browser"],
+                        quote: "I want to search by saying the show name - typing on a phone is too slow.",
+                      },
+                    ].map((p) => (
+                      <div key={p.name} className="discovery-persona-card">
+                        <div className={`discovery-persona-header persona-${p.color}`}>
+                          <span className="discovery-persona-emoji">{p.emoji}</span>
+                          <div>
+                            <h4 className="discovery-persona-name">{p.name}</h4>
+                            <p className="discovery-persona-role">{p.role}</p>
+                            <p className="discovery-persona-archetype">{p.archetype}</p>
+                          </div>
+                        </div>
+                        <div className="discovery-persona-body">
+                          <p className="discovery-persona-section-title">Goals</p>
+                          <ul className="discovery-persona-list">
+                            {p.goals.map((g) => <li key={g}>{g}</li>)}
+                          </ul>
+                          <p className="discovery-persona-section-title">Frustrations</p>
+                          <ul className="discovery-persona-list discovery-persona-frustrations">
+                            {p.frustrations.map((f) => <li key={f}>{f}</li>)}
+                          </ul>
+                          <p className="discovery-persona-section-title">Devices</p>
+                          <div className="discovery-persona-devices">
+                            {p.devices.map((d) => <span key={d} className="discovery-persona-device">{d}</span>)}
+                          </div>
+                          <div className="discovery-persona-quote">&ldquo;{p.quote}&rdquo;</div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </Reveal>
+              </section>
+
+              <div className="project-summary-divider" aria-hidden="true" />
+              </>
+            ) : null}
+
             <section className="case-section case-section-summary case-section-summary-extended">
               <Reveal className="project-detail-grid">
                 <article className="project-detail-card">
@@ -1855,6 +2196,299 @@ function ProjectDetailsPage({ project, onOpenPdf }) {
                 </article>
               </Reveal>
             </section>
+
+            {isDiscoveryPlus ? (
+              <>
+              <div className="project-summary-divider" aria-hidden="true" />
+              {/* ── User Journey Map ── */}
+              <section className="discovery-section discovery-journey-map">
+                <Reveal className="discovery-section-inner">
+                  <span className="discovery-section-label">User Journey Map</span>
+                  <h3 className="discovery-section-heading">Mapping the viewer experience - from browse to binge</h3>
+                  <p className="discovery-section-description">
+                    The journey map revealed that the biggest friction points happen before a user presses
+                    play - during browsing and onboarding. Users felt generic and unseen. Three of five
+                    major pain points occurred in the discovery phase, making personalisation the
+                    highest-priority design problem.
+                  </p>
+
+                  <div className="discovery-journey-wrap">
+                    <div className="discovery-journey-table">
+                      <div className="discovery-journey-header-row">
+                        <div className="discovery-journey-row-label" />
+                        <div className="discovery-journey-phase phase-before">
+                          <strong>Before Watching</strong>
+                          <span>Awareness &rarr; Onboarding &rarr; Browse</span>
+                        </div>
+                        <div className="discovery-journey-phase phase-during">
+                          <strong>During Watching</strong>
+                          <span>Discover &rarr; Play &rarr; Engage</span>
+                        </div>
+                        <div className="discovery-journey-phase phase-after">
+                          <strong>After Watching</strong>
+                          <span>Finish &rarr; Share &rarr; Return</span>
+                        </div>
+                      </div>
+
+                      <div className="discovery-journey-body-row">
+                        <div className="discovery-journey-row-label">Actions</div>
+                        <div className="discovery-journey-cells">
+                          <ul>
+                            <li>Downloads app via Play Store</li>
+                            <li>Selects interests at onboarding</li>
+                            <li>Browses category tabs</li>
+                            <li>Searches for a specific show</li>
+                          </ul>
+                        </div>
+                        <div className="discovery-journey-cells">
+                          <ul>
+                            <li>Selects show from home rail</li>
+                            <li>Presses play on episode</li>
+                            <li>Adjusts audio language / quality</li>
+                            <li>Switches device mid-episode</li>
+                          </ul>
+                        </div>
+                        <div className="discovery-journey-cells">
+                          <ul>
+                            <li>Adds show to Watchlist</li>
+                            <li>Shares a Short on WhatsApp</li>
+                            <li>Returns for next episode</li>
+                            <li>Reviews subscription plan</li>
+                          </ul>
+                        </div>
+                      </div>
+
+                      <div className="discovery-journey-body-row">
+                        <div className="discovery-journey-row-label">Emotion</div>
+                        <div className="discovery-journey-cells">
+                          <div className="discovery-journey-emotion">
+                            <span className="discovery-journey-emojis">🤗 😐 😕 😤</span>
+                            <span>Hopeful &rarr; Confused &rarr; Frustrated by overwhelming categories</span>
+                          </div>
+                        </div>
+                        <div className="discovery-journey-cells">
+                          <div className="discovery-journey-emotion">
+                            <span className="discovery-journey-emojis">😁 😁 😤 😮</span>
+                            <span>Delighted &rarr; Annoyed when sync fails on device switch</span>
+                          </div>
+                        </div>
+                        <div className="discovery-journey-cells">
+                          <div className="discovery-journey-emotion">
+                            <span className="discovery-journey-emojis">🤗 😕 😐</span>
+                            <span>Satisfied &rarr; Neutral about returning without a push</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="discovery-journey-body-row">
+                        <div className="discovery-journey-row-label">Pain Points</div>
+                        <div className="discovery-journey-cells">
+                          <div className="discovery-journey-tags">
+                            <span className="discovery-journey-tag tag-pain">Interest selection skipped by 60%</span>
+                            <span className="discovery-journey-tag tag-pain">Search returns irrelevant results</span>
+                          </div>
+                        </div>
+                        <div className="discovery-journey-cells">
+                          <div className="discovery-journey-tags">
+                            <span className="discovery-journey-tag tag-pain">No cross-device watch sync</span>
+                            <span className="discovery-journey-tag tag-pain">Paywall shown mid-episode</span>
+                          </div>
+                        </div>
+                        <div className="discovery-journey-cells">
+                          <div className="discovery-journey-tags">
+                            <span className="discovery-journey-tag tag-pain">No next-episode nudge</span>
+                            <span className="discovery-journey-tag tag-pain">Watchlist not synced on TV</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="discovery-journey-body-row">
+                        <div className="discovery-journey-row-label">Opportunities</div>
+                        <div className="discovery-journey-cells">
+                          <div className="discovery-journey-tags">
+                            <span className="discovery-journey-tag tag-opp">Gamify interest selection</span>
+                            <span className="discovery-journey-tag tag-opp">Smart genre-first home rail</span>
+                          </div>
+                        </div>
+                        <div className="discovery-journey-cells">
+                          <div className="discovery-journey-tags">
+                            <span className="discovery-journey-tag tag-opp">Cross-device sync via Adobe Analytics</span>
+                            <span className="discovery-journey-tag tag-opp">Platform-specific voice search</span>
+                          </div>
+                        </div>
+                        <div className="discovery-journey-cells">
+                          <div className="discovery-journey-tags">
+                            <span className="discovery-journey-tag tag-opp">Smart re-engagement notification</span>
+                            <span className="discovery-journey-tag tag-opp">WhatsApp share on Shorts</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="discovery-insight-box">
+                    <strong>Key insight:</strong> The biggest emotional low points happen before a user even
+                    presses play - at the browsing stage where content feels generic and irrelevant. Solving
+                    onboarding personalisation unblocks all downstream engagement.
+                  </div>
+                </Reveal>
+              </section>
+
+              <div className="project-summary-divider" aria-hidden="true" />
+              {/* ── Information Architecture ── */}
+              <section className="discovery-section discovery-ia">
+                <Reveal className="discovery-section-inner">
+                  <span className="discovery-section-label">Information Architecture</span>
+                  <h3 className="discovery-section-heading">One product, three platforms, five entry points each</h3>
+                  <p className="discovery-section-description">
+                    The platform needed a unified navigation model that felt native to Android, iOS, Web,
+                    Android TV, and OnePlus TV - while maintaining consistent content rails and a shared
+                    identity layer (watchlist, favourites, continue watching) across all five. The sitemap
+                    defined which screens existed per platform and which were shared.
+                  </p>
+
+                  <div className="discovery-ia-sitemap">
+                    <div className="discovery-ia-root">
+                      <span className="discovery-ia-root-pill">Discovery+ Platform</span>
+                    </div>
+                    <div className="discovery-ia-connector" />
+                    <div className="discovery-ia-platforms">
+                      {[
+                        {
+                          name: "Mobile (Android / iOS)",
+                          color: "blue",
+                          screens: ["Home Rail", "Search / Voice", "Shorts Feed", "Show Detail", "Video Player", "My Watchlist", "Profile / Settings", "Subscription"],
+                        },
+                        {
+                          name: "Web (Desktop / Tablet)",
+                          color: "green",
+                          screens: ["Home Rail", "Category Browse", "Search", "Show Detail", "Video Player", "My Watchlist", "Account / Billing"],
+                        },
+                        {
+                          name: "TV (Android TV / OnePlus)",
+                          color: "purple",
+                          screens: ["Home Rail", "D-pad Navigation", "Show Detail", "Video Player", "Continue Watching", "Settings / Audio", "Kids Section"],
+                        },
+                      ].map((platform) => (
+                        <div key={platform.name} className="discovery-ia-platform-group">
+                          <span className={`discovery-ia-platform-label platform-${platform.color}`}>{platform.name}</span>
+                          <div className="discovery-ia-screen-list">
+                            {platform.screens.map((s) => (
+                              <span key={s} className="discovery-ia-screen-chip">{s}</span>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="discovery-ia-connector" />
+                    <div className="discovery-ia-shared">
+                      <span className="discovery-ia-shared-label">Shared Layer</span>
+                      <div className="discovery-ia-shared-chips">
+                        {["User Identity", "Watchlist", "Continue Watching", "Favourites", "Subscription State", "Language Prefs"].map((s) => (
+                          <span key={s} className="discovery-ia-shared-chip">{s}</span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="discovery-ia-stats">
+                    {[
+                      { value: "3 platforms", label: "Mobile, Web, TV" },
+                      { value: "5 primary sections", label: "per platform" },
+                      { value: "15+ unique screens", label: "mapped and spec'd" },
+                    ].map((s) => (
+                      <div key={s.value} className="discovery-ia-stat">
+                        <span className="discovery-ia-stat-value">{s.value}</span>
+                        <span className="discovery-ia-stat-label">{s.label}</span>
+                      </div>
+                    ))}
+                  </div>
+                </Reveal>
+              </section>
+
+              <div className="project-summary-divider" aria-hidden="true" />
+              {/* ── User Flows ── */}
+              <section className="discovery-section discovery-flows">
+                <Reveal className="discovery-section-inner">
+                  <span className="discovery-section-label">User Flows</span>
+                  <h3 className="discovery-section-heading">Two flows that defined every design decision</h3>
+                  <p className="discovery-section-description">
+                    Out of 12 user stories, two flows touched every part of the platform: the content
+                    discovery path (home rail &rarr; show detail &rarr; video player) and the subscription
+                    upgrade flow (paywall &rarr; plan selection &rarr; payment). Getting these right -
+                    including edge cases like search fallback and payment method selection - unblocked
+                    all other screen designs.
+                  </p>
+
+                  <div className="discovery-flows-grid">
+                    <div>
+                      <p className="discovery-flow-title">Flow 1 - Content Discovery</p>
+                      <div className="discovery-flow-chart">
+                        <div className="flow-node flow-node-start">Opens Discovery+ app</div>
+                        <div className="flow-arrow" />
+                        <div className="flow-node flow-node-action">Lands on Home Rail<span className="flow-node-sub">Personalised or generic</span></div>
+                        <div className="flow-arrow" />
+                        <div className="flow-node flow-node-decision">Browses or searches?<span className="flow-node-sub">Two paths</span></div>
+                        <div className="flow-arrow" />
+                        <div className="flow-branch-labels">
+                          <span className="flow-branch-label">Browse</span>
+                          <span className="flow-branch-label">Search</span>
+                        </div>
+                        <div className="flow-branch-row">
+                          <div className="flow-branch-col">
+                            <div className="flow-node flow-node-action">Scrolls genre rails<span className="flow-node-sub">Trending / Recommended</span></div>
+                          </div>
+                          <div className="flow-branch-col">
+                            <div className="flow-node flow-node-action">Types or voice search<span className="flow-node-sub">Show name / genre</span></div>
+                            <div className="flow-arrow" />
+                            <div className="flow-node flow-node-neutral">Results shown<span className="flow-node-sub">Filtered by relevance</span></div>
+                          </div>
+                        </div>
+                        <div className="flow-arrow" />
+                        <div className="flow-node flow-node-action">Show Detail page<span className="flow-node-sub">Episodes, trailer, similar</span></div>
+                        <div className="flow-arrow" />
+                        <div className="flow-node flow-node-success">Presses Play<span className="flow-node-sub">Video player launches</span></div>
+                        <div className="flow-arrow" />
+                        <div className="flow-end-label">Episode ends &rarr; Auto-play next</div>
+                      </div>
+                    </div>
+
+                    <div>
+                      <p className="discovery-flow-title">Flow 2 - Subscription Upgrade</p>
+                      <div className="discovery-flow-chart">
+                        <div className="flow-node flow-node-start">Hits premium content</div>
+                        <div className="flow-arrow" />
+                        <div className="flow-node flow-node-payment">Paywall displayed<span className="flow-node-sub">Plan comparison shown</span></div>
+                        <div className="flow-arrow" />
+                        <div className="flow-node flow-node-decision">Monthly or Annual?<span className="flow-node-sub">Savings highlighted</span></div>
+                        <div className="flow-arrow" />
+                        <div className="flow-branch-labels">
+                          <span className="flow-branch-label">Monthly</span>
+                          <span className="flow-branch-label">Annual</span>
+                        </div>
+                        <div className="flow-branch-row">
+                          <div className="flow-branch-col">
+                            <div className="flow-node flow-node-neutral">Rs 299/mo<span className="flow-node-sub">Standard price</span></div>
+                          </div>
+                          <div className="flow-branch-col">
+                            <div className="flow-node flow-node-success">Rs 999/yr<span className="flow-node-sub">Save 72%</span></div>
+                          </div>
+                        </div>
+                        <div className="flow-arrow" />
+                        <div className="flow-node flow-node-action">Payment method<span className="flow-node-sub">UPI / Card / GPay</span></div>
+                        <div className="flow-arrow" />
+                        <div className="flow-node flow-node-success">Subscription active<span className="flow-node-sub">Premium unlocked</span></div>
+                        <div className="flow-arrow" />
+                        <div className="flow-end-label">Redirected to content</div>
+                      </div>
+                    </div>
+                  </div>
+                </Reveal>
+              </section>
+
+              <div className="project-summary-divider" aria-hidden="true" />
+              </>
+            ) : null}
 
             {isAlMaha ? (
               <>
