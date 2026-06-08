@@ -979,19 +979,60 @@ function Reveal({ as: Tag = "div", className = "", delay = 0, children }) {
 }
 
 function SiteHeader({ menuOpen, setMenuOpen }) {
+  const menuButtonRef = useRef(null);
+  const navRef = useRef(null);
+
   useEffect(() => {
     if (!menuOpen) {
       return undefined;
     }
 
+    const previousActiveElement = document.activeElement;
+
+    window.requestAnimationFrame(() => {
+      navRef.current?.querySelector(".menu-link")?.focus();
+    });
+
     const handleKeyDown = (event) => {
       if (event.key === "Escape") {
         setMenuOpen(false);
+        return;
+      }
+
+      if (event.key !== "Tab") {
+        return;
+      }
+
+      const focusableItems = [
+        menuButtonRef.current,
+        ...(navRef.current?.querySelectorAll(".menu-link") ?? []),
+      ].filter(Boolean);
+
+      if (!focusableItems.length) {
+        return;
+      }
+
+      const firstItem = focusableItems[0];
+      const lastItem = focusableItems[focusableItems.length - 1];
+
+      if (event.shiftKey && document.activeElement === firstItem) {
+        event.preventDefault();
+        lastItem.focus();
+      } else if (!event.shiftKey && document.activeElement === lastItem) {
+        event.preventDefault();
+        firstItem.focus();
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      if (previousActiveElement instanceof HTMLElement) {
+        previousActiveElement.focus();
+      } else {
+        menuButtonRef.current?.focus();
+      }
+    };
   }, [menuOpen, setMenuOpen]);
 
   return (
@@ -1006,6 +1047,7 @@ function SiteHeader({ menuOpen, setMenuOpen }) {
         </button>
 
         <button
+          ref={menuButtonRef}
           type="button"
           className={`menu-button ${menuOpen ? "menu-button-open" : ""}`}
           onClick={() => setMenuOpen((open) => !open)}
@@ -1024,11 +1066,12 @@ function SiteHeader({ menuOpen, setMenuOpen }) {
         className={`menu-backdrop ${menuOpen ? "menu-backdrop-open" : ""}`}
         aria-label="Close navigation"
         aria-hidden={!menuOpen}
-        tabIndex={menuOpen ? 0 : -1}
+        tabIndex={-1}
         onClick={() => setMenuOpen(false)}
       />
 
       <nav
+        ref={navRef}
         id="site-navigation"
         className={`menu-panel ${menuOpen ? "menu-panel-open" : ""}`}
         aria-label="Primary navigation"
@@ -1436,11 +1479,12 @@ function ProjectDetailsPage({ project, projectSlug, onOpenPdf }) {
             <section className="case-section case-section-hero">
               <Reveal className="case-hero-layout">
                 <div className="case-hero-main">
-                  <p className="case-hero-eyebrow">
-                    {project?.index ?? "--"} / {projectName} Case Study
-                  </p>
-                  <h3>{caseStudy.projectTitle}</h3>
+                  <p className="case-hero-eyebrow">{projectName} Case Study</p>
+                  <h1>{caseStudy.projectTitle}</h1>
                   <p className="case-hero-subtitle">{caseStudy.projectTagline}</p>
+                  {caseStudy.heroSubtitle ? (
+                    <p className="case-hero-supporting">{caseStudy.heroSubtitle}</p>
+                  ) : null}
                   <div className="project-detail-cta-row">
                     <button type="button" className="project-back-button" onClick={() => navigateTo("/projects")}>
                       <span aria-hidden="true">←</span>
@@ -1532,14 +1576,10 @@ function ProjectDetailsPage({ project, projectSlug, onOpenPdf }) {
                   <p>{caseStudy.overview}</p>
                 </article>
 
-                <div className="project-summary-divider" aria-hidden="true" />
-
                 <article className="project-detail-card">
                   <h3>Problem Statement</h3>
                   <p>{caseStudy.problemStatement}</p>
                 </article>
-
-                <div className="project-summary-divider" aria-hidden="true" />
 
                 <article className="project-detail-card">
                   <h3>Goals</h3>
@@ -1550,8 +1590,6 @@ function ProjectDetailsPage({ project, projectSlug, onOpenPdf }) {
                   </ul>
                 </article>
 
-                <div className="project-summary-divider" aria-hidden="true" />
-
                 <article className="project-detail-card">
                   <h3>My Role</h3>
                   <p>I led end-to-end UX/UI design for this initiative, including:</p>
@@ -1561,9 +1599,6 @@ function ProjectDetailsPage({ project, projectSlug, onOpenPdf }) {
                     ))}
                   </ul>
                 </article>
-
-                <div className="project-summary-divider" aria-hidden="true" />
-
               </Reveal>
             </section>
 
@@ -1589,8 +1624,6 @@ function ProjectDetailsPage({ project, projectSlug, onOpenPdf }) {
                   </div>
                 </article>
 
-                <div className="project-summary-divider" aria-hidden="true" />
-
                 <article className="project-detail-card">
                   <h3>Key UX Improvements</h3>
                   <ul>
@@ -1601,8 +1634,6 @@ function ProjectDetailsPage({ project, projectSlug, onOpenPdf }) {
                     ))}
                   </ul>
                 </article>
-
-                <div className="project-summary-divider" aria-hidden="true" />
 
                 <article className="project-detail-card">
                   <h3>Outcome</h3>
@@ -1615,8 +1646,6 @@ function ProjectDetailsPage({ project, projectSlug, onOpenPdf }) {
                   </ul>
                 </article>
 
-                <div className="project-summary-divider" aria-hidden="true" />
-
                 <article className="project-detail-card">
                   <h3>{caseStudy.visualStrategyTitle ?? "Visual Gallery Captions"}</h3>
                   <ul>
@@ -1625,8 +1654,6 @@ function ProjectDetailsPage({ project, projectSlug, onOpenPdf }) {
                     ))}
                   </ul>
                 </article>
-
-                <div className="project-summary-divider" aria-hidden="true" />
 
                 <article className="project-detail-card">
                   <h3>Why This Work Matters</h3>
@@ -1752,7 +1779,12 @@ export default function App() {
       <CustomCursor />
       <SiteHeader menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
 
-      <main key={`${pathname}-${projectSlug ?? ""}`} className="content page-stage">
+      <main
+        key={`${pathname}-${projectSlug ?? ""}`}
+        className="content page-stage"
+        aria-hidden={menuOpen}
+        inert={menuOpen ? "" : undefined}
+      >
         {pathname === "/" ? <HomePage /> : null}
         {pathname === "/resume" ? <ResumePage /> : null}
         {pathname === "/projects" ? <ProjectsPage /> : null}

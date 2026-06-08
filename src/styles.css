@@ -997,15 +997,21 @@ body.cursor-hidden .cursor-ring {
   color: #656565 !important;
 }
 
-.case-hero-main h3 {
+.case-hero-main h1 {
   font-size: clamp(1.7rem, 3.3vw, 2.55rem);
   line-height: 1.05;
   letter-spacing: -0.03em;
+  font-weight: 600;
+  margin: 0;
   margin-bottom: 0;
 }
 
 .case-hero-subtitle {
   margin-top: -4px !important;
+}
+
+.case-hero-supporting {
+  color: var(--text-subtle) !important;
 }
 
 .case-hero-image-wrap {
@@ -1430,10 +1436,13 @@ body.cursor-hidden .cursor-ring {
   background: none;
 }
 
-.project-summary-divider {
-  height: 1px;
-  width: 100%;
-  background: linear-gradient(90deg, rgba(17, 17, 17, 0.08), rgba(17, 17, 17, 0.28), rgba(17, 17, 17, 0.08));
+.case-section-summary .project-detail-grid > .project-detail-card + .project-detail-card {
+  padding-top: 28px;
+  border-top: 1px solid rgba(17, 17, 17, 0.14);
+}
+
+html[data-theme="dark"] .case-section-summary .project-detail-grid > .project-detail-card + .project-detail-card {
+  border-top-color: rgba(255, 255, 255, 0.14);
 }
 
 .case-section-summary .process-list-compact {
