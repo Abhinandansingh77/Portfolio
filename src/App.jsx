@@ -1599,10 +1599,238 @@ function ProjectDetailsPage({ project, onOpenPdf }) {
                   </ul>
                 </article>
 
-                <div className="project-summary-divider" aria-hidden="true" />
-
               </Reveal>
             </section>
+
+
+            {isAlMaha ? (
+              <>
+              <div className="project-summary-divider" aria-hidden="true" />
+              {/* ── User Personas ── */}
+              <section className="almaha-section almaha-personas">
+                <Reveal className="almaha-section-inner">
+                  <span className="almaha-section-number">User Personas</span>
+                  <div className="persona-grid-v2">
+                    {[
+                      {
+                        initials: "JA",
+                        variant: "visitor",
+                        name: "Jasim Al-Rashidi",
+                        role: "Island Visitor · Age 32 · Doha Resident",
+                        quote: "“I want to bring my family without worrying about cash at every stall.”",
+                        goals: ["Seamless entry with QR, skip queues", "Discover and pre-book outlets before arriving", "Single wallet for all island payments"],
+                        motivations: ["Premium experience for his family", "Book Al Maha Drive for his supercar"],
+                        frustrations: ["Cash-only entry gate causes long queues", "No way to know restaurant availability in advance", "Physical tickets get lost or damaged"],
+                        behaviours: ["Mobile-first", "Repeat visitor", "Brings family", "Plans ahead"],
+                      },
+                      {
+                        initials: "FH",
+                        variant: "merchant",
+                        name: "Fatima Hassan",
+                        role: "Outlet Cashier · Age 26 · Nammos Club",
+                        quote: "“Queues pile up when I manually count change. I need a fast scan-and-confirm.”",
+                        goals: ["Process payments fast without errors", "Verify customer wallet balance before charging", "Handle partial payments when balance is low"],
+                        motivations: ["Reduce end-of-shift reconciliation errors", "Serve more customers in less time"],
+                        frustrations: ["Manual entry causes payment disputes", "No clear signal when wallet is insufficient", "POS doesn’t talk to the customer app"],
+                        behaviours: ["Scan-first", "High volume", "Error-averse", "Evening shifts"],
+                      },
+                      {
+                        initials: "KM",
+                        variant: "admin",
+                        name: "Khalid Al-Mansouri",
+                        role: "Island Admin / Ops · Age 41 · Super User",
+                        quote: "“I can’t run promotions without calling every manager. I need one dashboard.”",
+                        goals: ["View real-time transaction reports by outlet", "Trigger push notifications to all visitors", "Download finance reports for compliance"],
+                        motivations: ["Increase in-island spend per visitor", "Reduce operational incidents at entry gate"],
+                        frustrations: ["No visibility into daily transaction totals", "Promotions require third-party email tools", "Merchant onboarding done manually via backend"],
+                        behaviours: ["Web-only user", "Data-driven", "Runs campaigns", "Senior ops"],
+                      },
+                    ].map((p) => (
+                      <div key={p.name} className="persona-card-v2">
+                        <div className={`persona-avatar-v2 ${p.variant}`}>{p.initials}</div>
+                        <div>
+                          <h4 className="persona-name">{p.name}</h4>
+                          <p className="persona-role">{p.role}</p>
+                        </div>
+                        <div className="persona-quote-v2">{p.quote}</div>
+                        <p className="persona-section-label">Goals</p>
+                        <ul className="persona-list-v2 goals">{p.goals.map((g) => <li key={g}>{g}</li>)}</ul>
+                        <p className="persona-section-label">Motivations</p>
+                        <ul className="persona-list-v2 motivations">{p.motivations.map((m) => <li key={m}>{m}</li>)}</ul>
+                        <p className="persona-section-label">Frustrations</p>
+                        <ul className="persona-list-v2 frustrations">{p.frustrations.map((f) => <li key={f}>{f}</li>)}</ul>
+                        <p className="persona-section-label">Behaviours</p>
+                        <div className="persona-tags-v2">{p.behaviours.map((b) => <span key={b}>{b}</span>)}</div>
+                      </div>
+                    ))}
+                  </div>
+                </Reveal>
+              </section>
+
+              <div className="project-summary-divider" aria-hidden="true" />
+              {/* ── Interview Insights & Affinity Map ── */}
+              <section className="almaha-section almaha-affinity">
+                <Reveal className="almaha-section-inner">
+                  <span className="almaha-section-number">Interview Insights &amp; User Pain Points (Affinity Map)</span>
+                  <div className="affinity-stats-row">
+                    {[
+                      { value: "12", label: "User interviews" },
+                      { value: "87", label: "Survey responses" },
+                      { value: "6", label: "Themes identified" },
+                      { value: "34", label: "Pain points mapped" },
+                    ].map((s) => (
+                      <div key={s.label} className="affinity-stat">
+                        <span className="affinity-stat-value">{s.value}</span>
+                        <span className="affinity-stat-label">{s.label}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="affinity-grid-v2">
+                    {[
+                      {
+                        title: "Entry & Access friction",
+                        color: "red",
+                        quotes: [
+                          "“I waited 20 mins at the gate — the cash machine was broken”",
+                          "“There was no way to show I had a reservation at the gate”",
+                          "No digital identity = every visit starts with re-verification",
+                          "Physical tickets damaged by rain, not accepted at gate",
+                        ],
+                      },
+                      {
+                        title: "Payment confusion",
+                        color: "orange",
+                        quotes: [
+                          "“I didn’t know how much was left on my physical card”",
+                          "“Cashier kept my change — I had no receipt to dispute it”",
+                          "Partial payment flow unclear — customers walked away",
+                          "Entry fee converting to credits was never explained",
+                        ],
+                      },
+                      {
+                        title: "Outlet discovery",
+                        color: "blue",
+                        quotes: [
+                          "“I found Nammos by accident — I almost left the island”",
+                          "“Couldn’t tell which restaurants were open before I left home”",
+                          "No map — visitors wandering the island lost",
+                          "Reservation process via phone call, often unanswered",
+                        ],
+                      },
+                      {
+                        title: "Booking experience",
+                        color: "purple",
+                        quotes: [
+                          "“I booked Al Maha Drive on WhatsApp — sketchy experience”",
+                          "“Winter Wonderland sold out but no one told me at booking”",
+                          "Car details had to be re-entered every visit",
+                          "No confirmation email received after booking",
+                        ],
+                      },
+                      {
+                        title: "Merchant operations",
+                        color: "green",
+                        quotes: [
+                          "Staff had no way to verify if a card had enough balance",
+                          "POS system not connected — manual amount entry caused errors",
+                          "“Customer disputes happen daily about charged amounts”",
+                          "Physical card linked to wrong account twice in one week",
+                        ],
+                      },
+                      {
+                        title: "Admin & promotions",
+                        color: "teal",
+                        quotes: [
+                          "No real-time visibility into transaction volume by outlet",
+                          "“We run promotions via WhatsApp broadcast — very unreliable”",
+                          "Finance team requests manual CSV exports from developer",
+                          "No way to target promotions to specific visitor segments",
+                        ],
+                      },
+                    ].map((theme) => (
+                      <div key={theme.title} className="affinity-theme-card">
+                        <div className={`affinity-theme-header theme-${theme.color}`}>{theme.title}</div>
+                        <div className="affinity-theme-body">
+                          {theme.quotes.map((q) => (
+                            <div key={q} className={`affinity-quote-chip chip-${theme.color}`}>{q}</div>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </Reveal>
+              </section>
+
+              <div className="project-summary-divider" aria-hidden="true" />
+              {/* ── Competitive Analysis ── */}
+              <section className="almaha-section almaha-competitive">
+                <Reveal className="almaha-section-inner">
+                  <span className="almaha-section-number">Competitive Analysis</span>
+                  <div className="comp-legend">
+                    <span><span className="comp-icon-yes">&#10003;</span> Available</span>
+                    <span><span className="comp-icon-no">&#10007;</span> Not available</span>
+                    <span><span className="comp-icon-partial">&#9684;</span> Partial</span>
+                  </div>
+                  <div className="comp-table-v2-wrap">
+                    <table className="comp-table-v2">
+                      <thead>
+                        <tr>
+                          <th />
+                          <th className="comp-highlight-col">Al Maha (designed)</th>
+                          <th>Ticketmaster</th>
+                          <th>Careem Pay</th>
+                          <th>Dubai Parks App</th>
+                          <th>Yas Island App</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {[
+                          { feature: "QR-based island entry", values: ["yes", "partial", "no", "yes", "yes"] },
+                          { feature: "In-app digital wallet", values: ["yes", "no", "yes", "no", "partial"] },
+                          { feature: "Physical card → digital link", values: ["yes", "no", "no", "no", "no"] },
+                          { feature: "Outlet map discovery", values: ["yes", "no", "no", "yes", "no"] },
+                          { feature: "Restaurant reservation", values: ["yes", "no", "no", "partial", "yes"] },
+                          { feature: "Partial wallet payment", values: ["yes", "no", "partial", "no", "no"] },
+                          { feature: "Merchant POS integration", values: ["yes", "no", "no", "no", "no"] },
+                          { feature: "Vehicle registration (drive)", values: ["yes", "no", "no", "no", "no"] },
+                          { feature: "Push notification campaigns", values: ["yes", "yes", "partial", "no", "partial"] },
+                          { feature: "Admin transaction reports", values: ["yes", "partial", "partial", "no", "partial"] },
+                        ].map((row) => (
+                          <tr key={row.feature}>
+                            <td>{row.feature}</td>
+                            {row.values.map((v, i) => (
+                              <td key={i} className={v === "yes" ? "comp-icon-yes" : v === "partial" ? "comp-icon-partial" : "comp-icon-no"}>
+                                {v === "yes" ? "✓" : v === "partial" ? "◔" : "✗"}
+                              </td>
+                            ))}
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  <div className="comp-insights-grid">
+                    <div className="comp-insight-card insight-opportunity">
+                      <span className="comp-insight-label">Opportunity &mdash; physical card bridging</span>
+                      <p>No competitor supports physical NFC/QR card &rarr; digital wallet linking. This became a differentiating Al Maha feature for first-time users not yet on the app.</p>
+                    </div>
+                    <div className="comp-insight-card insight-opportunity">
+                      <span className="comp-insight-label">Opportunity &mdash; closed ecosystem wallet</span>
+                      <p>Unlike open wallets (Careem Pay), Al Maha&apos;s entry fee converts to credits &mdash; a mechanic that drives in-island spending and creates lock-in without extra cost to visitor.</p>
+                    </div>
+                    <div className="comp-insight-card insight-gap">
+                      <span className="comp-insight-label">Gap &mdash; vehicle-specific booking UX</span>
+                      <p>Benchmarks showed no good reference for car-detail registration flows. UX had to be designed from scratch: step-by-step modal, photo upload, plate entry.</p>
+                    </div>
+                    <div className="comp-insight-card insight-gap">
+                      <span className="comp-insight-label">Gap &mdash; partial payment edge cases</span>
+                      <p>Careem Pay handles split payments but not within a merchant-scan flow. All three wallet scenarios (full, partial, overspend) had no direct reference pattern to borrow from.</p>
+                    </div>
+                  </div>
+                </Reveal>
+              </section>
+              <div className="project-summary-divider" aria-hidden="true" />
+              </>
+            ) : null}
 
             <section className="case-section case-section-summary case-section-summary-extended">
               <Reveal className="project-detail-grid">
@@ -1625,9 +1853,387 @@ function ProjectDetailsPage({ project, onOpenPdf }) {
                     ))}
                   </div>
                 </article>
+              </Reveal>
+            </section>
 
-                <div className="project-summary-divider" aria-hidden="true" />
+            {isAlMaha ? (
+              <>
+              <div className="project-summary-divider" aria-hidden="true" />
+              {/* ── User Journey Map ── */}
+              <section className="almaha-section almaha-journey">
+                <Reveal className="almaha-section-inner">
+                  <span className="almaha-section-number">User Journey Map &mdash; Visitor (Before, During, After)</span>
+                  <div className="journey-map-v2-wrap">
+                    <div className="journey-map-v2">
+                      <div className="journey-header-row">
+                        <div className="journey-header-label">Jasim&apos;s journey</div>
+                        <div className="journey-phase-header-v2 phase-before">Before &mdash; Planning &amp; Arrival</div>
+                        <div className="journey-phase-header-v2 phase-during">During &mdash; On the Island</div>
+                        <div className="journey-phase-header-v2 phase-after">After &mdash; Post-Visit</div>
+                      </div>
 
+                      <div className="journey-body-row">
+                        <div className="journey-row-label-v2">Steps</div>
+                        <div className="journey-phase-cells cells-3">
+                          <div className="journey-cell"><span className="journey-cell-step-num">01</span>Hears about Al Maha from friends online</div>
+                          <div className="journey-cell"><span className="journey-cell-step-num">02</span>Looks up outlets &amp; tries to book restaurant</div>
+                          <div className="journey-cell"><span className="journey-cell-step-num">03</span>Arrives at gate, pays entry fee</div>
+                        </div>
+                        <div className="journey-phase-cells cells-3">
+                          <div className="journey-cell"><span className="journey-cell-step-num">04</span>Navigates island, finds desired outlet</div>
+                          <div className="journey-cell"><span className="journey-cell-step-num">05</span>Makes payment at outlet via QR</div>
+                          <div className="journey-cell"><span className="journey-cell-step-num">06</span>Books Al Maha Drive experience</div>
+                        </div>
+                        <div className="journey-phase-cells cells-2">
+                          <div className="journey-cell"><span className="journey-cell-step-num">07</span>Reviews transaction history</div>
+                          <div className="journey-cell"><span className="journey-cell-step-num">08</span>Scans QR to exit island</div>
+                        </div>
+                      </div>
+
+                      <div className="journey-body-row">
+                        <div className="journey-row-label-v2">Touchpoints</div>
+                        <div className="journey-phase-cells cells-3">
+                          <div className="journey-cell">Instagram / word of mouth</div>
+                          <div className="journey-cell">Island website / phone call</div>
+                          <div className="journey-cell">Physical gate, cash counter</div>
+                        </div>
+                        <div className="journey-phase-cells cells-3">
+                          <div className="journey-cell">App map, on-foot signage</div>
+                          <div className="journey-cell">Merchant QR scan, POS</div>
+                          <div className="journey-cell">App booking, entry gate</div>
+                        </div>
+                        <div className="journey-phase-cells cells-2">
+                          <div className="journey-cell">App transaction history</div>
+                          <div className="journey-cell">Exit E-gate, QR code</div>
+                        </div>
+                      </div>
+
+                      <div className="journey-body-row">
+                        <div className="journey-row-label-v2">Emotion</div>
+                        <div className="journey-phase-cells cells-3">
+                          <div className="journey-cell"><span className="journey-emoji">🧐</span>Curious</div>
+                          <div className="journey-cell"><span className="journey-emoji">😣</span>Frustrated</div>
+                          <div className="journey-cell"><span className="journey-emoji">😤</span>Annoyed</div>
+                        </div>
+                        <div className="journey-phase-cells cells-3">
+                          <div className="journey-cell"><span className="journey-emoji">😐</span>Confused</div>
+                          <div className="journey-cell"><span className="journey-emoji">😌</span>Relieved</div>
+                          <div className="journey-cell"><span className="journey-emoji">🤩</span>Excited</div>
+                        </div>
+                        <div className="journey-phase-cells cells-2">
+                          <div className="journey-cell"><span className="journey-emoji">😊</span>Satisfied</div>
+                          <div className="journey-cell"><span className="journey-emoji">😊</span>Content</div>
+                        </div>
+                      </div>
+
+                      <div className="journey-body-row">
+                        <div className="journey-row-label-v2">Pain points</div>
+                        <div className="journey-phase-cells cells-3">
+                          <div className="journey-cell" />
+                          <div className="journey-cell"><span className="journey-cell-tag tag-pain">No online booking</span><span className="journey-sub">Restaurant only reachable by phone</span></div>
+                          <div className="journey-cell"><span className="journey-cell-tag tag-pain">Cash-only gate</span><span className="journey-sub">Long queue, no digital option</span></div>
+                        </div>
+                        <div className="journey-phase-cells cells-3">
+                          <div className="journey-cell"><span className="journey-cell-tag tag-pain">No in-app map</span><span className="journey-sub">Island difficult to navigate</span></div>
+                          <div className="journey-cell"><span className="journey-cell-tag tag-pain">Balance unclear</span><span className="journey-sub">Partial payment not explained</span></div>
+                          <div className="journey-cell" />
+                        </div>
+                        <div className="journey-phase-cells cells-2">
+                          <div className="journey-cell" />
+                          <div className="journey-cell" />
+                        </div>
+                      </div>
+
+                      <div className="journey-body-row">
+                        <div className="journey-row-label-v2">Opportunities</div>
+                        <div className="journey-phase-cells cells-3">
+                          <div className="journey-cell"><span className="journey-cell-tag tag-opp">Social sharing</span><span className="journey-sub">Pre-visit discovery via app</span></div>
+                          <div className="journey-cell"><span className="journey-cell-tag tag-opp">In-app booking</span><span className="journey-sub">Discover + reserve before arriving</span></div>
+                          <div className="journey-cell"><span className="journey-cell-tag tag-opp">Digital entry</span><span className="journey-sub">QR gate, credits auto-loaded</span></div>
+                        </div>
+                        <div className="journey-phase-cells cells-3">
+                          <div className="journey-cell"><span className="journey-cell-tag tag-opp">Map + categories</span><span className="journey-sub">Outlet map with filters</span></div>
+                          <div className="journey-cell"><span className="journey-cell-tag tag-opp">Wallet clarity</span><span className="journey-sub">Balance visible before scan</span></div>
+                          <div className="journey-cell"><span className="journey-cell-tag tag-opp">Drive booking</span><span className="journey-sub">In-app with vehicle details</span></div>
+                        </div>
+                        <div className="journey-phase-cells cells-2">
+                          <div className="journey-cell"><span className="journey-cell-tag tag-opp">History</span><span className="journey-sub">Full transaction log</span></div>
+                          <div className="journey-cell"><span className="journey-cell-tag tag-opp">Fast exit</span><span className="journey-sub">QR E-gate, no queue</span></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </Reveal>
+              </section>
+
+              <div className="project-summary-divider" aria-hidden="true" />
+              {/* ── Information Architecture — Sitemap ── */}
+              <section className="almaha-section almaha-ia">
+                <Reveal className="almaha-section-inner">
+                  <span className="almaha-section-number">Information Architecture &mdash; Sitemap</span>
+                  <div className="ia-tree">
+                    <div className="ia-tree-top">
+                      <div className="ia-tree-app-pill app-customer">Customer App</div>
+                      <div className="ia-tree-app-pill app-merchant">Merchant App</div>
+                      <div className="ia-tree-app-pill app-admin">Admin Portal</div>
+                    </div>
+
+                    <div className="ia-tree-connector" />
+
+                    <div className="ia-tree-level">
+                      <div className="ia-tree-app-group">
+                        <div className="ia-tree-nav-row">
+                          {["Home", "QR Code", "Booking", "Profile", "About"].map((n) => (
+                            <span key={n} className="ia-tree-nav-chip chip-customer">{n}</span>
+                          ))}
+                        </div>
+                        <div className="ia-tree-sub-row">
+                          {["Wallet", "Add $", "History", "Outlets", "Drive", "WW"].map((n) => (
+                            <span key={n} className="ia-tree-sub-chip">{n}</span>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="ia-tree-app-group">
+                        <div className="ia-tree-nav-row">
+                          {["Login", "Home", "Scan"].map((n) => (
+                            <span key={n} className="ia-tree-nav-chip chip-merchant">{n}</span>
+                          ))}
+                        </div>
+                        <div className="ia-tree-sub-row">
+                          {["Payment", "Entry", "Card link"].map((n) => (
+                            <span key={n} className="ia-tree-sub-chip">{n}</span>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="ia-tree-app-group">
+                        <div className="ia-tree-nav-row">
+                          {["Login", "Reports", "Promo"].map((n) => (
+                            <span key={n} className="ia-tree-nav-chip chip-admin">{n}</span>
+                          ))}
+                        </div>
+                        <div className="ia-tree-sub-row">
+                          {["Txn mgmt", "Export", "Push ntf"].map((n) => (
+                            <span key={n} className="ia-tree-sub-chip">{n}</span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="ia-tree-connector" />
+
+                    <div className="ia-tree-section-row">
+                      <div className="ia-tree-section-group">
+                        <span className="ia-tree-section-title">Onboarding</span>
+                        <div className="ia-tree-sub-row">
+                          {["Sign up / OTP verify", "Create 4-digit PIN", "Login (email + PIN)", "Forgot PIN flow"].map((n) => (
+                            <span key={n} className="ia-tree-sub-chip">{n}</span>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="ia-tree-section-group">
+                        <span className="ia-tree-section-title">Merchant login</span>
+                        <div className="ia-tree-sub-row">
+                          {["Mobile OTP", "Pre-registered"].map((n) => (
+                            <span key={n} className="ia-tree-sub-chip">{n}</span>
+                          ))}
+                        </div>
+                        <span className="ia-tree-section-title">Payment scenarios</span>
+                        <div className="ia-tree-sub-row">
+                          {["Full pay", "Partial", "Insufficient"].map((n) => (
+                            <span key={n} className="ia-tree-sub-chip">{n}</span>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="ia-tree-section-group">
+                        <span className="ia-tree-section-title">Admin sections</span>
+                        <div className="ia-tree-sub-row">
+                          {["Dashboard", "User mgmt", "Reports", "Campaigns"].map((n) => (
+                            <span key={n} className="ia-tree-sub-chip">{n}</span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="ia-tree-legend">
+                      <span><span className="ia-legend-dot dot-customer" /> Customer App</span>
+                      <span><span className="ia-legend-dot dot-merchant" /> Merchant App</span>
+                      <span><span className="ia-legend-dot dot-admin" /> Admin Portal</span>
+                      <span><span className="ia-legend-dot dot-sub" /> Sub-screens / states</span>
+                    </div>
+                  </div>
+                </Reveal>
+              </section>
+              </>
+            ) : null}
+
+            {isAlMaha ? (
+              <>
+              <div className="project-summary-divider" aria-hidden="true" />
+              {/* ── Key User Flows ── */}
+              <section className="almaha-section almaha-flows">
+                <Reveal className="almaha-section-inner">
+                  <span className="almaha-section-number">Key User Flows &mdash; QR Payment &amp; Island Entry</span>
+                  <div className="flows-two-col">
+                    <div>
+                      <p className="flow-title">Flow 1 &mdash; Island entry</p>
+                      <div className="flow-chart">
+                        <div className="flow-node flow-node-start">Visitor arrives at gate</div>
+                        <div className="flow-arrow" />
+                        <div className="flow-node flow-node-action">Opens Al Maha app<span className="flow-node-sub">Tap QR Code tab</span></div>
+                        <div className="flow-arrow" />
+                        <div className="flow-node flow-node-decision">Prior booking?<span className="flow-node-sub">System checks</span></div>
+                        <div className="flow-arrow" />
+                        <div className="flow-branch-labels">
+                          <span className="flow-branch-label">Yes</span>
+                          <span className="flow-branch-label">No</span>
+                        </div>
+                        <div className="flow-branch-row">
+                          <div className="flow-branch-col">
+                            <div className="flow-node flow-node-success">QR generated<span className="flow-node-sub">Booking verified</span></div>
+                          </div>
+                          <div className="flow-branch-col">
+                            <div className="flow-node flow-node-payment">Pay 300 QAR<span className="flow-node-sub">Via SkipCash</span></div>
+                            <div className="flow-arrow" />
+                            <div className="flow-node flow-node-action">Credits loaded<span className="flow-node-sub">300 QAR → credits</span></div>
+                          </div>
+                        </div>
+                        <div className="flow-arrow" />
+                        <div className="flow-node flow-node-action">Security scans QR<span className="flow-node-sub">Merchant app validates</span></div>
+                        <div className="flow-arrow" />
+                        <div className="flow-end-label">Entry granted &mdash; gate opens</div>
+                      </div>
+                    </div>
+
+                    <div>
+                      <p className="flow-title">Flow 2 &mdash; Wallet payment</p>
+                      <div className="flow-chart">
+                        <div className="flow-node flow-node-start">Customer at outlet</div>
+                        <div className="flow-arrow" />
+                        <div className="flow-node flow-node-action">Merchant scans QR<span className="flow-node-sub">Customer app QR code</span></div>
+                        <div className="flow-arrow" />
+                        <div className="flow-node flow-node-action">Balance shown<span className="flow-node-sub">Merchant inputs amount</span></div>
+                        <div className="flow-arrow" />
+                        <div className="flow-node flow-node-decision">Amount vs balance?<span className="flow-node-sub">3 scenarios</span></div>
+                        <div className="flow-arrow" />
+                        <div className="flow-three-branch">
+                          <div className="flow-branch-col">
+                            <span className="flow-branch-label">Full</span>
+                            <div className="flow-node flow-node-success">Full deduct<span className="flow-node-sub">Barcode gen</span></div>
+                          </div>
+                          <div className="flow-branch-col">
+                            <span className="flow-branch-label">Partial</span>
+                            <div className="flow-node flow-node-payment">Part deduct<span className="flow-node-sub">Split payment</span></div>
+                          </div>
+                          <div className="flow-branch-col">
+                            <span className="flow-branch-label">Over</span>
+                            <div className="flow-node flow-node-error">Error shown<span className="flow-node-sub">Insufficient</span></div>
+                            <div className="flow-side-label">Retry or top up</div>
+                          </div>
+                        </div>
+                        <div className="flow-arrow" />
+                        <div className="flow-node flow-node-neutral">2D barcode generated<span className="flow-node-sub">POS reads barcode</span></div>
+                        <div className="flow-arrow" />
+                        <div className="flow-end-label">Transaction complete</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flow-stories-section">
+                    <p className="flow-stories-title">User Story acceptance criteria (from FRD)</p>
+                    <div className="flow-stories-row">
+                      <div className="flow-story-pill story-blue">
+                        <h6>Story 1 &mdash; Entry access</h6>
+                        <span>New visitor, prior booking, prime member scenarios</span>
+                      </div>
+                      <div className="flow-story-pill story-teal">
+                        <h6>Story 3 &mdash; Wallet top-up</h6>
+                        <span>Credit card, internet banking, physical card scan</span>
+                      </div>
+                      <div className="flow-story-pill story-orange">
+                        <h6>Story 5 &mdash; Booking</h6>
+                        <span>Outlet reservation, Drive, Winter Wonderland</span>
+                      </div>
+                      <div className="flow-story-pill story-green">
+                        <h6>Story 4 &mdash; Payment</h6>
+                        <span>Full, partial, insufficient wallet scenarios</span>
+                      </div>
+                    </div>
+                    <p className="flow-rules-text">
+                      OTP validation · Field rules (name 4–15 chars, mobile 8 digits, OTP 4 digits) · Max 3 incorrect OTP attempts<br />
+                      Wallet PIN required for payment · Confirmation email · Drive booking · Push notification on transaction
+                    </p>
+                  </div>
+                </Reveal>
+              </section>
+
+              <div className="project-summary-divider" aria-hidden="true" />
+              {/* ── User Quotes ── */}
+              <section className="almaha-section almaha-quotes">
+                <Reveal className="almaha-section-inner">
+                  <span className="almaha-section-number">User Quotes</span>
+                  <div className="quotes-grid-v2">
+                    {[
+                      {
+                        quote: "I waited 20 minutes at the entry gate because the card machine was down. By the time I got in, my kids were upset and I’d missed our restaurant booking window.",
+                        name: "Jasim, 32",
+                        role: "Repeat visitor",
+                        tag: "Pain: entry friction",
+                        tagClass: "quote-tag-pain",
+                      },
+                      {
+                        quote: "I didn’t know the 300 riyal entry fee turns into credits I can spend inside. No one explained that. I was walking around thinking I’d wasted money at the gate.",
+                        name: "Layla, 28",
+                        role: "First-time visitor",
+                        tag: "Insight: credits unclear",
+                        tagClass: "quote-tag-insight",
+                      },
+                      {
+                        quote: "The cashier at Billionaire scanned my card and it just beeped. He didn’t know if it worked or not. We stood there for 5 minutes while he called someone to check the system.",
+                        name: "Ahmed, 35",
+                        role: "Luxury dining visitor",
+                        tag: "Pain: merchant UX",
+                        tagClass: "quote-tag-pain",
+                      },
+                      {
+                        quote: "I booked a table at Carbone by calling three times. The first two times nobody picked up. If there was an app I could just book myself in 30 seconds.",
+                        name: "Sara, 29",
+                        role: "Al Maha Drive visitor",
+                        tag: "Need: in-app booking",
+                        tagClass: "quote-tag-need",
+                      },
+                      {
+                        quote: "When a customer’s wallet doesn’t have enough, I enter an amount anyway and then the machine rejects it. We end up in an awkward negotiation at the POS in front of a queue.",
+                        name: "Fatima, 26",
+                        role: "Merchant cashier",
+                        tag: "Pain: partial payment",
+                        tagClass: "quote-tag-pain",
+                      },
+                      {
+                        quote: "We had a promotion for 30% off at Nammos but the only way to tell people was a WhatsApp broadcast. Half the visitors never saw it. A push notification would fix this instantly.",
+                        name: "Khalid, 41",
+                        role: "Island operations manager",
+                        tag: "Opportunity: campaigns",
+                        tagClass: "quote-tag-opportunity",
+                      },
+                    ].map((q) => (
+                      <div key={q.name} className="quote-card-v2">
+                        <span className="quote-card-v2-mark" aria-hidden="true">&ldquo;</span>
+                        <blockquote>{q.quote}</blockquote>
+                        <div className="quote-card-v2-footer">
+                          <span className="quote-card-v2-attribution"><strong>{q.name}</strong> &middot; {q.role}</span>
+                          <span className={`quote-card-v2-tag ${q.tagClass}`}>{q.tag}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </Reveal>
+              </section>
+              <div className="project-summary-divider" aria-hidden="true" />
+              </>
+            ) : null}
+
+            <section className="case-section case-section-summary case-section-summary-extended">
+              <Reveal className="project-detail-grid">
                 <article className="project-detail-card">
                   <h3>Key UX Improvements</h3>
                   <ul>
