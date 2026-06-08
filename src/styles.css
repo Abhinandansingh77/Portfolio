@@ -1556,6 +1556,12 @@ body.cursor-hidden .cursor-ring {
   overflow: hidden;
   border: 1px solid #e8e4de;
   background: #ffffff;
+  display: flex;
+  flex-direction: column;
+}
+
+.affinity-theme-body {
+  flex: 1;
 }
 
 .affinity-theme-header {

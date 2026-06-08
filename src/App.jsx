@@ -84,7 +84,7 @@ const experienceItems = [
   {
     range: "Jan 2020 - Oct 2021",
     company: "eClerx",
-    role: "Senior Analyst — UX/UI",
+    role: "Senior Analyst  - UX/UI",
     logo: eclerxLogo,
     description:
       "Created digital experiences for Dell, Sephora, DFS, and Radisson across campaign, landing page, and dashboard ecosystems.",
@@ -529,7 +529,7 @@ const mcdeliveryCaseStudy = {
 
 const cardinalHealthCaseStudy = {
   hideVisualsLink: true,
-  projectTitle: "Order Express — Healthcare Procurement Platform Redesign",
+  projectTitle: "Order Express  - Healthcare Procurement Platform Redesign",
   projectTagline:
     "Redesigning a large-scale B2B healthcare ordering and inventory system used by pharmacies and hospitals.",
   quickInfo: [
@@ -662,7 +662,7 @@ const brightlineCaseStudy = {
     { value: "Multi-Channel", label: "Connected Service", secondLine: "Architecture", primaryValue: true },
   ],
   overview:
-    "Brightline’s future mobility concept explored how modern transportation can evolve into a fully connected, touchless, and intelligent digital ecosystem. Rather than designing a standalone booking app, the challenge was to rethink the complete traveler experience across every stage of the journey—from planning and ticketing to in-station interactions, onboard services, and destination support. The focus was to create a seamless, digitally orchestrated experience that reduces friction, improves convenience, and enhances engagement.",
+    "Brightline’s future mobility concept explored how modern transportation can evolve into a fully connected, touchless, and intelligent digital ecosystem. Rather than designing a standalone booking app, the challenge was to rethink the complete traveler experience across every stage of the journey -from planning and ticketing to in-station interactions, onboard services, and destination support. The focus was to create a seamless, digitally orchestrated experience that reduces friction, improves convenience, and enhances engagement.",
   problemStatement:
     "Traditional travel journeys are fragmented. Users often experience friction across multiple disconnected systems: booking and schedule planning, parking and first-mile transit, security and check-in, navigation inside stations, onboard services, and destination assistance. The challenge was to unify these touchpoints into one seamless experience.",
   goals: [
@@ -1691,7 +1691,7 @@ function ProjectDetailsPage({ project, onOpenPdf }) {
                         title: "Entry & Access friction",
                         color: "red",
                         quotes: [
-                          "“I waited 20 mins at the gate — the cash machine was broken”",
+                          "“I waited 20 mins at the gate  - the cash machine was broken”",
                           "“There was no way to show I had a reservation at the gate”",
                           "No digital identity = every visit starts with re-verification",
                           "Physical tickets damaged by rain, not accepted at gate",
@@ -1702,8 +1702,8 @@ function ProjectDetailsPage({ project, onOpenPdf }) {
                         color: "orange",
                         quotes: [
                           "“I didn’t know how much was left on my physical card”",
-                          "“Cashier kept my change — I had no receipt to dispute it”",
-                          "Partial payment flow unclear — customers walked away",
+                          "“Cashier kept my change  - I had no receipt to dispute it”",
+                          "Partial payment flow unclear  - customers walked away",
                           "Entry fee converting to credits was never explained",
                         ],
                       },
@@ -1711,9 +1711,9 @@ function ProjectDetailsPage({ project, onOpenPdf }) {
                         title: "Outlet discovery",
                         color: "blue",
                         quotes: [
-                          "“I found Nammos by accident — I almost left the island”",
+                          "“I found Nammos by accident  - I almost left the island”",
                           "“Couldn’t tell which restaurants were open before I left home”",
-                          "No map — visitors wandering the island lost",
+                          "No map  - visitors wandering the island lost",
                           "Reservation process via phone call, often unanswered",
                         ],
                       },
@@ -1721,7 +1721,7 @@ function ProjectDetailsPage({ project, onOpenPdf }) {
                         title: "Booking experience",
                         color: "purple",
                         quotes: [
-                          "“I booked Al Maha Drive on WhatsApp — sketchy experience”",
+                          "“I booked Al Maha Drive on WhatsApp  - sketchy experience”",
                           "“Winter Wonderland sold out but no one told me at booking”",
                           "Car details had to be re-entered every visit",
                           "No confirmation email received after booking",
@@ -1732,7 +1732,7 @@ function ProjectDetailsPage({ project, onOpenPdf }) {
                         color: "green",
                         quotes: [
                           "Staff had no way to verify if a card had enough balance",
-                          "POS system not connected — manual amount entry caused errors",
+                          "POS system not connected  - manual amount entry caused errors",
                           "“Customer disputes happen daily about charged amounts”",
                           "Physical card linked to wrong account twice in one week",
                         ],
@@ -1742,7 +1742,7 @@ function ProjectDetailsPage({ project, onOpenPdf }) {
                         color: "teal",
                         quotes: [
                           "No real-time visibility into transaction volume by outlet",
-                          "“We run promotions via WhatsApp broadcast — very unreliable”",
+                          "“We run promotions via WhatsApp broadcast  - very unreliable”",
                           "Finance team requests manual CSV exports from developer",
                           "No way to target promotions to specific visitor segments",
                         ],
@@ -1810,19 +1810,19 @@ function ProjectDetailsPage({ project, onOpenPdf }) {
                   </div>
                   <div className="comp-insights-grid">
                     <div className="comp-insight-card insight-opportunity">
-                      <span className="comp-insight-label">Opportunity &mdash; physical card bridging</span>
+                      <span className="comp-insight-label">Opportunity - physical card bridging</span>
                       <p>No competitor supports physical NFC/QR card &rarr; digital wallet linking. This became a differentiating Al Maha feature for first-time users not yet on the app.</p>
                     </div>
                     <div className="comp-insight-card insight-opportunity">
-                      <span className="comp-insight-label">Opportunity &mdash; closed ecosystem wallet</span>
-                      <p>Unlike open wallets (Careem Pay), Al Maha&apos;s entry fee converts to credits &mdash; a mechanic that drives in-island spending and creates lock-in without extra cost to visitor.</p>
+                      <span className="comp-insight-label">Opportunity - closed ecosystem wallet</span>
+                      <p>Unlike open wallets (Careem Pay), Al Maha&apos;s entry fee converts to credits - a mechanic that drives in-island spending and creates lock-in without extra cost to visitor.</p>
                     </div>
                     <div className="comp-insight-card insight-gap">
-                      <span className="comp-insight-label">Gap &mdash; vehicle-specific booking UX</span>
+                      <span className="comp-insight-label">Gap - vehicle-specific booking UX</span>
                       <p>Benchmarks showed no good reference for car-detail registration flows. UX had to be designed from scratch: step-by-step modal, photo upload, plate entry.</p>
                     </div>
                     <div className="comp-insight-card insight-gap">
-                      <span className="comp-insight-label">Gap &mdash; partial payment edge cases</span>
+                      <span className="comp-insight-label">Gap - partial payment edge cases</span>
                       <p>Careem Pay handles split payments but not within a merchant-scan flow. All three wallet scenarios (full, partial, overspend) had no direct reference pattern to borrow from.</p>
                     </div>
                   </div>
@@ -1862,14 +1862,14 @@ function ProjectDetailsPage({ project, onOpenPdf }) {
               {/* ── User Journey Map ── */}
               <section className="almaha-section almaha-journey">
                 <Reveal className="almaha-section-inner">
-                  <span className="almaha-section-number">User Journey Map &mdash; Visitor (Before, During, After)</span>
+                  <span className="almaha-section-number">User Journey Map - Visitor (Before, During, After)</span>
                   <div className="journey-map-v2-wrap">
                     <div className="journey-map-v2">
                       <div className="journey-header-row">
                         <div className="journey-header-label">Jasim&apos;s journey</div>
-                        <div className="journey-phase-header-v2 phase-before">Before &mdash; Planning &amp; Arrival</div>
-                        <div className="journey-phase-header-v2 phase-during">During &mdash; On the Island</div>
-                        <div className="journey-phase-header-v2 phase-after">After &mdash; Post-Visit</div>
+                        <div className="journey-phase-header-v2 phase-before">Before - Planning &amp; Arrival</div>
+                        <div className="journey-phase-header-v2 phase-during">During - On the Island</div>
+                        <div className="journey-phase-header-v2 phase-after">After - Post-Visit</div>
                       </div>
 
                       <div className="journey-body-row">
@@ -1967,10 +1967,10 @@ function ProjectDetailsPage({ project, onOpenPdf }) {
               </section>
 
               <div className="project-summary-divider" aria-hidden="true" />
-              {/* ── Information Architecture — Sitemap ── */}
+              {/* ── Information Architecture  - Sitemap ── */}
               <section className="almaha-section almaha-ia">
                 <Reveal className="almaha-section-inner">
-                  <span className="almaha-section-number">Information Architecture &mdash; Sitemap</span>
+                  <span className="almaha-section-number">Information Architecture - Sitemap</span>
                   <div className="ia-tree">
                     <div className="ia-tree-top">
                       <div className="ia-tree-app-pill app-customer">Customer App</div>
@@ -2072,10 +2072,10 @@ function ProjectDetailsPage({ project, onOpenPdf }) {
               {/* ── Key User Flows ── */}
               <section className="almaha-section almaha-flows">
                 <Reveal className="almaha-section-inner">
-                  <span className="almaha-section-number">Key User Flows &mdash; QR Payment &amp; Island Entry</span>
+                  <span className="almaha-section-number">Key User Flows - QR Payment &amp; Island Entry</span>
                   <div className="flows-two-col">
                     <div>
-                      <p className="flow-title">Flow 1 &mdash; Island entry</p>
+                      <p className="flow-title">Flow 1 - Island entry</p>
                       <div className="flow-chart">
                         <div className="flow-node flow-node-start">Visitor arrives at gate</div>
                         <div className="flow-arrow" />
@@ -2100,12 +2100,12 @@ function ProjectDetailsPage({ project, onOpenPdf }) {
                         <div className="flow-arrow" />
                         <div className="flow-node flow-node-action">Security scans QR<span className="flow-node-sub">Merchant app validates</span></div>
                         <div className="flow-arrow" />
-                        <div className="flow-end-label">Entry granted &mdash; gate opens</div>
+                        <div className="flow-end-label">Entry granted - gate opens</div>
                       </div>
                     </div>
 
                     <div>
-                      <p className="flow-title">Flow 2 &mdash; Wallet payment</p>
+                      <p className="flow-title">Flow 2 - Wallet payment</p>
                       <div className="flow-chart">
                         <div className="flow-node flow-node-start">Customer at outlet</div>
                         <div className="flow-arrow" />
@@ -2142,19 +2142,19 @@ function ProjectDetailsPage({ project, onOpenPdf }) {
                     <p className="flow-stories-title">User Story acceptance criteria (from FRD)</p>
                     <div className="flow-stories-row">
                       <div className="flow-story-pill story-blue">
-                        <h6>Story 1 &mdash; Entry access</h6>
+                        <h6>Story 1 - Entry access</h6>
                         <span>New visitor, prior booking, prime member scenarios</span>
                       </div>
                       <div className="flow-story-pill story-teal">
-                        <h6>Story 3 &mdash; Wallet top-up</h6>
+                        <h6>Story 3 - Wallet top-up</h6>
                         <span>Credit card, internet banking, physical card scan</span>
                       </div>
                       <div className="flow-story-pill story-orange">
-                        <h6>Story 5 &mdash; Booking</h6>
+                        <h6>Story 5 - Booking</h6>
                         <span>Outlet reservation, Drive, Winter Wonderland</span>
                       </div>
                       <div className="flow-story-pill story-green">
-                        <h6>Story 4 &mdash; Payment</h6>
+                        <h6>Story 4 - Payment</h6>
                         <span>Full, partial, insufficient wallet scenarios</span>
                       </div>
                     </div>
