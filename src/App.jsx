@@ -26,7 +26,7 @@ import cardinalHealthPreview from "../Assets/Cardinal health Preview img.jpg";
 import brightlineLogo from "../Assets/Brightline_Logo.svg.png";
 import brightlinePreview from "../Assets/Brightline Preview img.png";
 import brightlinePdf from "../Assets/Brightline.pdf";
-import resumePdf from "../Assets/Abhinandan_Singh_UX_Resume.pdf";
+import resumePdf from "../Assets/Abhinandan_Singh_Resume.pdf";
 
 const navItems = [
   { label: "Home", href: "/" },
@@ -1117,7 +1117,7 @@ function HomePage() {
               at, and measurably move the needle for the businesses behind them.
             </p>
             <div className="intro-actions">
-              <a className="hero-button hero-button-secondary" href={resumePdf} download>
+              <a className="hero-button hero-button-secondary" href={resumePdf} download="Abhinandan_Singh_Resume.pdf">
                 <DownloadResumeIcon />
                 Download Resume
               </a>
@@ -1406,7 +1406,7 @@ function ContactPage() {
             </a>
           </div>
 
-          <a className="hero-button hero-button-secondary contact-resume-cta" href={resumePdf} download>
+          <a className="hero-button hero-button-secondary contact-resume-cta" href={resumePdf} download="Abhinandan_Singh_Resume.pdf">
             <DownloadResumeIcon />
             Download Resume
           </a>
