@@ -3,7 +3,6 @@ import profilePhoto from "../Assets/profile photo.png";
 import robosoftLogo from "../Assets/Robotosoft.svg";
 import deloitteLogo from "../Assets/Delloite.svg";
 import eclerxLogo from "../Assets/Eclerx.svg";
-import burdaLogo from "../Assets/Burda druck.svg";
 import cromaLogo from "../Assets/Croma.svg";
 import njoyLogo from "../Assets/Njoy art.png";
 import kashiLogo from "../Assets/Kashi vidyapith.png";
@@ -27,7 +26,7 @@ import cardinalHealthPreview from "../Assets/Cardinal health Preview img.jpg";
 import brightlineLogo from "../Assets/Brightline_Logo.svg.png";
 import brightlinePreview from "../Assets/Brightline Preview img.png";
 import brightlinePdf from "../Assets/Brightline.pdf";
-import resumePdf from "../Assets/Abhinandan_Singh_UX_Resume.pdf";
+import resumePdf from "../Assets/Abhinandan_Singh_Resume.pdf";
 
 const navItems = [
   { label: "Home", href: "/" },
@@ -56,7 +55,7 @@ const valuePillars = [
 
 const experienceItems = [
   {
-    range: "Mar 2024 - Present",
+    range: "Mar 2024 - Apr 2026",
     company: "Cardinal Health",
     role: "Senior Product Designer",
     logo: cardinalHealthLogo,
@@ -84,18 +83,10 @@ const experienceItems = [
   {
     range: "Jan 2020 - Oct 2021",
     company: "eClerx",
-    role: "Senior Analyst  - UX/UI",
+    role: "Visual Designer",
     logo: eclerxLogo,
     description:
       "Created digital experiences for Dell, Sephora, DFS, and Radisson across campaign, landing page, and dashboard ecosystems.",
-  },
-  {
-    range: "Jan 2018 - Dec 2019",
-    company: "Burda Druck",
-    role: "Graphic Designer",
-    logo: burdaLogo,
-    description:
-      "Started in visual design before transitioning into digital product design.",
   },
 ];
 
@@ -1126,7 +1117,7 @@ function HomePage() {
               at, and measurably move the needle for the businesses behind them.
             </p>
             <div className="intro-actions">
-              <a className="hero-button hero-button-secondary" href={resumePdf} download>
+              <a className="hero-button hero-button-secondary" href={resumePdf} download="Abhinandan_Singh_Resume.pdf">
                 <DownloadResumeIcon />
                 Download Resume
               </a>
@@ -1415,7 +1406,7 @@ function ContactPage() {
             </a>
           </div>
 
-          <a className="hero-button hero-button-secondary contact-resume-cta" href={resumePdf} download>
+          <a className="hero-button hero-button-secondary contact-resume-cta" href={resumePdf} download="Abhinandan_Singh_Resume.pdf">
             <DownloadResumeIcon />
             Download Resume
           </a>
