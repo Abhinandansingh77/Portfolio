@@ -21,8 +21,6 @@
   --sand: #f3f0ea;
   --card: #ffffff;
   --ink: #111318;
-}
-
 
   /* Shared shape + CTA scale. Change here to restyle every card and button. */
   --radius-card: 20px;
@@ -5422,6 +5420,8 @@ body.cursor-hidden .cursor-ring {
 .project-detail-grid .project-summary-divider {
   margin: 0;
   max-width: 100%;
+}
+
 .case-section-summary .project-detail-grid > .project-detail-card + .project-detail-card {
   padding-top: 28px;
   border-top: 1px solid rgba(17, 17, 17, 0.14);
@@ -7196,6 +7196,7 @@ body.cursor-hidden .cursor-ring {
 
 .pdf-viewer-close:hover {
   background: rgba(255, 255, 255, 0.3);
+}
 /* ==========================================================================
    Shared CTA + radius scale
    Declared last so it normalises the per-section button rules above.
