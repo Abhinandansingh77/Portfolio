@@ -2152,232 +2152,511 @@ function ContactPage() {
 }
 
 function CardinalHealthCaseStudyPage() {
+  const [activeSection, setActiveSection] = useState("context-problem");
+  const [beforeAfterTab, setBeforeAfterTab] = useState("after");
+
+  const sections = [
+    { id: "context-problem", label: "01. Context & Problem" },
+    { id: "research-insights", label: "02. Research & Insights" },
+    { id: "solution-pillars", label: "03. Core Solution Pillars" },
+    { id: "ai-workflow", label: "04. AI-Accelerated Workflow" },
+    { id: "outcomes-learnings", label: "05. Outcomes & Learnings" },
+  ];
+
+  useEffect(() => {
+    const observerOptions = {
+      root: null,
+      rootMargin: "-20% 0px -50% 0px",
+      threshold: 0,
+    };
+
+    const handleIntersect = (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(handleIntersect, observerOptions);
+
+    sections.forEach((sec) => {
+      const el = document.getElementById(sec.id);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   const scrollToAnchor = (id) => {
     const el = document.getElementById(id);
     if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
+      const yOffset = -90;
+      const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: "smooth" });
+      setActiveSection(id);
     }
   };
 
   return (
-    <div className="page-view case-study-template">
-      {/* 1. Header Navigation Back Button & Hero */}
-      <section className="cs-hero-section">
-        <Reveal className="cs-back-bar" delay={40}>
+    <div className="page-view case-study-editorial">
+      {/* 1. Header Navigation & Hero */}
+      <section className="ch-hero-section">
+        <Reveal className="ch-back-bar" delay={40}>
           <button
             type="button"
-            className="cs-back-button"
+            className="ch-back-button"
             onClick={() => navigateTo("/projects")}
+            aria-label="Back to Selected Work"
           >
             <span aria-hidden="true">←</span>
             <span>Back to Selected Work</span>
           </button>
         </Reveal>
 
-        <Reveal className="cs-header-content" delay={100}>
-          <span className="cs-tag-pill">HEALTHCARE / B2B ENTERPRISE / DESIGN SYSTEMS</span>
-          <h1 className="cs-main-title">Cardinal Health — Order Express Redesign</h1>
-          <p className="cs-main-subtitle">
-            Redesigning a large-scale B2B healthcare ordering and inventory management system used by thousands of pharmacies and hospitals.
+        <Reveal className="ch-hero-content" delay={80}>
+          <div className="ch-pill-group">
+            <span className="ch-tag-pill">HEALTHCARE / B2B ENTERPRISE / DESIGN SYSTEMS</span>
+          </div>
+          <h1 className="ch-hero-title">
+            Redesigning high-stakes procurement for 100,000+ healthcare professionals.
+          </h1>
+          <p className="ch-hero-subtitle">
+            Transforming a fragmented legacy medical ordering platform into an intuitive, zero-error enterprise system.
           </p>
 
-          {/* 4-Column Metadata Grid */}
-          <div className="cs-metadata-grid">
-            <div className="cs-meta-item">
-              <span className="meta-label">Role</span>
-              <span className="meta-value">Senior UX Designer</span>
+          {/* 4-Column Metadata Grid Card */}
+          <div className="ch-metadata-card">
+            <div className="ch-meta-col">
+              <span className="ch-meta-label">Role</span>
+              <span className="ch-meta-val">Lead / Senior Product Designer</span>
             </div>
-            <div className="cs-meta-item">
-              <span className="meta-label">Platform</span>
-              <span className="meta-value">Web Application (Desktop-first)</span>
+            <div className="ch-meta-col">
+              <span className="ch-meta-label">Timeline</span>
+              <span className="ch-meta-val">6 Months</span>
             </div>
-            <div className="cs-meta-item">
-              <span className="meta-label">Scope</span>
-              <span className="meta-value">Ordering Workflows, Inventory, Financial Dashboards, Design Systems</span>
+            <div className="ch-meta-col">
+              <span className="ch-meta-label">Platform</span>
+              <span className="ch-meta-val">Web / Enterprise Desktop Application</span>
             </div>
-            <div className="cs-meta-item">
-              <span className="meta-label">Key Tools</span>
-              <span className="meta-value">Figma, Claude Code, Design Tokens, Cursor</span>
+            <div className="ch-meta-col">
+              <span className="ch-meta-label">Core Focus</span>
+              <span className="ch-meta-val">Complex Workflows, Inventory Architecture, Design Tokens, AI-Assisted Prototyping</span>
             </div>
           </div>
         </Reveal>
 
-        <Reveal className="cs-hero-image-box" delay={180}>
-          <img
-            src={cardinalHealthPreview}
-            alt="Cardinal Health Order Express Platform Interface"
-            className="cs-hero-img"
-          />
-        </Reveal>
-      </section>
-
-      {/* Sticky Sub-Navigation Anchor Bar */}
-      <nav className="cs-subnav-bar" aria-label="Case study section jump links">
-        <div className="cs-subnav-inner">
-          <button type="button" onClick={() => scrollToAnchor("overview")}>Overview</button>
-          <button type="button" onClick={() => scrollToAnchor("problem-goals")}>Problem &amp; Goals</button>
-          <button type="button" onClick={() => scrollToAnchor("system-architecture")}>System Architecture</button>
-          <button type="button" onClick={() => scrollToAnchor("ai-execution")}>AI &amp; Tech Execution</button>
-          <button type="button" onClick={() => scrollToAnchor("business-impact")}>Business Impact</button>
-        </div>
-      </nav>
-
-      {/* 2. Highlight Impact Banner (Top Metrics) */}
-      <section className="cs-section cs-impact-banner">
-        <Reveal className="cs-stat-grid" delay={40}>
-          <div className="cs-stat-card">
-            <span className="stat-number">+28%</span>
-            <span className="stat-desc">Improved Order Completion Rate</span>
-          </div>
-          <div className="cs-stat-card">
-            <span className="stat-number">-35%</span>
-            <span className="stat-desc">Faster Design-to-Dev Handoff</span>
-          </div>
-          <div className="cs-stat-card">
-            <span className="stat-number">100K+</span>
-            <span className="stat-desc">Healthcare Professionals Served</span>
-          </div>
-          <div className="cs-stat-card">
-            <span className="stat-number">WCAG 2.1 AA</span>
-            <span className="stat-desc">Accessibility Compliance Achieved</span>
-          </div>
-        </Reveal>
-      </section>
-
-      {/* 3. Section 1: Overview & Problem & Strategic Context */}
-      <section id="overview" className="cs-section">
-        <div className="cs-container">
-          <Reveal className="cs-content-block" delay={40}>
-            <span className="cs-section-label">01 / CONTEXT &amp; OVERVIEW</span>
-            <h2 className="cs-section-heading">High-Stakes Enterprise Healthcare Procurement</h2>
-            <p className="cs-paragraph">
-              Cardinal Health’s Order Express platform processes billions in pharmaceutical and medical supply transactions annually. Used by pharmacy managers, hospital procurement officers, and healthcare staff, the platform demands zero-error accuracy, swift catalog search, and reliable inventory tracking.
-            </p>
-          </Reveal>
-
-          <div id="problem-goals" className="cs-two-col-grid">
-            <Reveal className="cs-info-box" delay={100}>
-              <div className="info-box-icon">⚠️</div>
-              <h3>The Problem Statement</h3>
-              <p>
-                Pharmacies faced cognitive overload due to fragmented inventory tracking, high error rates during multi-item drug orders, and inconsistent UI patterns across legacy enterprise modules that slowed daily procurement.
-              </p>
-            </Reveal>
-
-            <Reveal className="cs-info-box" delay={160}>
-              <div className="info-box-icon">🎯</div>
-              <h3>Strategic Goals</h3>
-              <ul className="cs-goals-list">
-                <li>Streamline complex multi-tenant checkout &amp; reordering flows.</li>
-                <li>Establish a unified, accessible, token-driven design system.</li>
-                <li>Reduce operational risk by adding proactive error validation and stock notifications.</li>
-              </ul>
-            </Reveal>
-          </div>
-        </div>
-      </section>
-
-      {/* 4. Section 2: UX Architecture & Systems Thinking */}
-      <section id="system-architecture" className="cs-section cs-section-alt">
-        <div className="cs-container">
-          <Reveal className="cs-content-block" delay={40}>
-            <span className="cs-section-label">02 / SYSTEMS &amp; ARCHITECTURE</span>
-            <h2 className="cs-section-heading">UX Architecture &amp; Systems Thinking</h2>
-            <p className="cs-paragraph">
-              To address scale, we decomposed the platform into core functional pillars, auditing over 120 legacy screens and consolidating them into streamlined modular flows.
-            </p>
-          </Reveal>
-
-          <div className="cs-pillars-grid">
-            <Reveal className="cs-pillar-card" delay={100}>
-              <span className="pillar-num">01</span>
-              <h3>Workflow Analysis</h3>
-              <p>
-                Mapped end-to-end procurement cycles from catalog search to invoice reconciliation, eliminating redundant steps and reducing cart drop-off points.
-              </p>
-            </Reveal>
-
-            <Reveal className="cs-pillar-card" delay={160}>
-              <span className="pillar-num">02</span>
-              <h3>Information Architecture</h3>
-              <p>
-                Restructured dashboard modules to surface real-time stock alerts, order status updates, and critical reorder prompts directly on primary landing surfaces.
-              </p>
-            </Reveal>
-
-            <Reveal className="cs-pillar-card" delay={220}>
-              <span className="pillar-num">03</span>
-              <h3>Component System</h3>
-              <p>
-                Built a robust Figma component library with strict tokens for high-density data tables, accessible filter bars, and status indicators matching WCAG 2.1 AA.
-              </p>
-            </Reveal>
-          </div>
-        </div>
-      </section>
-
-      {/* 5. Section 3: AI-Accelerated Workflow & Engineering Handoff */}
-      <section id="ai-execution" className="cs-section">
-        <div className="cs-container">
-          <Reveal className="cs-ai-feature-card" delay={40}>
-            <div className="ai-card-header">
-              <span className="ai-badge">⚡ 2026 AI-ACCELERATED TOUCHPOINT</span>
-              <h2>AI-Accelerated Workflow &amp; Engineering Handoff</h2>
+        {/* Hero Browser Mockup Frame Container */}
+        <Reveal className="ch-browser-frame" delay={160}>
+          <div className="ch-browser-topbar">
+            <div className="ch-window-dots">
+              <span className="dot dot-red" />
+              <span className="dot dot-yellow" />
+              <span className="dot dot-green" />
             </div>
-            <p className="ai-card-copy">
-              To accelerate execution, I leveraged AI tools (Claude &amp; Cursor) to rapidly prototype complex data-table interactions and generate design token documentation directly compatible with the frontend codebase—reducing handoff friction by 35%.
-            </p>
-            <div className="ai-tags-row">
-              <span className="ai-tag">Claude Code Prototyping</span>
-              <span className="ai-tag">Cursor IDE Integration</span>
-              <span className="ai-tag">Automated Token Handoff</span>
-              <span className="ai-tag">Synthetic Usability Testing</span>
+            <div className="ch-browser-address">
+              <span className="lock-icon">🔒</span>
+              <span>orderexpress.cardinalhealth.com/enterprise/dashboard</span>
             </div>
-          </Reveal>
-        </div>
+            <div className="ch-browser-status">
+              <span className="badge-live">LIVE SYSTEM</span>
+            </div>
+          </div>
+          <div className="ch-browser-viewport">
+            <img
+              src={cardinalHealthPreview}
+              alt="Cardinal Health Order Express Enterprise Dashboard Preview"
+              className="ch-mockup-img"
+            />
+          </div>
+        </Reveal>
       </section>
 
-      {/* 6. Section 4: Key Outcomes & Lessons Learned */}
-      <section id="business-impact" className="cs-section cs-section-alt">
-        <div className="cs-container">
-          <Reveal className="cs-content-block" delay={40}>
-            <span className="cs-section-label">04 / IMPACT &amp; RETROSPECTIVE</span>
-            <h2 className="cs-section-heading">Key Outcomes &amp; Lessons Learned</h2>
-          </Reveal>
+      {/* 2. Executive Impact Stat Banner (4 Highlight Cards) */}
+      <section className="ch-impact-banner">
+        <Reveal className="ch-impact-grid" delay={40}>
+          <div className="ch-stat-card">
+            <div className="stat-header">
+              <span className="stat-num">+28%</span>
+              <span className="stat-pill pill-green">Order Rate</span>
+            </div>
+            <h3 className="stat-title">Order Completion Rate</h3>
+            <p className="stat-desc">Eliminated drop-offs during bulk prescription checkout cycles.</p>
+          </div>
 
-          <div className="cs-two-col-grid">
-            <Reveal className="cs-impact-box" delay={100}>
-              <h3>Measurable Business Impact</h3>
-              <ul className="cs-impact-list">
-                <li><strong>+28% Order Completion Rate:</strong> Accelerated pharmacy ordering workflows.</li>
-                <li><strong>-35% Developer Handoff Time:</strong> Achieved through tokenized design specs.</li>
-                <li><strong>Zero Compliance Violations:</strong> Passed rigorous WCAG 2.1 AA audit across all core modules.</li>
-              </ul>
-            </Reveal>
+          <div className="ch-stat-card">
+            <div className="stat-header">
+              <span className="stat-num">-35%</span>
+              <span className="stat-pill pill-blue">Handoff Efficiency</span>
+            </div>
+            <h3 className="stat-title">Handoff Time</h3>
+            <p className="stat-desc">Via AI-generated tokens and component documentation.</p>
+          </div>
 
-            <Reveal className="cs-impact-box" delay={160}>
-              <h3>What I Learned</h3>
-              <p className="cs-paragraph">
-                Designing for high-density enterprise tools requires an unwavering focus on clarity over ornamentation. Proactive error handling and tight collaboration between product, UX, and engineering are non-negotiable when building mission-critical B2B software.
+          <div className="ch-stat-card">
+            <div className="stat-header">
+              <span className="stat-num">-25%</span>
+              <span className="stat-pill pill-amber">Error Reduction</span>
+            </div>
+            <h3 className="stat-title">User-Reported Errors</h3>
+            <p className="stat-desc">Prevented wrong-item and duplicate dosage orders.</p>
+          </div>
+
+          <div className="ch-stat-card">
+            <div className="stat-header">
+              <span className="stat-num">WCAG 2.1 AA</span>
+              <span className="stat-pill pill-purple">Compliance</span>
+            </div>
+            <h3 className="stat-title">Accessibility Standard</h3>
+            <p className="stat-desc">Full keyboard navigation &amp; color contrast compliance.</p>
+          </div>
+        </Reveal>
+      </section>
+
+      {/* 3. Main Content Area with Sticky In-Page Left Sidebar Navigation */}
+      <section className="ch-main-layout">
+        {/* Left Column: Sticky Table of Contents */}
+        <aside className="ch-sidebar-nav">
+          <div className="ch-toc-sticky">
+            <span className="ch-toc-title">IN THIS CASE STUDY</span>
+            <nav className="ch-toc-list" aria-label="Case Study Navigation">
+              {sections.map((sec) => (
+                <button
+                  key={sec.id}
+                  type="button"
+                  className={`ch-toc-item ${activeSection === sec.id ? "active" : ""}`}
+                  onClick={() => scrollToAnchor(sec.id)}
+                >
+                  <span className="toc-indicator" />
+                  <span className="toc-label">{sec.label}</span>
+                </button>
+              ))}
+            </nav>
+          </div>
+        </aside>
+
+        {/* Right Column: Case Study Sections */}
+        <div className="ch-content-body">
+          {/* Section 1: Context & Problem */}
+          <section id="context-problem" className="ch-section-block">
+            <Reveal className="ch-section-header" delay={40}>
+              <span className="ch-sec-tag">01 / CONTEXT &amp; PROBLEM</span>
+              <h2 className="ch-sec-title">High stakes, zero margin for error.</h2>
+              <p className="ch-lead-p">
+                Cardinal Health’s Order Express is used daily by hospital procurement teams, clinical buyers, and independent pharmacies to purchase critical medical supplies. Over a decade of feature creep left the platform fragmented with cognitive overload, disconnected inventory data, and disjointed multi-system approvals.
               </p>
             </Reveal>
-          </div>
-        </div>
-      </section>
 
-      {/* 7. Next Project Navigation Footer */}
-      <section className="cs-next-project-bar">
-        <Reveal className="cs-next-inner" delay={40}>
-          <span className="next-label">UP NEXT</span>
-          <button
-            type="button"
-            className="next-project-link"
-            onClick={() => navigateTo("/projects/discovery-plus")}
-          >
-            <span>Next Project: Discovery+ — Next-Gen OTT Experience</span>
-            <span className="next-arrow" aria-hidden="true">→</span>
-          </button>
-        </Reveal>
+            <Reveal className="ch-context-grid" delay={100}>
+              <div className="ch-context-card">
+                <span className="ctx-icon">🏥</span>
+                <h4>100,000+ Active Users</h4>
+                <p>Pharmacy directors, hospital buyers, and clinical managers depending on daily order accuracy.</p>
+              </div>
+              <div className="ch-context-card">
+                <span className="ctx-icon">📦</span>
+                <h4>Multi-System Complexity</h4>
+                <p>Integrating warehouse inventory, NDC drug registries, split-shipment invoices, and approval chains.</p>
+              </div>
+              <div className="ch-context-card">
+                <span className="ctx-icon">⚡</span>
+                <h4>Critical Timeline</h4>
+                <p>Delayed medication orders immediately impact hospital inventory and patient care timelines.</p>
+              </div>
+            </Reveal>
+          </section>
+
+          {/* Section 2: Research & Insights */}
+          <section id="research-insights" className="ch-section-block">
+            <Reveal className="ch-section-header" delay={40}>
+              <span className="ch-sec-tag">02 / RESEARCH &amp; INSIGHTS</span>
+              <h2 className="ch-sec-title">Voices from the frontlines of pharmacy procurement.</h2>
+            </Reveal>
+
+            {/* Highlight Quotes Block (2 Cards) */}
+            <Reveal className="ch-quotes-grid" delay={80}>
+              <div className="ch-quote-card">
+                <span className="quote-mark">“</span>
+                <p className="quote-body">
+                  Ordering critical medication shouldn't feel like filling out a 1998 tax form.
+                </p>
+                <div className="quote-author">
+                  <span className="author-name">Pharmacy Director</span>
+                  <span className="author-org">Regional Acute Care Network</span>
+                </div>
+              </div>
+
+              <div className="ch-quote-card">
+                <span className="quote-mark">“</span>
+                <p className="quote-body">
+                  If an item is out of stock, tell me before I spend 20 minutes building an order.
+                </p>
+                <div className="quote-author">
+                  <span className="author-name">Clinical Buyer</span>
+                  <span className="author-org">Health System Supply Chain</span>
+                </div>
+              </div>
+            </Reveal>
+
+            {/* Key Finding Callout */}
+            <Reveal className="ch-finding-banner" delay={120}>
+              <div className="finding-badge">KEY RESEARCH FINDING</div>
+              <p className="finding-text">
+                <strong>78% of order delays</strong> were caused by confusing error states during bulk CSV uploads, and <strong>42% of support tickets</strong> involved locating split shipment invoices.
+              </p>
+            </Reveal>
+          </section>
+
+          {/* Section 3: Core Solution Pillars */}
+          <section id="solution-pillars" className="ch-section-block">
+            <Reveal className="ch-section-header" delay={40}>
+              <span className="ch-sec-tag">03 / CORE SOLUTION PILLARS</span>
+              <h2 className="ch-sec-title">Architecting zero-error enterprise ordering.</h2>
+            </Reveal>
+
+            {/* Pillar 1: Real-Time Inventory & Smart Search */}
+            <Reveal className="ch-pillar-block" delay={80}>
+              <div className="pillar-header">
+                <span className="pillar-badge">PILLAR 01</span>
+                <h3>Real-Time Inventory &amp; Smart Search</h3>
+                <p className="pillar-copy">
+                  Redesigned search with fuzzy logic, NDC drug code auto-suggestions, and live warehouse availability badges. Proactive stock warnings suggest direct generic equivalents when items are backordered.
+                </p>
+              </div>
+
+              {/* Component Showcase Card: Smart Search Drawer Preview */}
+              <div className="ch-showcase-card search-showcase">
+                <div className="search-bar-sim">
+                  <span className="search-icon">🔍</span>
+                  <span className="search-query">NDC 00093-0147-01 (Amoxicillin 500mg)</span>
+                  <span className="search-shortcut">⌘K</span>
+                </div>
+                <div className="search-results-sim">
+                  <div className="result-item primary">
+                    <div className="result-main">
+                      <span className="item-title">Amoxicillin 500mg Capsules (100 Count)</span>
+                      <span className="item-ndc">NDC: 00093-0147-01 • Teva Pharmaceuticals</span>
+                    </div>
+                    <span className="status-badge badge-success">In Stock (1,420 units)</span>
+                  </div>
+
+                  <div className="result-item warning">
+                    <div className="result-main">
+                      <span className="item-title">Amoxicillin 500mg Oral Suspension 150mL</span>
+                      <span className="item-ndc">NDC: 00093-4160-73 • Backordered</span>
+                    </div>
+                    <span className="status-badge badge-amber">Low Stock (12 units)</span>
+                  </div>
+
+                  <div className="result-item suggestion">
+                    <div className="result-main">
+                      <span className="item-title">✨ Generic Equiv: Ampicillin 500mg Capsules</span>
+                      <span className="item-ndc">NDC: 00093-0021-01 • Direct Substitute</span>
+                    </div>
+                    <span className="status-badge badge-info">Generic Alternative Available</span>
+                  </div>
+                </div>
+              </div>
+            </Reveal>
+
+            {/* Pillar 2: Frictionless Bulk Checkout Flow */}
+            <Reveal className="ch-pillar-block" delay={120}>
+              <div className="pillar-header">
+                <span className="pillar-badge">PILLAR 02</span>
+                <h3>Frictionless Bulk Checkout Flow</h3>
+                <p className="pillar-copy">
+                  Simplified multi-location cart routing to allow hospital ward splits from one screen. Added inline validation and pre-submission error checking.
+                </p>
+              </div>
+
+              {/* Before / After Comparison Widget */}
+              <div className="ch-before-after-widget">
+                <div className="widget-tab-bar">
+                  <span className="widget-label">INTERACTIVE COMPARISON:</span>
+                  <button
+                    type="button"
+                    className={`widget-tab ${beforeAfterTab === "before" ? "active-before" : ""}`}
+                    onClick={() => setBeforeAfterTab("before")}
+                  >
+                    🔴 Before: Legacy 5-Step Flow
+                  </button>
+                  <button
+                    type="button"
+                    className={`widget-tab ${beforeAfterTab === "after" ? "active-after" : ""}`}
+                    onClick={() => setBeforeAfterTab("after")}
+                  >
+                    🟢 After: Single-Page Drawer
+                  </button>
+                </div>
+
+                {beforeAfterTab === "before" ? (
+                  <div className="comparison-view before-view">
+                    <div className="comp-header">
+                      <span className="comp-tag tag-red">BEFORE (LEGACY SYSTEM)</span>
+                      <h4>5-Step Fragmented Modal with Hidden Errors</h4>
+                    </div>
+                    <ul className="comp-list">
+                      <li>⚠️ <strong>5 Separated Modals:</strong> Hidden errors required stepping back 3 screens to fix invalid quantities.</li>
+                      <li>⚠️ <strong>Bulk Upload Frustrations:</strong> CSV errors resulted in total cart wipeouts without specific line-item highlighting.</li>
+                      <li>⚠️ <strong>No Multi-Ward Routing:</strong> Required 4 individual orders for 4 hospital departments.</li>
+                      <li>⏱️ <strong>Average Completion:</strong> 35-45 minutes per order.</li>
+                    </ul>
+                  </div>
+                ) : (
+                  <div className="comparison-view after-view">
+                    <div className="comp-header">
+                      <span className="comp-tag tag-green">AFTER (REDESIGNED SYSTEM)</span>
+                      <h4>Single-Page Progressive Drawer with Real-Time Error Callouts</h4>
+                    </div>
+                    <ul className="comp-list">
+                      <li>✅ <strong>Inline Real-time Validation:</strong> Line-item level error highlight with 1-click auto-correction.</li>
+                      <li>✅ <strong>Multi-Location Ward Splitting:</strong> Route items to ICU, ER, and Surgery from a single master cart.</li>
+                      <li>✅ <strong>Smart Inventory Allocation:</strong> Proactive split-shipment calculation with clear delivery ETAs.</li>
+                      <li>⚡ <strong>Average Completion:</strong> &lt; 8 minutes (78% speed improvement).</li>
+                    </ul>
+                  </div>
+                )}
+              </div>
+            </Reveal>
+
+            {/* Pillar 3: Scalable Enterprise Design System */}
+            <Reveal className="ch-pillar-block" delay={160}>
+              <div className="pillar-header">
+                <span className="pillar-badge">PILLAR 03</span>
+                <h3>Scalable Enterprise Design System</h3>
+                <p className="pillar-copy">
+                  Built a WCAG 2.1 AA compliant component library in Figma with unified typography, dense data tables, and high-contrast status tokens across 40+ sub-pages.
+                </p>
+              </div>
+
+              {/* Visual Asset Showcase Grid */}
+              <div className="ch-showcase-card system-showcase">
+                <div className="system-tokens-row">
+                  <div className="token-chip chip-success">--token-status-success</div>
+                  <div className="token-chip chip-warning">--token-status-warning</div>
+                  <div className="token-chip chip-error">--token-status-error</div>
+                  <div className="token-chip chip-neutral">--table-density-compact</div>
+                </div>
+
+                <div className="system-table-sim">
+                  <div className="sim-table-head">
+                    <span>ITEM / NDC</span>
+                    <span>CATEGORY</span>
+                    <span>QUANTITY</span>
+                    <span>WARD ALLOCATION</span>
+                    <span>STATUS</span>
+                  </div>
+                  <div className="sim-table-row">
+                    <span className="cell-item">Sodium Chloride 0.9% 1000mL</span>
+                    <span className="cell-sub">IV Fluids</span>
+                    <span className="cell-qty">500 Cases</span>
+                    <span className="cell-ward">ICU &amp; Surgery</span>
+                    <span className="cell-status badge-success">Approved</span>
+                  </div>
+                  <div className="sim-table-row">
+                    <span className="cell-item">Epinephrine 1mg/mL Auto-Inject</span>
+                    <span className="cell-sub">Emergency</span>
+                    <span className="cell-qty">50 Boxes</span>
+                    <span className="cell-ward">Emergency Dept</span>
+                    <span className="cell-status badge-amber">Split Ship</span>
+                  </div>
+                </div>
+              </div>
+            </Reveal>
+          </section>
+
+          {/* Section 4: AI-Accelerated Workflow & Tech Leverage */}
+          <section id="ai-workflow" className="ch-section-block">
+            <Reveal className="ch-section-header" delay={40}>
+              <span className="ch-sec-tag">04 / AI-ACCELERATED WORKFLOW</span>
+              <h2 className="ch-sec-title">AI-Accelerated Workflow &amp; Tech Leverage (2026 Touchpoint)</h2>
+            </Reveal>
+
+            <Reveal className="ch-ai-card" delay={80}>
+              <div className="ai-card-badge">⚡ NEXT-GEN AI DESIGN ENGINE</div>
+              <h3>Supercharging Enterprise Product Delivery</h3>
+              <p className="ai-intro-copy">
+                To move at maximum velocity across 40+ complex screens, I integrated AI-native design engineering practices into every phase of the project:
+              </p>
+
+              <div className="ai-highlights-grid">
+                <div className="ai-highlight-item">
+                  <div className="ai-item-num">01</div>
+                  <h4>Accelerated Ideation</h4>
+                  <p>Synthesized 20+ hours of user transcripts into workflow friction maps using Claude.</p>
+                </div>
+
+                <div className="ai-highlight-item">
+                  <div className="ai-item-num">02</div>
+                  <h4>Live Interactive Prototypes</h4>
+                  <p>Built working React/Tailwind prototypes in Cursor to validate complex table filtering with real pharmacists.</p>
+                </div>
+
+                <div className="ai-highlight-item">
+                  <div className="ai-item-num">03</div>
+                  <h4>Automated Token Handoff</h4>
+                  <p>Generated design token documentation directly compatible with the frontend codebase, cutting handoff friction by 35%.</p>
+                </div>
+              </div>
+            </Reveal>
+          </section>
+
+          {/* Section 5: Outcomes & Lessons Learned */}
+          <section id="outcomes-learnings" className="ch-section-block">
+            <Reveal className="ch-section-header" delay={40}>
+              <span className="ch-sec-tag">05 / OUTCOMES &amp; LEARNINGS</span>
+              <h2 className="ch-sec-title">Outcomes &amp; Senior Product Takeaways</h2>
+            </Reveal>
+
+            <div className="ch-outcomes-grid">
+              <Reveal className="ch-outcome-card impact" delay={80}>
+                <h3>Business &amp; Operational Impact</h3>
+                <ul className="impact-list">
+                  <li>
+                    <span className="imp-val">+28%</span>
+                    <span className="imp-text">28% boost in completed orders across regional hospital networks.</span>
+                  </li>
+                  <li>
+                    <span className="imp-val">-25%</span>
+                    <span className="imp-text">25% drop in high-risk ordering errors (wrong dosage, duplicate orders, or invalid NDCs).</span>
+                  </li>
+                  <li>
+                    <span className="imp-val">100%</span>
+                    <span className="imp-text">Immediate adoption across regional hospital networks &amp; full WCAG 2.1 AA compliance.</span>
+                  </li>
+                </ul>
+              </Reveal>
+
+              <Reveal className="ch-outcome-card takeaway" delay={120}>
+                <h3>Senior Takeaway</h3>
+                <blockquote className="takeaway-quote">
+                  “In enterprise B2B, density is not the enemy—ambiguity is. High-volume workflows thrive on clear visual hierarchy, scannable data tables, and keyboard accessibility.”
+                </blockquote>
+                <p className="takeaway-footer">
+                  Building for critical healthcare operations reinforced that reducing cognitive friction directly translates to safer, more efficient hospital operations.
+                </p>
+              </Reveal>
+            </div>
+          </section>
+
+          {/* Bottom Project Navigation */}
+          <section className="ch-next-project">
+            <Reveal className="ch-next-card" delay={40}>
+              <span className="next-tag">NEXT CASE STUDY</span>
+              <button
+                type="button"
+                className="next-link-btn"
+                onClick={() => navigateTo("/projects/discovery-plus")}
+              >
+                <div className="next-info">
+                  <h3>Discovery+ — Next-Gen Multi-Device OTT Ecosystem</h3>
+                  <p>Cross-platform streaming experience across Mobile, Web, and Smart TV.</p>
+                </div>
+                <span className="next-arrow">→</span>
+              </button>
+            </Reveal>
+          </section>
+        </div>
       </section>
     </div>
   );
