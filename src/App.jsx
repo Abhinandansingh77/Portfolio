@@ -60,7 +60,15 @@ import willowLogo from "../Assets/Willow tv primary.svg";
 import mankindLogo from "../Assets/mankind primary.png";
 import bharatPetroleumLogo from "../Assets/bharat petroleum.png";
 
+import cardinalHealthHorizontalImg from "../Assets/Featured work cardinal health img 1 horizotal.webp";
+import discoveryPlusHorizontalImg from "../Assets/Featured work discovery plus img 2 horizotal.webp";
+import brightlineHorizontalImg from "../Assets/Featured work bright line img 3 horizotal.webp";
+import almahaHorizontalImg from "../Assets/Featured work al maha img 4 horizotal.webp";
+import mcdeliveryHorizontalImg from "../Assets/Featured work mcdonald img 5 horizotal.webp";
+import mcdonaldsWebpLogo from "../Assets/McDonald's logo.webp";
+
 const navItems = [
+  { label: "Home", href: "/" },
   { label: "Work", href: "/projects" },
   { label: "About", href: "/resume" },
   { label: "Contact", href: "/contact" },
@@ -191,11 +199,15 @@ const projectItems = [
     titleImage: cardinalHealthProjectLogo,
     titleAlt: "Cardinal Health",
     title: "Cardinal Health",
-    category: "Healthcare • B2B Platform",
-    stats: ["+28% Order Completion", "35% Faster Handoff"],
+    domainTags: "HealthTech · Enterprise B2B & B2C · Web App",
+    projectTitle: <>Order Express — Healthcare Procurement<br />Platform Redesign</>,
+    impactBadges: ["+28% Order Completion", "-35% Dev Handoff Time", "WCAG 2.1 AA"],
+    stats: ["+28% Order Completion", "-35% Dev Handoff Time", "WCAG 2.1 AA"],
     description:
-      "Designed a large-scale healthcare procurement platform for pharmacies, improving ordering workflows, inventory management, and financial tracking across an enterprise system.",
-    preview: cardinalHealthPreview,
+      "Redesigned a complex healthcare procurement system for pharmacies and hospitals. Simplified bulk ordering workflows to make daily operations faster and error-free.",
+    roleScope: "End-to-End UX, Enterprise Design System, Workflow Optimization",
+    cta: "View Case Study →",
+    preview: cardinalHealthHorizontalImg,
   },
   {
     index: "02",
@@ -203,11 +215,16 @@ const projectItems = [
     titleImage: discoveryLogo,
     titleAlt: "Discovery Plus",
     title: "Discovery Plus",
-    category: "Media • OTT Platform",
-    stats: ["40% Faster UI Production", "+32% Discoverability"],
+    domainTags: "Media & OTT · Consumer UX · TV, Mobile & Web",
+    projectTitle: <>Cross-Platform Entertainment &amp; Content<br />Discovery Ecosystem</>,
+    impactBadges: ["+40% Faster Discovery", "1.5M+ Active Users", "Multi-Device Architecture"],
+    stats: ["+40% Faster Discovery", "1.5M+ Active Users", "Multi-Device Architecture"],
     description:
-      "Redesigned a multi-device OTT platform to improve content discovery, navigation efficiency, and user engagement across TV, mobile, and web.",
-    preview: discoveryPreview,
+      "Unified the streaming experience across TV, mobile, and web apps. Made content discovery faster and easier to keep viewers engaged longer.",
+    roleScope: "Multi-Platform UX/UI, Content Architecture, Interaction Design",
+    cta: "View Case Study →",
+    preview: discoveryPlusHorizontalImg,
+    previewScale: 1.2,
   },
   {
     index: "03",
@@ -215,11 +232,15 @@ const projectItems = [
     titleImage: brightlineLogo,
     titleAlt: "Brightline Future Mobility",
     title: "Brightline Future Mobility",
-    category: "Mobility • Travel Platform",
-    stats: ["20+ Connected Features", "5+ Touchpoints"],
+    domainTags: "Travel Tech · Connected Mobility · Mobile & IoT",
+    projectTitle: "Future Mobility & Connected Journey Companion",
+    impactBadges: ["Touchless Station UX", "End-to-End Journey Mapping", "Real-Time Transit IoT"],
+    stats: ["Touchless Station UX", "End-to-End Journey Mapping", "Real-Time Transit IoT"],
     description:
-      "Designed a future-ready mobility ecosystem connecting booking, smart stations, onboard services, and destination experiences into one seamless travel journey.",
-    preview: brightlinePreview,
+      "Designed a connected travel companion connecting train stations, booking, and onboard services. Created a smooth, touchless journey for travelers from departure to arrival.",
+    roleScope: "Service Design, Mobile UX/UI, Connected Physical-Digital Touchpoints",
+    cta: "View Case Study →",
+    preview: brightlineHorizontalImg,
   },
   {
     index: "04",
@@ -227,23 +248,31 @@ const projectItems = [
     titleImage: almahaLogo,
     titleAlt: "AL MAHA Island Lusail",
     title: "AL MAHA Island Lusail",
-    category: "Events • Ticketing Platform",
-    stats: ["35% Faster Booking Flow", "20% Reduced Drop-offs"],
+    domainTags: "Entertainment & Leisure · Mobile-First · Ticketing Platform",
+    projectTitle: "High-Traffic Destination & Event Booking Platform",
+    impactBadges: ["Mobile-First Checkout", "-25% Booking Friction", "Dynamic Event Schedules"],
+    stats: ["Mobile-First Checkout", "-25% Booking Friction", "Dynamic Event Schedules"],
     description:
-      "Designed a mobile-first booking and event discovery platform for a high-traffic entertainment destination, optimizing ticketing flows and reducing user drop-offs.",
-    preview: almahaPreview,
+      "Designed a mobile-first ticketing and event guide for a top entertainment destination. Streamlined booking flows to reduce drop-offs and make planning effortless.",
+    roleScope: "Mobile UX Strategy, Booking Funnel Optimization, Visual Identity",
+    cta: "View Case Study →",
+    preview: almahaHorizontalImg,
   },
   {
     index: "05",
     slug: "mcdelivery-experience-design",
-    titleImage: mcdeliveryLogo,
-    titleAlt: "McDelivery Experience Design",
-    title: "McDelivery Experience Design",
-    category: "F&B • Mobile Experience",
-    stats: ["30% Faster Checkout", "22% Reduced Drop-offs"],
+    titleImage: mcdonaldsWebpLogo,
+    titleAlt: "McDonald's",
+    title: "McDonald's",
+    domainTags: "QSR & Food Delivery · E-Commerce · High-Volume Consumer Mobile",
+    projectTitle: "Frictionless Mobile Ordering & Customization Experience",
+    impactBadges: ["+30% Faster Checkout", "-22% Cart Drop-Off", "15% Repeat Reorders"],
+    stats: ["+30% Faster Checkout", "-22% Cart Drop-Off", "15% Repeat Reorders"],
     description:
-      "Optimizing food ordering flows to improve speed, personalization, and conversion across mobile platforms.",
-    preview: mcdeliveryPreview,
+      "Redesigned the mobile ordering experience to speed up meal browsing and checkout. Reduced friction during rush hours to boost completed orders and repeat visits.",
+    roleScope: "Conversion Rate Optimization (CRO), Checkout Flow UX, Micro-Interactions",
+    cta: "View Case Study →",
+    preview: mcdeliveryHorizontalImg,
   },
 ];
 
@@ -1106,6 +1135,16 @@ function GeometricWolfLogo() {
 function SiteHeader({ menuOpen, setMenuOpen }) {
   const menuButtonRef = useRef(null);
   const navRef = useRef(null);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   useEffect(() => {
     if (!menuOpen) {
@@ -1162,7 +1201,7 @@ function SiteHeader({ menuOpen, setMenuOpen }) {
 
   return (
     <>
-      <header className="site-header site-header-transparent site-header-animate">
+      <header className={`site-header site-header-transparent site-header-animate ${scrolled ? "is-scrolled" : ""}`}>
         <button type="button" className="brand brand-button" onClick={() => navigateTo("/")}>
           <span className="brand-name-only">Abhinandan Singh</span>
         </button>
@@ -1404,10 +1443,10 @@ function ContactSection() {
 }
 
 const featuredWorkImages = {
-  "cardinal-health-procurement-platform": featuredWorkImg1,
-  "discovery-plus": featuredWorkImg2,
-  "brightline-future-travel": featuredWorkImg3,
-  "al-maha-island-lusail": featuredWorkImg4,
+  "cardinal-health-procurement-platform": cardinalHealthHorizontalImg,
+  "discovery-plus": discoveryPlusHorizontalImg,
+  "brightline-future-travel": brightlineHorizontalImg,
+  "al-maha-island-lusail": almahaHorizontalImg,
 };
 
 // Per-image crop nudges where the subject isn't centred in the source frame.
@@ -1982,18 +2021,55 @@ function ProjectsPage() {
   return (
     <div className="page-view">
       <section className="projects-section">
-        <Reveal as="p" className="section-kicker">Works</Reveal>
+        <Reveal className="section-kicker-header">
+          <button
+            type="button"
+            className="work-back-button"
+            onClick={() => navigateTo("/")}
+            aria-label="Back to Home"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="19" y1="12" x2="5" y2="12" />
+              <polyline points="12 19 5 12 12 5" />
+            </svg>
+          </button>
+          <span className="section-kicker">Works</span>
+        </Reveal>
 
         <div className="projects-list">
           {projectItems.map((item, index) => (
             <Reveal as="article" key={item.index} className="project-row" delay={index * 90}>
               <div className="project-copy">
                 <div className="project-brand">
-                  <span className="project-number">{item.index}</span>
                   <img className="project-title-image" src={item.titleImage} alt={item.titleAlt} />
                 </div>
 
+                {item.domainTags && (
+                  <p className="project-domain-tags">{item.domainTags}</p>
+                )}
+
+                {item.projectTitle && (
+                  <h3 className="project-row-headline">{item.projectTitle}</h3>
+                )}
+
                 <p className="project-description">{item.description}</p>
+
+                {item.roleScope && (
+                  <p className="project-role-scope">
+                    <strong>Role / Scope:</strong> {item.roleScope}
+                  </p>
+                )}
+
+                <div className="project-link-row">
+                  <span className="project-line" />
+                  <button
+                    type="button"
+                    className="text-link"
+                    onClick={() => navigateTo(`/projects/${item.slug}`)}
+                  >
+                    {item.cta || "View Case Study →"}
+                  </button>
+                </div>
               </div>
 
               <button
@@ -2002,19 +2078,13 @@ function ProjectsPage() {
                 onClick={() => navigateTo(`/projects/${item.slug}`)}
                 aria-label={`View ${item.title} case study`}
               >
-                <img className="project-preview-image" src={item.preview} alt={`${item.titleAlt} preview`} />
+                <img
+                  className="project-preview-image"
+                  src={item.preview}
+                  alt={`${item.titleAlt} preview`}
+                  style={item.previewScale ? { transform: `scale(${item.previewScale})` } : undefined}
+                />
               </button>
-
-              <div className="project-link-row">
-                <span className="project-line" />
-                <button
-                  type="button"
-                  className="text-link"
-                  onClick={() => navigateTo(`/projects/${item.slug}`)}
-                >
-                  View Case Study →
-                </button>
-              </div>
             </Reveal>
           ))}
         </div>
