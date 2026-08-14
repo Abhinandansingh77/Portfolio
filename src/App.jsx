@@ -1,5 +1,13 @@
 import { useEffect, useRef, useState } from "react";
+import heroImg from "../Assets/Hero img.webp";
 import profilePhoto from "../Assets/profile photo.png";
+import aiWorkflowImg1 from "../Assets/ai & workflow img 1.webp";
+import aiWorkflowImg2 from "../Assets/ai & workflow img 2.webp";
+import aiWorkflowImg3 from "../Assets/ai & workflow img 3.webp";
+import featuredWorkImg1 from "../Assets/Featured work img 1.webp";
+import featuredWorkImg2 from "../Assets/Featured work img 2.webp";
+import featuredWorkImg3 from "../Assets/Featured work img 3.webp";
+import featuredWorkImg4 from "../Assets/Featured work img 4.webp";
 import robosoftLogo from "../Assets/Robotosoft.svg";
 import deloitteLogo from "../Assets/Delloite.svg";
 import eclerxLogo from "../Assets/Eclerx.svg";
@@ -27,12 +35,35 @@ import cardinalHealthPreview from "../Assets/Cardinal health Preview img.jpg";
 import brightlineLogo from "../Assets/Brightline_Logo.svg.png";
 import brightlinePreview from "../Assets/Brightline Preview img.png";
 import brightlinePdf from "../Assets/Brightline.pdf";
-import resumePdf from "../Assets/Abhinandan_Singh_UX_Resume.pdf";
+import resumePdf from "../Assets/Abhinandan_Singh_Resume.pdf";
+import toolChatgpt from "../Assets/logo_ChatGpt.svg";
+import toolGemini from "../Assets/logo_gemini.svg";
+import toolClaude from "../Assets/logo_claude.svg";
+import toolCursor from "../Assets/logo_cursor.svg";
+import toolAntigravity from "../Assets/logo_antigravity.svg";
+import toolPerplexity from "../Assets/logo_perplexity.svg";
+import toolMidjourney from "../Assets/logo_midjourney.svg";
+import toolFigma from "../Assets/logo_Figma.svg";
+import toolPhotoshop from "../Assets/logo_adobe photoshop.svg";
+import toolIllustrator from "../Assets/logo_adobe illustrator.svg";
+import toolMiro from "../Assets/logo_miro.svg";
+import toolWebflow from "../Assets/logo_webflow.svg";
+import toolFramer from "../Assets/logo_framer.svg";
+import toolZeplin from "../Assets/logo_zeplin.svg";
+import toolCanva from "../Assets/logo_canva.svg";
+import cardinalHealthLogoWhite from "../Assets/cardinal-health-logo-white.svg";
+import discoveryLogoWhite from "../Assets/Discovery white.png";
+import almahaLogoWhite from "../Assets/Al maha logo white.png";
+import brightlineLogoWhite from "../Assets/Brightline_Logo white.png";
+import mcdonaldsLogo from "../Assets/McDonalds black.png";
+import shoppersStopLogo from "../Assets/shoppers shop black.png";
+import willowLogo from "../Assets/Willow tv primary.svg";
+import mankindLogo from "../Assets/mankind primary.png";
+import bharatPetroleumLogo from "../Assets/bharat petroleum.png";
 
 const navItems = [
-  { label: "Home", href: "/" },
-  { label: "Resume", href: "/resume" },
-  { label: "Works", href: "/projects" },
+  { label: "Work", href: "/projects" },
+  { label: "About", href: "/resume" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -138,6 +169,8 @@ const projectItems = [
     titleImage: cardinalHealthProjectLogo,
     titleAlt: "Cardinal Health",
     title: "Cardinal Health",
+    category: "Healthcare • B2B Platform",
+    stats: ["+28% Order Completion", "35% Faster Handoff"],
     description:
       "Designed a large-scale healthcare procurement platform for pharmacies, improving ordering workflows, inventory management, and financial tracking across an enterprise system.",
     preview: cardinalHealthPreview,
@@ -148,6 +181,8 @@ const projectItems = [
     titleImage: discoveryLogo,
     titleAlt: "Discovery Plus",
     title: "Discovery Plus",
+    category: "Media • OTT Platform",
+    stats: ["40% Faster UI Production", "+32% Discoverability"],
     description:
       "Redesigned a multi-device OTT platform to improve content discovery, navigation efficiency, and user engagement across TV, mobile, and web.",
     preview: discoveryPreview,
@@ -158,6 +193,8 @@ const projectItems = [
     titleImage: brightlineLogo,
     titleAlt: "Brightline Future Mobility",
     title: "Brightline Future Mobility",
+    category: "Mobility • Travel Platform",
+    stats: ["20+ Connected Features", "5+ Touchpoints"],
     description:
       "Designed a future-ready mobility ecosystem connecting booking, smart stations, onboard services, and destination experiences into one seamless travel journey.",
     preview: brightlinePreview,
@@ -168,6 +205,8 @@ const projectItems = [
     titleImage: almahaLogo,
     titleAlt: "AL MAHA Island Lusail",
     title: "AL MAHA Island Lusail",
+    category: "Events • Ticketing Platform",
+    stats: ["35% Faster Booking Flow", "20% Reduced Drop-offs"],
     description:
       "Designed a mobile-first booking and event discovery platform for a high-traffic entertainment destination, optimizing ticketing flows and reducing user drop-offs.",
     preview: almahaPreview,
@@ -178,6 +217,8 @@ const projectItems = [
     titleImage: mcdeliveryLogo,
     titleAlt: "McDelivery Experience Design",
     title: "McDelivery Experience Design",
+    category: "F&B • Mobile Experience",
+    stats: ["30% Faster Checkout", "22% Reduced Drop-offs"],
     description:
       "Optimizing food ordering flows to improve speed, personalization, and conversion across mobile platforms.",
     preview: mcdeliveryPreview,
@@ -776,6 +817,30 @@ function DownloadResumeIcon() {
   );
 }
 
+function SunIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="5" />
+      <line x1="12" y1="1" x2="12" y2="3" />
+      <line x1="12" y1="21" x2="12" y2="23" />
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+      <line x1="1" y1="12" x2="3" y2="12" />
+      <line x1="21" y1="12" x2="23" y2="12" />
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+    </svg>
+  );
+}
+
+function MoonIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+    </svg>
+  );
+}
+
 function getRouteState() {
   if (typeof window === "undefined") {
     return { pathname: "/", projectSlug: null };
@@ -889,17 +954,25 @@ function CustomCursor() {
       document.body.classList.toggle("cursor-pressed", active);
     };
 
+    const setViewState = (target) => {
+      const overCard = Boolean(target?.closest?.(".featured-work-card-btn"));
+      document.body.classList.toggle("cursor-view", overCard);
+    };
+
     const handlePointerOver = (event) => {
       setHoverState(Boolean(getInteractiveTarget(event.target)));
+      setViewState(event.target);
     };
 
     const handlePointerOut = (event) => {
       if (!event.relatedTarget) {
         setHoverState(false);
+        setViewState(null);
         return;
       }
 
       setHoverState(Boolean(getInteractiveTarget(event.relatedTarget)));
+      setViewState(event.relatedTarget);
     };
 
     const handleMouseLeave = () => {
@@ -931,13 +1004,15 @@ function CustomCursor() {
       window.removeEventListener("mouseup", handleMouseUp);
       document.removeEventListener("mouseleave", handleMouseLeave);
       document.removeEventListener("mouseenter", handleMouseEnter);
-      document.body.classList.remove("cursor-hover", "cursor-pressed", "cursor-hidden");
+      document.body.classList.remove("cursor-hover", "cursor-pressed", "cursor-hidden", "cursor-view");
     };
   }, []);
 
   return (
     <div className="cursor-layer" aria-hidden="true">
-      <div ref={ringRef} className="cursor-ring" />
+      <div ref={ringRef} className="cursor-ring">
+        <span className="cursor-view-label">View</span>
+      </div>
       <div ref={dotRef} className="cursor-dot" />
     </div>
   );
@@ -945,36 +1020,63 @@ function CustomCursor() {
 
 function Reveal({ as: Tag = "div", className = "", delay = 0, children }) {
   const ref = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const node = ref.current;
     if (!node) {
+      setIsVisible(true);
       return undefined;
     }
 
     if (typeof IntersectionObserver === "undefined") {
-      node.classList.add("is-visible");
+      setIsVisible(true);
       return undefined;
     }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          node.classList.add("is-visible");
+          setIsVisible(true);
           observer.unobserve(node);
         }
       },
-      { threshold: 0.18, rootMargin: "0px 0px -8% 0px" },
+      { threshold: 0.01, rootMargin: "200px 0px 200px 0px" },
     );
 
     observer.observe(node);
-    return () => observer.disconnect();
-  }, []);
+
+    // Immediate fallback trigger so content is never invisible
+    const timer = setTimeout(() => {
+      setIsVisible(true);
+    }, delay + 50);
+
+    return () => {
+      clearTimeout(timer);
+      observer.disconnect();
+    };
+  }, [delay]);
 
   return (
-    <Tag ref={ref} className={`reveal ${className}`.trim()} style={{ transitionDelay: `${delay}ms` }}>
+    <Tag
+      ref={ref}
+      className={`reveal ${isVisible ? "is-visible" : ""} ${className}`.trim()}
+      style={{ transitionDelay: `${delay}ms` }}
+    >
       {children}
     </Tag>
+  );
+}
+
+function GeometricWolfLogo() {
+  return (
+    <svg width="30" height="30" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="brand-wolf-logo">
+      <path d="M16 2L8 10L11 20L16 28L21 20L24 10L16 2Z" fill="currentColor" />
+      <path d="M8 10L2 14L6 22L11 20L8 10Z" fill="currentColor" />
+      <path d="M24 10L30 14L26 22L21 20L24 10Z" fill="currentColor" />
+      <path d="M12 14L15 17L11 18L12 14Z" fill="var(--bg, #FAF9F6)" />
+      <path d="M20 14L17 17L21 18L20 14Z" fill="var(--bg, #FAF9F6)" />
+    </svg>
   );
 }
 
@@ -1037,28 +1139,48 @@ function SiteHeader({ menuOpen, setMenuOpen }) {
 
   return (
     <>
-      <header className="site-header site-header-animate">
+      <header className="site-header site-header-transparent site-header-animate">
         <button type="button" className="brand brand-button" onClick={() => navigateTo("/")}>
-          <span className="brand-dot" />
-          <span className="brand-copy">
-            <span className="brand-name">Abhinandan Singh</span>
-            <span className="brand-tagline">Senior UX/UI Designer</span>
-          </span>
+          <span className="brand-name-only">Abhinandan Singh</span>
         </button>
 
-        <button
-          ref={menuButtonRef}
-          type="button"
-          className={`menu-button ${menuOpen ? "menu-button-open" : ""}`}
-          onClick={() => setMenuOpen((open) => !open)}
-          aria-label="Toggle navigation"
-          aria-expanded={menuOpen}
-          aria-controls="site-navigation"
-        >
-          <span />
-          <span />
-          <span />
-        </button>
+        <div className="header-right-nav">
+          <nav className="desktop-nav-pill-box" aria-label="Primary header navigation">
+            {navItems.map((item) => (
+              <button
+                key={item.label}
+                type="button"
+                className="desktop-pill-nav-link"
+                onClick={() => navigateTo(item.href)}
+              >
+                {item.label}
+              </button>
+            ))}
+          </nav>
+
+          <a
+            className="dark-pill-cta-btn"
+            href={resumePdf}
+            download="Abhinandan_Singh_UX_Resume.pdf"
+          >
+            Resume
+            <DownloadResumeIcon />
+          </a>
+
+          <button
+            ref={menuButtonRef}
+            type="button"
+            className={`menu-button ${menuOpen ? "menu-button-open" : ""}`}
+            onClick={() => setMenuOpen((open) => !open)}
+            aria-label="Toggle navigation"
+            aria-expanded={menuOpen}
+            aria-controls="site-navigation"
+          >
+            <span />
+            <span />
+            <span />
+          </button>
+        </div>
       </header>
 
       <button
@@ -1074,7 +1196,7 @@ function SiteHeader({ menuOpen, setMenuOpen }) {
         ref={navRef}
         id="site-navigation"
         className={`menu-panel ${menuOpen ? "menu-panel-open" : ""}`}
-        aria-label="Primary navigation"
+        aria-label="Mobile navigation"
         aria-hidden={!menuOpen}
       >
         {navItems.map((item) => (
@@ -1088,31 +1210,421 @@ function SiteHeader({ menuOpen, setMenuOpen }) {
             {item.label}
           </button>
         ))}
+        <a
+          className="menu-link menu-link-cta"
+          href={resumePdf}
+          download="Abhinandan_Singh_UX_Resume.pdf"
+          tabIndex={menuOpen ? 0 : -1}
+          onClick={() => setMenuOpen(false)}
+        >
+          Resume
+          <DownloadResumeIcon />
+        </a>
       </nav>
     </>
   );
 }
 
-function Footer() {
+const experienceData = [
+  {
+    role: "Senior Product Designer",
+    company: "Cardinal Health",
+    period: "Dec 2024 – Present",
+    description:
+      "Leading end-to-end UX for enterprise procurement, inventory systems, and healthcare workflows across high-volume hospital and pharmacy platforms.",
+    metrics: "+28% Order Completion | -35% Dev Handoff Time",
+  },
+  {
+    role: "Senior UX Designer",
+    company: "Tech & Media Ecosystems / Discovery+",
+    period: "Sep 2022 – Dec 2024",
+    description:
+      "Architected multi-device OTT streaming ecosystems across TV, mobile, and web—streamlining navigation rails and personalized content discovery.",
+    metrics: "+40% Faster Screen Design | Improved Discovery",
+  },
+  {
+    role: "UX/UI Designer",
+    company: "Enterprise Solutions / Doc-Mode",
+    period: "Oct 2020 – Sep 2022",
+    description:
+      "Designed data-dense enterprise dashboards and workflow automation systems for complex corporate operations.",
+    metrics: "Data-Dense Dashboards | Process Automation",
+  },
+];
+
+function AboutExperienceSection() {
   return (
-    <footer id="contact" className="footer">
-      <div className="footer-main">
-        <div>
-          <h3>Phone</h3>
-          <p>+91-9097168852</p>
-        </div>
-        <div>
-          <h3>Email</h3>
-          <p>abhinandansingh77@outlook.com</p>
-        </div>
-        <div>
-          <h3>Follow Me</h3>
-          <div className="socials">
-            <a aria-label="Behance" href="https://www.behance.net/" target="_blank" rel="noreferrer">
-              Be
+    <section id="about" className="about-experience-section">
+      <Reveal className="section-header-center" delay={40}>
+        <span className="section-kicker">ABOUT &amp; EXPERIENCE</span>
+        <h2 className="section-title">Solving Complexity Through Systems &amp; Strategy</h2>
+        <p className="section-intro-lead">
+          I am a Senior Product Designer who thrives in complex, high-stakes domains. Over the last 6+ years, I’ve led UX initiatives for enterprise leaders like Cardinal Health, global entertainment platforms like Discovery+, and high-volume QSR brands like McDonald&apos;s. My approach combines rigorous design system thinking with modern AI tools to ship business-critical products faster without compromising accessibility or user clarity.
+        </p>
+      </Reveal>
+
+      <div className="experience-timeline">
+        <div className="timeline-connector-line" aria-hidden="true" />
+        {experienceData.map((item, idx) => (
+          <Reveal key={`${item.company}-${item.role}`} className="experience-card" delay={100 + idx * 90}>
+            <div className="experience-card-top">
+              <div className="experience-title-wrap">
+                <h3 className="experience-role">{item.role}</h3>
+                <span className="experience-dot-sep" aria-hidden="true">•</span>
+                <span className="experience-company">{item.company}</span>
+              </div>
+              <span className="experience-period-badge">{item.period}</span>
+            </div>
+
+            <p className="experience-desc">{item.description}</p>
+
+            <div className="experience-metric-badge">
+              <span className="badge-pulse" aria-hidden="true" />
+              <span>{item.metrics}</span>
+            </div>
+          </Reveal>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function ContactSection() {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopyEmail = () => {
+    if (typeof navigator !== "undefined" && navigator.clipboard) {
+      navigator.clipboard.writeText("abhinandansingh77@outlook.com");
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
+
+  return (
+    <section id="contact" className="contact-hire-section">
+      <Reveal className="contact-card-wrap" delay={40}>
+        <div className="contact-card-inner">
+          <div className="status-pill">
+            <span className="status-dot" aria-hidden="true" />
+            <span>Available for Senior Product Design Roles &amp; Strategic Consulting</span>
+          </div>
+
+          <h2 className="contact-headline">Let’s build something impactful together.</h2>
+
+          <p className="contact-body">
+            Whether you&apos;re scaling an enterprise product, building a next-gen AI platform, or looking for strategic product design leadership, I’d love to connect.
+          </p>
+
+          <div className="contact-actions-bar">
+            <a
+              href="mailto:abhinandansingh77@outlook.com"
+              className="btn-primary contact-btn-primary"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                <polyline points="22,6 12,13 2,6" />
+              </svg>
+              <span>abhinandansingh77@outlook.com</span>
             </a>
-            <a aria-label="LinkedIn" href="https://www.linkedin.com/" target="_blank" rel="noreferrer">
-              in
+
+            <button
+              type="button"
+              className="btn-secondary contact-btn-secondary"
+              onClick={handleCopyEmail}
+            >
+              {copied ? "✓ Copied Email!" : "Copy Email"}
+            </button>
+
+            <a
+              href="tel:+919097168852"
+              className="btn-secondary contact-btn-secondary"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+              </svg>
+              <span>+91 9097168852</span>
+            </a>
+
+            <a
+              href={resumePdf}
+              download="Abhinandan_Singh_Resume.pdf"
+              className="btn-secondary contact-btn-secondary"
+            >
+              <span>Resume</span>
+              <DownloadResumeIcon />
+            </a>
+          </div>
+
+          <div className="contact-socials-row">
+            <span className="socials-label">Connect on:</span>
+            <a
+              href="https://www.linkedin.com/in/abhinandansingh77/"
+              target="_blank"
+              rel="noreferrer"
+              className="social-pill-link"
+            >
+              LinkedIn ↗
+            </a>
+            <a
+              href="https://www.behance.net/abhinandan77"
+              target="_blank"
+              rel="noreferrer"
+              className="social-pill-link"
+            >
+              Behance ↗
+            </a>
+          </div>
+        </div>
+      </Reveal>
+    </section>
+  );
+}
+
+const featuredWorkImages = {
+  "cardinal-health-procurement-platform": featuredWorkImg1,
+  "discovery-plus": featuredWorkImg2,
+  "brightline-future-travel": featuredWorkImg3,
+  "al-maha-island-lusail": featuredWorkImg4,
+};
+
+// Per-image crop nudges where the subject isn't centred in the source frame.
+const featuredWorkImagePositions = {
+  // The TV sits right of the frame's centre; shift the crop as far right as
+  // the overflow allows to bring it toward the card's centre.
+  "discovery-plus": "100% center",
+};
+
+// White marks, shown centred on the scrim when a card is hovered.
+const featuredWorkHoverLogos = {
+  "cardinal-health-procurement-platform": cardinalHealthLogoWhite,
+  "discovery-plus": discoveryLogoWhite,
+  "brightline-future-travel": brightlineLogoWhite,
+  "al-maha-island-lusail": almahaLogoWhite,
+};
+
+const featuredWorkTabs = [
+  {
+    id: "product-design",
+    label: "Product Design",
+    items: projectItems
+      .filter((item) => featuredWorkImages[item.slug])
+      .map((item) => ({
+        ...item,
+        image: featuredWorkImages[item.slug],
+        hoverLogo: featuredWorkHoverLogos[item.slug],
+        imagePosition: featuredWorkImagePositions[item.slug],
+      })),
+  },
+  {
+    id: "brand-design",
+    label: "Brand Design",
+    items: [],
+  },
+];
+
+function FeaturedWorkSection() {
+  const [activeTab, setActiveTab] = useState(featuredWorkTabs[0].id);
+  const currentTab = featuredWorkTabs.find((tab) => tab.id === activeTab) ?? featuredWorkTabs[0];
+
+  return (
+    <section id="projects" className="featured-work-section">
+      <Reveal delay={40}>
+        <h2 className="featured-work-title">Featured Work</h2>
+      </Reveal>
+
+      <Reveal className="featured-work-tabs-wrap" delay={100}>
+        <div className="featured-work-tabs" role="tablist" aria-label="Featured work categories">
+          {featuredWorkTabs.map((tab) => (
+            <button
+              key={tab.id}
+              type="button"
+              role="tab"
+              id={`featured-tab-${tab.id}`}
+              aria-selected={tab.id === activeTab}
+              aria-controls={`featured-panel-${tab.id}`}
+              className={`featured-work-tab${tab.id === activeTab ? " is-active" : ""}`}
+              onClick={() => setActiveTab(tab.id)}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+      </Reveal>
+
+      <div
+        className="featured-work-grid"
+        role="tabpanel"
+        id={`featured-panel-${currentTab.id}`}
+        aria-labelledby={`featured-tab-${currentTab.id}`}
+      >
+        {currentTab.items.map((item, index) => (
+          <Reveal as="article" key={item.slug} className="featured-work-card" delay={160 + index * 80}>
+            <button
+              type="button"
+              className="featured-work-card-btn"
+              onClick={() => navigateTo(`/projects/${item.slug}`)}
+              aria-label={`View ${item.title} case study`}
+            >
+              <img
+                className="featured-work-card-img"
+                src={item.image}
+                alt={`${item.titleAlt} case study preview`}
+                loading="lazy"
+                style={item.imagePosition ? { objectPosition: item.imagePosition } : undefined}
+              />
+              <span className="featured-work-card-overlay">
+                <img className="featured-work-card-logo" src={item.hoverLogo} alt="" />
+              </span>
+            </button>
+          </Reveal>
+        ))}
+
+        {currentTab.items.length === 0 && (
+          <Reveal className="featured-work-empty" delay={160}>
+            <p>Brand design case studies are coming soon.</p>
+          </Reveal>
+        )}
+      </div>
+
+      <Reveal className="featured-work-footer" delay={480}>
+        <button type="button" className="btn-secondary" onClick={() => navigateTo("/projects")}>
+          View All Work
+        </button>
+      </Reveal>
+    </section>
+  );
+}
+
+function AIWorkflowSection() {
+  return (
+    <section id="ai-workflow" className="ai-workflow-section">
+      <Reveal className="section-header-center" delay={40}>
+        <h2 className="ai-workflow-title">AI &amp; Workflow</h2>
+      </Reveal>
+
+      <div className="aiw-grid">
+        {/* Column 1: Phone mockup + lead text */}
+        <Reveal className="aiw-card aiw-card-intro" delay={100}>
+          <div className="aiw-phone-frame">
+            <img
+              src={aiWorkflowImg1}
+              alt="Project Hub app mockup on a phone"
+              className="aiw-phone-img"
+            />
+          </div>
+          <p className="aiw-intro-text">
+            <strong>AI speeds up my workflow</strong> — but human intuition
+            drives the final product. I use modern AI tools to skip repetitive
+            tasks, test ideas fast, and keep my focus on real user problems.
+          </p>
+        </Reveal>
+
+        {/* Column 2: Keycaps + stats */}
+        <div className="aiw-column">
+          <Reveal className="aiw-card aiw-card-code" delay={160}>
+            <div className="aiw-code-frame">
+              <img
+                src={aiWorkflowImg2}
+                alt="Keycaps showing Figma, AI, and code symbols"
+                className="aiw-code-img"
+              />
+            </div>
+            <span className="aiw-code-caption">Figma to Working Code</span>
+          </Reveal>
+
+          <Reveal className="aiw-card aiw-card-stats" delay={220}>
+            <div className="aiw-stat">
+              <h3 className="aiw-stat-value">6+ Years</h3>
+              <p className="aiw-stat-label">
+                Designing scalable products across multiple domains
+              </p>
+            </div>
+            <div className="aiw-stat">
+              <h3 className="aiw-stat-value">35% Faster</h3>
+              <p className="aiw-stat-label">
+                Design-to-dev handoff using AI tools
+              </p>
+            </div>
+          </Reveal>
+        </div>
+
+        {/* Column 3: Mindset + zen stones */}
+        <div className="aiw-column">
+          <Reveal className="aiw-card aiw-card-mindset" delay={280}>
+            <div className="aiw-mindset-group">
+              <h3 className="aiw-mindset-title">Mindset</h3>
+              <p className="aiw-mindset-desc">
+                Synthesizing user data in seconds, turning Figma tokens into real code,
+                and validating interaction patterns before developer handoff.
+              </p>
+            </div>
+            <div className="aiw-pills">
+              <span className="aiw-pill">Research</span>
+              <span className="aiw-pill">Prototype</span>
+              <span className="aiw-pill">Ship</span>
+            </div>
+          </Reveal>
+
+          <Reveal className="aiw-card aiw-card-photo" delay={340}>
+            <img
+              src={aiWorkflowImg3}
+              alt="Balanced stack of zen stones"
+              className="aiw-photo-img"
+            />
+          </Reveal>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const impactMetrics = [
+  { value: "+28%", label: "Order Completion" },
+  { value: "+40%", label: "UI Production Speed" },
+  { value: "1.5M+", label: "Platform Audience Reach" },
+  { value: "2.1 AA", label: "WCAG Compliance" },
+];
+
+function ImpactMetricsSection() {
+  return (
+    <section className="impact-section">
+      <div className="impact-inner">
+        <div className="impact-grid">
+          {impactMetrics.map((item, index) => (
+            <Reveal key={item.label} className="impact-item" delay={80 + index * 80}>
+              <span className="impact-value">{item.value}</span>
+              <span className="impact-label">{item.label}</span>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Footer() {
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  return (
+    <footer className="site-footer-minimal">
+      <div className="footer-content">
+        <p className="footer-copyright">
+          © 2026 Abhinandan Singh.
+        </p>
+
+        <div className="footer-right-actions">
+          <button type="button" className="back-to-top-btn" onClick={scrollToTop}>
+            <span>↑ Back to Top</span>
+          </button>
+
+          <div className="footer-socials">
+            <a href="https://www.linkedin.com/in/abhinandansingh77/" target="_blank" rel="noreferrer" aria-label="LinkedIn">
+              LinkedIn
+            </a>
+            <a href="https://www.behance.net/abhinandan77" target="_blank" rel="noreferrer" aria-label="Behance">
+              Behance
             </a>
           </div>
         </div>
@@ -1121,52 +1633,133 @@ function Footer() {
   );
 }
 
+// `width` optically balances the marks: these logos range from a 10:1 wordmark
+// (Shoppers Stop) to a 0.8:1 badge (Bharat Petroleum), so a single height alone
+// would render some of them hairline-thin and others oversized.
+const clientLogos = [
+  { name: "Cardinal Health", src: cardinalHealthProjectLogo, width: 140 },
+  { name: "Discovery+", src: discoveryLogo, width: 170 },
+  { name: "AL MAHA Island Lusail", src: almahaLogo, width: 160 },
+  { name: "Brightline", src: brightlineLogo, width: 160 },
+  { name: "McDonald's", src: mcdonaldsLogo, width: 180 },
+  { name: "Shoppers Stop", src: shoppersStopLogo, width: 210 },
+  { name: "Willow TV", src: willowLogo, width: 160 },
+  { name: "Mankind Pharma", src: mankindLogo, width: 90 },
+  { name: "Bharat Petroleum", src: bharatPetroleumLogo, width: 44 },
+];
+
+// Entries without a `src` fall back to a wordmark.
+const toolLogos = [
+  { name: "ChatGPT", src: toolChatgpt },
+  { name: "Gemini", src: toolGemini },
+  { name: "Claude", src: toolClaude },
+  { name: "Cursor", src: toolCursor },
+  { name: "Antigravity", src: toolAntigravity },
+  { name: "Perplexity", src: toolPerplexity },
+  { name: "Midjourney", src: toolMidjourney },
+  { name: "Figma", src: toolFigma },
+  { name: "Photoshop", src: toolPhotoshop },
+  { name: "Illustrator", src: toolIllustrator },
+  { name: "Canva", src: toolCanva },
+  { name: "Miro", src: toolMiro },
+  { name: "Webflow", src: toolWebflow },
+  { name: "Framer", src: toolFramer },
+  { name: "Zeplin", src: toolZeplin },
+];
+
+function LogoRail({ items, ariaLabel }) {
+  // Two identical sets so the -50% scroll loops seamlessly.
+  const track = [...items, ...items];
+
+  return (
+    <div className="client-logo-rail">
+      <ul className="client-logo-track" aria-label={ariaLabel}>
+        {track.map((logo, index) => {
+          const isOriginal = index < items.length;
+          return (
+            <li
+              className="client-logo-slot"
+              key={`${logo.name}-${index}`}
+              aria-hidden={isOriginal ? undefined : "true"}
+            >
+              {logo.src ? (
+                <img
+                  className="client-logo-img"
+                  src={logo.src}
+                  alt={isOriginal ? logo.name : ""}
+                  style={logo.width ? { maxWidth: `${logo.width}px` } : undefined}
+                />
+              ) : (
+                <span className="client-logo-wordmark">{logo.name}</span>
+              )}
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+}
+
+function ClientLogoRail() {
+  return <LogoRail items={clientLogos} ariaLabel="Clients and brands" />;
+}
+
+function ToolsRailSection() {
+  return (
+    <section className="tools-rail-section">
+      <Reveal className="tools-rail-wrap" delay={40}>
+        <h5 className="tools-rail-title">Tools</h5>
+        <LogoRail items={toolLogos} ariaLabel="Tools used daily" />
+      </Reveal>
+    </section>
+  );
+}
+
 function HomePage() {
   return (
     <div className="page-view">
-      <section className="hero-section">
-        <Reveal className="hero-photo-wrap" delay={60}>
-          <img className="hero-photo-image" src={profilePhoto} alt="Abhinandan Singh portrait" />
-        </Reveal>
+      <section className="hero-centered-section">
+        <div className="hero-centered-container">
+          {/* Main Title */}
+          <Reveal className="hero-title-wrap" delay={40}>
+            <h1 className="hero-centered-title">
+              Abhinandan Singh, Senior<br />Product Designer
+            </h1>
+          </Reveal>
 
-        <Reveal className="hero-actions" delay={140}>
-          {homeActions.map((item) => (
-            <button
-              key={item.label}
-              type="button"
-              className="circle-link"
-              onClick={() => navigateTo(item.href)}
-            >
-              {item.label}
-            </button>
-          ))}
-        </Reveal>
-
-        <div className="hero-copy">
-          <Reveal className="intro" delay={200}>
-            <h2>Hello!</h2>
-            <p>
-              I&apos;m Abhinandan, a Senior UX/UI Designer with 6+ years shaping digital
-              products across healthcare, OTT/media, e-commerce, and enterprise platforms.
-              I design the kind of interfaces that feel obvious to use, are a joy to look
-              at, and measurably move the needle for the businesses behind them.
+          {/* Subheadline */}
+          <Reveal className="hero-sub-wrap" delay={120}>
+            <p className="hero-centered-sub">
+              6+ years designing scalable digital products across diverse industries.<br />
+              Fast execution with AI workflows.
             </p>
-            <div className="intro-actions">
-              <a className="hero-button hero-button-secondary" href={resumePdf} download>
-                <DownloadResumeIcon />
-                Download Resume
-              </a>
-            </div>
           </Reveal>
 
-          <Reveal className="hero-title" delay={260}>
-            <div>Brand &amp;</div>
-            <div>
-              UX/UI <span>Designer</span>
-            </div>
+          {/* Centered Visual Image */}
+          <Reveal className="hero-portrait-centered-wrap" delay={200}>
+            <img
+              src={heroImg}
+              alt="Abhinandan Singh - Senior Product Designer"
+              className="hero-centered-portrait"
+            />
           </Reveal>
+
         </div>
+
+        {/* Client Logos Bar — sits outside .hero-centered-container so it can
+            use the same 1160px grid width as the AI & Workflow section. */}
+        <Reveal className="hero-client-logos-bar" delay={280}>
+          <ClientLogoRail />
+        </Reveal>
       </section>
+
+      <AIWorkflowSection />
+
+      <ImpactMetricsSection />
+
+      <FeaturedWorkSection />
+
+      <ToolsRailSection />
 
       <Footer />
     </div>
@@ -1397,8 +1990,8 @@ function ContactPage() {
           </a>
 
           <a className="hero-button hero-button-secondary contact-resume-cta" href={resumePdf} download>
-            <DownloadResumeIcon />
             Download Resume
+            <DownloadResumeIcon />
           </a>
         </Reveal>
       </section>
@@ -1408,8 +2001,244 @@ function ContactPage() {
   );
 }
 
+function CardinalHealthCaseStudyPage() {
+  const scrollToAnchor = (id) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  return (
+    <div className="page-view case-study-template">
+      {/* 1. Header Navigation Back Button & Hero */}
+      <section className="cs-hero-section">
+        <Reveal className="cs-back-bar" delay={40}>
+          <button
+            type="button"
+            className="cs-back-button"
+            onClick={() => navigateTo("/projects")}
+          >
+            <span aria-hidden="true">←</span>
+            <span>Back to Selected Work</span>
+          </button>
+        </Reveal>
+
+        <Reveal className="cs-header-content" delay={100}>
+          <span className="cs-tag-pill">HEALTHCARE / B2B ENTERPRISE / DESIGN SYSTEMS</span>
+          <h1 className="cs-main-title">Cardinal Health — Order Express Redesign</h1>
+          <p className="cs-main-subtitle">
+            Redesigning a large-scale B2B healthcare ordering and inventory management system used by thousands of pharmacies and hospitals.
+          </p>
+
+          {/* 4-Column Metadata Grid */}
+          <div className="cs-metadata-grid">
+            <div className="cs-meta-item">
+              <span className="meta-label">Role</span>
+              <span className="meta-value">Senior UX Designer</span>
+            </div>
+            <div className="cs-meta-item">
+              <span className="meta-label">Platform</span>
+              <span className="meta-value">Web Application (Desktop-first)</span>
+            </div>
+            <div className="cs-meta-item">
+              <span className="meta-label">Scope</span>
+              <span className="meta-value">Ordering Workflows, Inventory, Financial Dashboards, Design Systems</span>
+            </div>
+            <div className="cs-meta-item">
+              <span className="meta-label">Key Tools</span>
+              <span className="meta-value">Figma, Claude Code, Design Tokens, Cursor</span>
+            </div>
+          </div>
+        </Reveal>
+
+        <Reveal className="cs-hero-image-box" delay={180}>
+          <img
+            src={cardinalHealthPreview}
+            alt="Cardinal Health Order Express Platform Interface"
+            className="cs-hero-img"
+          />
+        </Reveal>
+      </section>
+
+      {/* Sticky Sub-Navigation Anchor Bar */}
+      <nav className="cs-subnav-bar" aria-label="Case study section jump links">
+        <div className="cs-subnav-inner">
+          <button type="button" onClick={() => scrollToAnchor("overview")}>Overview</button>
+          <button type="button" onClick={() => scrollToAnchor("problem-goals")}>Problem &amp; Goals</button>
+          <button type="button" onClick={() => scrollToAnchor("system-architecture")}>System Architecture</button>
+          <button type="button" onClick={() => scrollToAnchor("ai-execution")}>AI &amp; Tech Execution</button>
+          <button type="button" onClick={() => scrollToAnchor("business-impact")}>Business Impact</button>
+        </div>
+      </nav>
+
+      {/* 2. Highlight Impact Banner (Top Metrics) */}
+      <section className="cs-section cs-impact-banner">
+        <Reveal className="cs-stat-grid" delay={40}>
+          <div className="cs-stat-card">
+            <span className="stat-number">+28%</span>
+            <span className="stat-desc">Improved Order Completion Rate</span>
+          </div>
+          <div className="cs-stat-card">
+            <span className="stat-number">-35%</span>
+            <span className="stat-desc">Faster Design-to-Dev Handoff</span>
+          </div>
+          <div className="cs-stat-card">
+            <span className="stat-number">100K+</span>
+            <span className="stat-desc">Healthcare Professionals Served</span>
+          </div>
+          <div className="cs-stat-card">
+            <span className="stat-number">WCAG 2.1 AA</span>
+            <span className="stat-desc">Accessibility Compliance Achieved</span>
+          </div>
+        </Reveal>
+      </section>
+
+      {/* 3. Section 1: Overview & Problem & Strategic Context */}
+      <section id="overview" className="cs-section">
+        <div className="cs-container">
+          <Reveal className="cs-content-block" delay={40}>
+            <span className="cs-section-label">01 / CONTEXT &amp; OVERVIEW</span>
+            <h2 className="cs-section-heading">High-Stakes Enterprise Healthcare Procurement</h2>
+            <p className="cs-paragraph">
+              Cardinal Health’s Order Express platform processes billions in pharmaceutical and medical supply transactions annually. Used by pharmacy managers, hospital procurement officers, and healthcare staff, the platform demands zero-error accuracy, swift catalog search, and reliable inventory tracking.
+            </p>
+          </Reveal>
+
+          <div id="problem-goals" className="cs-two-col-grid">
+            <Reveal className="cs-info-box" delay={100}>
+              <div className="info-box-icon">⚠️</div>
+              <h3>The Problem Statement</h3>
+              <p>
+                Pharmacies faced cognitive overload due to fragmented inventory tracking, high error rates during multi-item drug orders, and inconsistent UI patterns across legacy enterprise modules that slowed daily procurement.
+              </p>
+            </Reveal>
+
+            <Reveal className="cs-info-box" delay={160}>
+              <div className="info-box-icon">🎯</div>
+              <h3>Strategic Goals</h3>
+              <ul className="cs-goals-list">
+                <li>Streamline complex multi-tenant checkout &amp; reordering flows.</li>
+                <li>Establish a unified, accessible, token-driven design system.</li>
+                <li>Reduce operational risk by adding proactive error validation and stock notifications.</li>
+              </ul>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* 4. Section 2: UX Architecture & Systems Thinking */}
+      <section id="system-architecture" className="cs-section cs-section-alt">
+        <div className="cs-container">
+          <Reveal className="cs-content-block" delay={40}>
+            <span className="cs-section-label">02 / SYSTEMS &amp; ARCHITECTURE</span>
+            <h2 className="cs-section-heading">UX Architecture &amp; Systems Thinking</h2>
+            <p className="cs-paragraph">
+              To address scale, we decomposed the platform into core functional pillars, auditing over 120 legacy screens and consolidating them into streamlined modular flows.
+            </p>
+          </Reveal>
+
+          <div className="cs-pillars-grid">
+            <Reveal className="cs-pillar-card" delay={100}>
+              <span className="pillar-num">01</span>
+              <h3>Workflow Analysis</h3>
+              <p>
+                Mapped end-to-end procurement cycles from catalog search to invoice reconciliation, eliminating redundant steps and reducing cart drop-off points.
+              </p>
+            </Reveal>
+
+            <Reveal className="cs-pillar-card" delay={160}>
+              <span className="pillar-num">02</span>
+              <h3>Information Architecture</h3>
+              <p>
+                Restructured dashboard modules to surface real-time stock alerts, order status updates, and critical reorder prompts directly on primary landing surfaces.
+              </p>
+            </Reveal>
+
+            <Reveal className="cs-pillar-card" delay={220}>
+              <span className="pillar-num">03</span>
+              <h3>Component System</h3>
+              <p>
+                Built a robust Figma component library with strict tokens for high-density data tables, accessible filter bars, and status indicators matching WCAG 2.1 AA.
+              </p>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* 5. Section 3: AI-Accelerated Workflow & Engineering Handoff */}
+      <section id="ai-execution" className="cs-section">
+        <div className="cs-container">
+          <Reveal className="cs-ai-feature-card" delay={40}>
+            <div className="ai-card-header">
+              <span className="ai-badge">⚡ 2026 AI-ACCELERATED TOUCHPOINT</span>
+              <h2>AI-Accelerated Workflow &amp; Engineering Handoff</h2>
+            </div>
+            <p className="ai-card-copy">
+              To accelerate execution, I leveraged AI tools (Claude &amp; Cursor) to rapidly prototype complex data-table interactions and generate design token documentation directly compatible with the frontend codebase—reducing handoff friction by 35%.
+            </p>
+            <div className="ai-tags-row">
+              <span className="ai-tag">Claude Code Prototyping</span>
+              <span className="ai-tag">Cursor IDE Integration</span>
+              <span className="ai-tag">Automated Token Handoff</span>
+              <span className="ai-tag">Synthetic Usability Testing</span>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* 6. Section 4: Key Outcomes & Lessons Learned */}
+      <section id="business-impact" className="cs-section cs-section-alt">
+        <div className="cs-container">
+          <Reveal className="cs-content-block" delay={40}>
+            <span className="cs-section-label">04 / IMPACT &amp; RETROSPECTIVE</span>
+            <h2 className="cs-section-heading">Key Outcomes &amp; Lessons Learned</h2>
+          </Reveal>
+
+          <div className="cs-two-col-grid">
+            <Reveal className="cs-impact-box" delay={100}>
+              <h3>Measurable Business Impact</h3>
+              <ul className="cs-impact-list">
+                <li><strong>+28% Order Completion Rate:</strong> Accelerated pharmacy ordering workflows.</li>
+                <li><strong>-35% Developer Handoff Time:</strong> Achieved through tokenized design specs.</li>
+                <li><strong>Zero Compliance Violations:</strong> Passed rigorous WCAG 2.1 AA audit across all core modules.</li>
+              </ul>
+            </Reveal>
+
+            <Reveal className="cs-impact-box" delay={160}>
+              <h3>What I Learned</h3>
+              <p className="cs-paragraph">
+                Designing for high-density enterprise tools requires an unwavering focus on clarity over ornamentation. Proactive error handling and tight collaboration between product, UX, and engineering are non-negotiable when building mission-critical B2B software.
+              </p>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* 7. Next Project Navigation Footer */}
+      <section className="cs-next-project-bar">
+        <Reveal className="cs-next-inner" delay={40}>
+          <span className="next-label">UP NEXT</span>
+          <button
+            type="button"
+            className="next-project-link"
+            onClick={() => navigateTo("/projects/discovery-plus")}
+          >
+            <span>Next Project: Discovery+ — Next-Gen OTT Experience</span>
+            <span className="next-arrow" aria-hidden="true">→</span>
+          </button>
+        </Reveal>
+      </section>
+    </div>
+  );
+}
+
 function ProjectDetailsPage({ project, projectSlug, onOpenPdf }) {
-  const isCardinalHealth = project?.slug === "cardinal-health-procurement-platform";
+  const isCardinalHealth = project?.slug === "cardinal-health-procurement-platform" || projectSlug === "cardinal-health-procurement-platform";
+  if (isCardinalHealth) {
+    return <CardinalHealthCaseStudyPage />;
+  }
+
   const isDiscoveryPlus = project?.slug === "discovery-plus";
   const isAlMaha = project?.slug === "al-maha-island-lusail";
   const isMcDelivery = project?.slug === "mcdelivery-experience-design";
@@ -1704,7 +2533,7 @@ function ProjectDetailsPage({ project, projectSlug, onOpenPdf }) {
 export default function App() {
   const [{ pathname, projectSlug }, setRouteState] = useState(getRouteState);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [isEntering, setIsEntering] = useState(true);
+  const [isEntering, setIsEntering] = useState(false);
   const [pdfSrc, setPdfSrc] = useState(null);
   const selectedProject = projectItems.find((item) => item.slug === projectSlug) ?? null;
 
