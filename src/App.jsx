@@ -4,10 +4,11 @@ import profilePhoto from "../Assets/profile photo.png";
 import aiWorkflowImg1 from "../Assets/ai & workflow img 1.webp";
 import aiWorkflowImg2 from "../Assets/ai & workflow img 2.webp";
 import aiWorkflowImg3 from "../Assets/ai & workflow img 3.webp";
-import featuredWorkImg1 from "../Assets/Featured work img 1.webp";
-import featuredWorkImg2 from "../Assets/Featured work img 2.webp";
-import featuredWorkImg3 from "../Assets/Featured work img 3.webp";
-import featuredWorkImg4 from "../Assets/Featured work img 4.webp";
+import cardinalHealthVerticalImg from "../Assets/Featured work cardinal health img vertical.webp";
+// Note the capital V — this file is named differently from its siblings.
+import discoveryPlusVerticalImg from "../Assets/Featured work discovery plus img Vertical.webp";
+import brightlineVerticalImg from "../Assets/Featured work bright line img vertical.webp";
+import almahaVerticalImg from "../Assets/Featured work al maha img vertical.webp";
 import robosoftLogo from "../Assets/Robotosoft.svg";
 import deloitteLogo from "../Assets/Delloite.svg";
 import eclerxLogo from "../Assets/Eclerx.svg";
@@ -60,11 +61,11 @@ import willowLogo from "../Assets/Willow tv primary.svg";
 import mankindLogo from "../Assets/mankind primary.png";
 import bharatPetroleumLogo from "../Assets/bharat petroleum.png";
 
-import cardinalHealthHorizontalImg from "../Assets/Featured work cardinal health img 1 horizotal.webp";
-import discoveryPlusHorizontalImg from "../Assets/Featured work discovery plus img 2 horizotal.webp";
-import brightlineHorizontalImg from "../Assets/Featured work bright line img 3 horizotal.webp";
-import almahaHorizontalImg from "../Assets/Featured work al maha img 4 horizotal.webp";
-import mcdeliveryHorizontalImg from "../Assets/Featured work mcdonald img 5 horizotal.webp";
+import cardinalHealthHorizontalImg from "../Assets/Featured work cardinal health img horizotal.webp";
+import discoveryPlusHorizontalImg from "../Assets/Featured work discovery plus img horizotal.webp";
+import brightlineHorizontalImg from "../Assets/Featured work bright line img horizotal.webp";
+import almahaHorizontalImg from "../Assets/Featured work al maha img horizotal.webp";
+import mcdeliveryHorizontalImg from "../Assets/Featured work mcdonald img horizotal.webp";
 import mcdonaldsWebpLogo from "../Assets/McDonald's logo.webp";
 
 const navItems = [
@@ -1442,11 +1443,13 @@ function ContactSection() {
   );
 }
 
+// Portrait crops, sized for the 3 / 5 cards on the home page. The Work page
+// uses the horizontal `preview` images on each project instead.
 const featuredWorkImages = {
-  "cardinal-health-procurement-platform": cardinalHealthHorizontalImg,
-  "discovery-plus": discoveryPlusHorizontalImg,
-  "brightline-future-travel": brightlineHorizontalImg,
-  "al-maha-island-lusail": almahaHorizontalImg,
+  "cardinal-health-procurement-platform": cardinalHealthVerticalImg,
+  "discovery-plus": discoveryPlusVerticalImg,
+  "brightline-future-travel": brightlineVerticalImg,
+  "al-maha-island-lusail": almahaVerticalImg,
 };
 
 // Per-image crop nudges where the subject isn't centred in the source frame.
