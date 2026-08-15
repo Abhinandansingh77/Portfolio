@@ -6280,7 +6280,7 @@ hr {
 
 .project-row {
   display: grid;
-  grid-template-columns: minmax(280px, 1fr) minmax(320px, 480px);
+  grid-template-columns: minmax(280px, 1fr) minmax(0, 568px);
   gap: 44px;
   align-items: center;
   border-radius: 0 !important;
@@ -6319,7 +6319,7 @@ hr {
 .project-title-image {
   display: block;
   max-width: min(300px, 100%);
-  max-height: 72px;
+  max-height: 32px;
   object-fit: contain;
   transition:
     filter 420ms var(--ease-smooth),
@@ -6398,8 +6398,11 @@ hr {
 }
 
 .project-line {
-  width: 230px;
-  max-width: 40%;
+  /* Grows so the row spans the full width of the .project-copy column,
+     pushing the CTA to the column's right edge. */
+  flex: 1;
+  width: auto;
+  max-width: none;
   border-top: 1px solid var(--line);
   border-radius: 0 !important;
 }
@@ -6414,8 +6417,11 @@ hr {
 }
 
 .project-preview-wrap {
-  min-height: 300px;
-  width: 100%;
+  /* Fixed thumbnail size: 568 x 420. The aspect-ratio keeps those
+     proportions when the column has to shrink below 568px. */
+  width: 568px;
+  max-width: 100%;
+  aspect-ratio: 568 / 420;
   padding: 0;
   border: 0;
   overflow: hidden;
@@ -6430,7 +6436,7 @@ hr {
 .project-preview-image {
   display: block;
   width: 100%;
-  min-height: 300px;
+  height: 100%;
   object-fit: cover;
   filter: var(--image-filter);
   transform: scale(1.01);
@@ -6683,7 +6689,7 @@ hr {
   }
 
   .project-row {
-    grid-template-columns: minmax(280px, 1fr) minmax(320px, 440px);
+    grid-template-columns: minmax(280px, 1fr) minmax(0, 568px);
     gap: 34px;
     align-items: center;
   }
@@ -6691,12 +6697,6 @@ hr {
   .project-link-row {
     gap: 18px;
     margin-top: 20px;
-  }
-
-  .project-line {
-    flex: 1;
-    width: auto;
-    max-width: none;
   }
 }
 
@@ -7062,7 +7062,7 @@ hr {
   }
 
   .project-title-image {
-    max-height: 58px;
+    max-height: 32px;
     max-width: min(250px, calc(100vw - 104px));
   }
 
@@ -7072,18 +7072,10 @@ hr {
     line-height: 1.42;
   }
 
-  .project-line {
-    flex: 1;
-    width: auto;
-    max-width: none;
-  }
-
-  .project-preview-wrap,
-  .project-preview-image {
-    min-height: 224px;
-  }
-
   .project-preview-wrap {
+    /* Single-column rows: fill the column instead of forcing the 568px
+       track width, keeping the 568:420 ratio via aspect-ratio. */
+    width: 100%;
     border-radius: 10px;
   }
 
