@@ -1989,6 +1989,13 @@ body.cursor-hidden .cursor-ring {
   color: var(--text-subtle);
 }
 
+/* "Platform Audience Reach" needs 226px at 0.12em tracking but the column
+   only offers 222px, so it wrapped. Tightening the tracking keeps every
+   label on a single line. */
+.impact-item .impact-label {
+  letter-spacing: 0.08em;
+}
+
 @media (max-width: 760px) {
   .impact-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -2967,7 +2974,7 @@ body.cursor-hidden .cursor-ring {
   width: 100%;
   max-width: 1160px;
   margin: 0 auto;
-  padding: 14px 24px 64px;
+  padding: 17px 24px 64px;
 }
 
 .contact-section {
@@ -5801,11 +5808,12 @@ body.cursor-hidden .cursor-ring {
   display: flex;
   align-items: center;
   gap: 16px;
-  margin-bottom: 62px;
+  margin-bottom: 74px;
 }
 
 .section-kicker-header .section-kicker {
   margin-bottom: 0;
+  text-transform: none;
 }
 
 .work-back-button {
@@ -6273,32 +6281,77 @@ hr {
   align-items: start;
 }
 
+/* Works page tab bar: leans on the "Works" heading's bottom margin for the
+   space above it. */
+.works-tabs-wrap {
+  margin-top: 0;
+}
+
+/* Block flow (not grid) so each sticky card can travel within the whole list
+   rather than being trapped in its own grid area. */
 .projects-list {
-  display: grid;
-  gap: 82px;
-}
-
-.project-row {
-  display: grid;
-  grid-template-columns: minmax(280px, 1fr) minmax(0, 568px);
-  gap: 44px;
-  align-items: center;
-  border-radius: 0 !important;
-  transition:
-    transform 420ms var(--ease-premium),
-    opacity 420ms var(--ease-premium);
-}
-
-.project-copy {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  display: block;
 }
 
 .project-row + .project-row {
-  padding-top: 74px;
-  border-top: 1px solid var(--line);
-  border-radius: 0 !important;
+  margin-top: 96px;
+}
+
+/* Each project is a tinted card: inset preview, then the logo/tags row, then
+   the title + description line. */
+.project-row {
+  display: grid;
+  gap: 32px;
+  /* Each card pins below the sticky header while the next one scrolls over it,
+     stacking them. Cards paint in DOM order, so later cards cover earlier. */
+  position: sticky;
+  top: 96px;
+  padding: 40px;
+  background: var(--surface-soft);
+  border-radius: var(--radius-card);
+  transition:
+    transform 420ms var(--ease-premium),
+    opacity 420ms var(--ease-premium),
+    box-shadow 420ms var(--ease-premium);
+}
+
+/* A pinned card taller than the viewport would hide its own lower half, so
+   fall back to normal flow on short viewports. Stays positioned so the
+   full-card link still anchors to it. */
+@media (max-height: 780px) {
+  .project-row {
+    position: relative;
+  }
+}
+
+.project-row-link {
+  position: absolute;
+  inset: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  border-radius: inherit;
+  cursor: pointer;
+}
+
+.project-row-link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+.project-row:hover {
+  box-shadow: var(--shadow-lift);
+}
+
+.project-row:hover .project-preview-wrap {
+  transform: scale(1.012);
+}
+
+.project-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
 }
 
 .project-brand {
@@ -6327,12 +6380,24 @@ hr {
 }
 
 .project-domain-tags {
-  font-size: 0.78rem;
+  font-size: 1.15rem;
   font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--text-subtle);
-  margin: 0 0 8px 0;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  text-align: right;
+  margin: 0;
+}
+
+.project-row-summary {
+  margin: 0;
+  font-size: 1.15rem;
+  line-height: 1.6;
+  color: var(--text-soft);
+}
+
+.project-row-summary-title {
+  font-weight: 600;
+  color: var(--text);
 }
 
 .project-row-headline {
@@ -6417,11 +6482,8 @@ hr {
 }
 
 .project-preview-wrap {
-  /* Fixed thumbnail size: 568 x 420. The aspect-ratio keeps those
-     proportions when the column has to shrink below 568px. */
-  width: 568px;
-  max-width: 100%;
-  aspect-ratio: 568 / 420;
+  width: 100%;
+  aspect-ratio: 9 / 4;
   padding: 0;
   border: 0;
   overflow: hidden;
@@ -6689,9 +6751,8 @@ hr {
   }
 
   .project-row {
-    grid-template-columns: minmax(280px, 1fr) minmax(0, 568px);
-    gap: 34px;
-    align-items: center;
+    gap: 32px;
+    padding: 32px;
   }
 
   .project-link-row {
@@ -6722,13 +6783,6 @@ hr {
   .case-hero-layout,
   .footer-main {
     grid-template-columns: 1fr;
-  }
-
-  .project-row {
-    grid-template-areas:
-      "copy"
-      "preview"
-      "link";
   }
 
   .project-link-row {
@@ -7038,27 +7092,28 @@ hr {
   }
 
   .project-row + .project-row {
-    padding-top: 66px;
-    border-top: 0;
-  }
-
-  .projects-list {
-    gap: 70px;
+    margin-top: 70px;
   }
 
   .project-row {
-    grid-template-columns: 1fr;
-    gap: 34px;
-    align-items: start;
+    gap: 24px;
+    padding: 20px;
   }
 
-  .project-brand {
-    gap: 18px;
-    margin-bottom: 40px;
+  /* Narrow screens can't hold the logo and tags on one line. */
+  .project-meta-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
   }
 
-  .project-number {
-    font-size: clamp(1.55rem, 6.5vw, 1.8rem);
+  .project-domain-tags {
+    text-align: left;
+    font-size: 0.98rem;
+  }
+
+  .project-row-summary {
+    font-size: 1rem;
   }
 
   .project-title-image {
@@ -7066,16 +7121,7 @@ hr {
     max-width: min(250px, calc(100vw - 104px));
   }
 
-  .project-description {
-    max-width: none;
-    font-size: 1rem;
-    line-height: 1.42;
-  }
-
   .project-preview-wrap {
-    /* Single-column rows: fill the column instead of forcing the 568px
-       track width, keeping the 568:420 ratio via aspect-ratio. */
-    width: 100%;
     border-radius: 10px;
   }
 

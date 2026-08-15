@@ -201,7 +201,7 @@ const projectItems = [
     titleAlt: "Cardinal Health",
     title: "Cardinal Health",
     domainTags: "HealthTech · Enterprise B2B & B2C · Web App",
-    projectTitle: <>Order Express — Healthcare Procurement<br />Platform Redesign</>,
+    projectTitle: "Order Express, Healthcare Procurement Platform Redesign",
     impactBadges: ["+28% Order Completion", "-35% Dev Handoff Time", "WCAG 2.1 AA"],
     stats: ["+28% Order Completion", "-35% Dev Handoff Time", "WCAG 2.1 AA"],
     description:
@@ -217,7 +217,7 @@ const projectItems = [
     titleAlt: "Discovery Plus",
     title: "Discovery Plus",
     domainTags: "Media & OTT · Consumer UX · TV, Mobile & Web",
-    projectTitle: <>Cross-Platform Entertainment &amp; Content<br />Discovery Ecosystem</>,
+    projectTitle: "Cross-Platform Entertainment & Content Discovery Ecosystem",
     impactBadges: ["+40% Faster Discovery", "1.5M+ Active Users", "Multi-Device Architecture"],
     stats: ["+40% Faster Discovery", "1.5M+ Active Users", "Multi-Device Architecture"],
     description:
@@ -226,6 +226,7 @@ const projectItems = [
     cta: "View Case Study →",
     preview: discoveryPlusHorizontalImg,
     previewScale: 1.2,
+    previewPosition: "center 70%",
   },
   {
     index: "03",
@@ -242,6 +243,7 @@ const projectItems = [
     roleScope: "Service Design, Mobile UX/UI, Connected Physical-Digital Touchpoints",
     cta: "View Case Study →",
     preview: brightlineHorizontalImg,
+    previewPosition: "center 70%",
   },
   {
     index: "04",
@@ -258,6 +260,7 @@ const projectItems = [
     roleScope: "Mobile UX Strategy, Booking Funnel Optimization, Visual Identity",
     cta: "View Case Study →",
     preview: almahaHorizontalImg,
+    previewPosition: "center 70%",
   },
   {
     index: "05",
@@ -274,6 +277,7 @@ const projectItems = [
     roleScope: "Conversion Rate Optimization (CRO), Checkout Flow UX, Micro-Interactions",
     cta: "View Case Study →",
     preview: mcdeliveryHorizontalImg,
+    previewPosition: "center 70%",
   },
 ];
 
@@ -1008,7 +1012,7 @@ function CustomCursor() {
     };
 
     const setViewState = (target) => {
-      const overCard = Boolean(target?.closest?.(".featured-work-card-btn"));
+      const overCard = Boolean(target?.closest?.(".featured-work-card-btn, .project-row"));
       document.body.classList.toggle("cursor-view", overCard);
     };
 
@@ -1486,6 +1490,19 @@ const featuredWorkTabs = [
     items: [],
   },
 ];
+
+// The Works page reuses the Featured Work tab labels, but lists every project
+// in a category rather than the featured subset.
+const worksTabProjects = {
+  "product-design": projectItems,
+  "brand-design": [],
+};
+
+const worksTabs = featuredWorkTabs.map((tab) => ({
+  id: tab.id,
+  label: tab.label,
+  items: worksTabProjects[tab.id] ?? [],
+}));
 
 function FeaturedWorkSection() {
   const [activeTab, setActiveTab] = useState(featuredWorkTabs[0].id);
@@ -2021,6 +2038,9 @@ function ResumePage() {
 }
 
 function ProjectsPage() {
+  const [activeTab, setActiveTab] = useState(worksTabs[0].id);
+  const currentTab = worksTabs.find((tab) => tab.id === activeTab) ?? worksTabs[0];
+
   return (
     <div className="page-view">
       <section className="projects-section">
@@ -2036,62 +2056,86 @@ function ProjectsPage() {
               <polyline points="12 19 5 12 12 5" />
             </svg>
           </button>
-          <span className="section-kicker">Works</span>
+          <span className="section-kicker">Creative Works</span>
         </Reveal>
 
-        <div className="projects-list">
-          {projectItems.map((item, index) => (
-            <Reveal as="article" key={item.index} className="project-row" delay={index * 90}>
-              <div className="project-copy">
-                <div className="project-brand">
-                  <img className="project-title-image" src={item.titleImage} alt={item.titleAlt} />
-                </div>
-
-                {item.domainTags && (
-                  <p className="project-domain-tags">{item.domainTags}</p>
-                )}
-
-                {item.projectTitle && (
-                  <h3 className="project-row-headline">{item.projectTitle}</h3>
-                )}
-
-                <p className="project-description">{item.description}</p>
-
-                {item.roleScope && (
-                  <p className="project-role-scope">
-                    <strong>Role / Scope:</strong> {item.roleScope}
-                  </p>
-                )}
-
-                <div className="project-link-row">
-                  <span className="project-line" />
-                  <button
-                    type="button"
-                    className="text-link"
-                    onClick={() => navigateTo(`/projects/${item.slug}`)}
-                  >
-                    {item.cta || "View Case Study →"}
-                  </button>
-                </div>
-              </div>
-
+        <Reveal className="featured-work-tabs-wrap works-tabs-wrap" delay={100}>
+          <div className="featured-work-tabs" role="tablist" aria-label="Work categories">
+            {worksTabs.map((tab) => (
               <button
+                key={tab.id}
                 type="button"
-                className="project-preview-wrap"
-                onClick={() => navigateTo(`/projects/${item.slug}`)}
-                aria-label={`View ${item.title} case study`}
+                role="tab"
+                id={`works-tab-${tab.id}`}
+                aria-selected={tab.id === activeTab}
+                aria-controls={`works-panel-${tab.id}`}
+                className={`featured-work-tab${tab.id === activeTab ? " is-active" : ""}`}
+                onClick={() => setActiveTab(tab.id)}
               >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+        </Reveal>
+
+        <div
+          className="projects-list"
+          role="tabpanel"
+          id={`works-panel-${currentTab.id}`}
+          aria-labelledby={`works-tab-${currentTab.id}`}
+        >
+          {currentTab.items.map((item, index) => (
+            <Reveal as="article" key={item.index} className="project-row" delay={index * 90}>
+              <div className="project-preview-wrap">
                 <img
                   className="project-preview-image"
                   src={item.preview}
                   alt={`${item.titleAlt} preview`}
-                  style={item.previewScale ? { transform: `scale(${item.previewScale})` } : undefined}
+                  style={{
+                    transform: item.previewScale ? `scale(${item.previewScale})` : undefined,
+                    objectPosition: item.previewPosition,
+                  }}
                 />
-              </button>
+              </div>
+
+              <div className="project-meta-row">
+                <img className="project-title-image" src={item.titleImage} alt={item.titleAlt} />
+
+                {item.domainTags && (
+                  <p className="project-domain-tags">{item.domainTags}</p>
+                )}
+              </div>
+
+              <p className="project-row-summary">
+                {item.projectTitle && (
+                  <>
+                    <strong className="project-row-summary-title">{item.projectTitle}</strong>
+                    {" — "}
+                  </>
+                )}
+                {item.description}
+              </p>
+
+              {/* Covers the whole card so the "View" cursor matches what is
+                  actually clickable. */}
+              <button
+                type="button"
+                className="project-row-link"
+                onClick={() => navigateTo(`/projects/${item.slug}`)}
+                aria-label={`View ${item.title} case study`}
+              />
             </Reveal>
           ))}
+
+          {currentTab.items.length === 0 && (
+            <Reveal className="featured-work-empty" delay={160}>
+              <p>Brand design case studies are coming soon.</p>
+            </Reveal>
+          )}
         </div>
       </section>
+
+      <ToolsRailSection />
 
       <Footer />
     </div>
