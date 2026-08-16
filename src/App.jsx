@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import heroImg from "../Assets/Hero img.webp";
 import profilePhoto from "../Assets/profile photo.png";
 import aiWorkflowImg1 from "../Assets/ai & workflow img 1.webp";
@@ -31,7 +31,6 @@ import mcdeliveryLogo from "../Assets/McDelivery logo.png";
 import mcdeliveryPreview from "../Assets/McDelivery Preview img.jpg";
 import cardinalHealthLogo from "../Assets/Cardinal health.svg";
 import cardinalHealthProjectLogo from "../Assets/cardinal-health-logo.svg";
-import cardinalHealthPreview from "../Assets/Cardinal health Preview img.jpg";
 import brightlineLogo from "../Assets/Brightline_Logo.svg.png";
 import brightlinePreview from "../Assets/Brightline Preview img.png";
 import brightlinePdf from "../Assets/Brightline.pdf";
@@ -99,34 +98,42 @@ const experienceItems = [
     company: "Cardinal Health",
     role: "Senior Product Designer",
     logo: cardinalHealthLogo,
-    description:
-      "Leading UX/product design for Order Express, a large-scale healthcare procurement platform used by hospitals and pharmacies. Designed ordering workflows, dashboards, inventory systems, financial tracking experiences, and scalable design systems.",
-    highlights: ["+28% order completion", "-35% developer handoff time", "WCAG 2.1 AA compliance"],
+    points: [
+      "Led UX/product design for Order Express, a large-scale healthcare procurement platform used by hospitals and pharmacies",
+      "Designed ordering workflows, dashboards, inventory systems, financial tracking experiences, and scalable design systems",
+      "+28% order completion, -35% developer handoff time, and full WCAG 2.1 AA compliance",
+    ],
   },
   {
     range: "Sep 2022 - Jan 2024",
     company: "Robosoft Technologies",
     role: "Senior UX Designer",
     logo: robosoftLogo,
-    description:
-      "Designed OTT and consumer digital products including Discovery+, Willow TV, and Al Maha Island. Led cross-device UX across TV, mobile, and desktop ecosystems.",
-    highlights: ["+40% faster new screen design", "Improved discovery & engagement flows"],
+    points: [
+      "Designed OTT and consumer digital products including Discovery+, Willow TV, and Al Maha Island",
+      "Led cross-device UX across TV, mobile, and desktop ecosystems",
+      "+40% faster new screen design and improved discovery & engagement flows",
+    ],
   },
   {
     range: "Oct 2021 - Sep 2022",
     company: "Deloitte",
     role: "UX/UI Designer",
     logo: deloitteLogo,
-    description:
-      "Designed enterprise dashboards and workflow systems for Fortune 500 environments, translating business complexity into usable product experiences.",
+    points: [
+      "Designed enterprise dashboards and workflow systems for Fortune 500 environments",
+      "Translated business complexity into usable product experiences",
+    ],
   },
   {
     range: "Jan 2020 - Oct 2021",
     company: "eClerx",
     role: "Visual Designer",
     logo: eclerxLogo,
-    description:
-      "Created digital experiences for Dell, Sephora, DFS, and Radisson across campaign, landing page, and dashboard ecosystems.",
+    points: [
+      "Created digital experiences for Dell, Sephora, DFS, and Radisson",
+      "Delivered across campaign, landing page, and dashboard ecosystems",
+    ],
   },
 ];
 
@@ -588,101 +595,262 @@ const mcdeliveryCaseStudy = {
 
 const cardinalHealthCaseStudy = {
   hideVisualsLink: true,
-  projectTitle: "Order Express  - Healthcare Procurement Platform Redesign",
+  projectTitle: "Order Express — A home for zero-error medicine ordering",
   projectTagline:
-    "Redesigning a large-scale B2B healthcare ordering and inventory system used by pharmacies and hospitals.",
+    "A design case study of simplifying procurement for 100,000+ healthcare professionals.",
+  heroSubtitle:
+    "Redesigning a large-scale healthcare procurement backbone built for pharmacies and hospital procurement teams.",
+  disclaimer:
+    "Before we dive in, I want to note that, in compliance with my confidentiality agreement, I've omitted proprietary business data and internal materials from this case study. The insights shared here are my own and don't necessarily represent the views of Cardinal Health.",
   quickInfo: [
-    { label: "Role", value: "Senior UX Designer" },
-    { label: "Platform", value: "Web Application (Desktop-first)" },
-    { label: "Industry", value: "Healthcare / B2B / E-commerce" },
-    { label: "Scope", value: "Ordering System, Inventory Management, Dashboards, UX Systems" },
+    { label: "Role", value: "Lead / Senior Product Designer" },
+    { label: "Timeline", value: "6 Months" },
+    { label: "Platform", value: "Web / Enterprise Desktop Application" },
+    {
+      label: "Scope",
+      value: "Workflow Analysis, Information Architecture, UI Systems, AI Prototyping",
+    },
     {
       label: "Skills",
-      value: "Figma, Research, Prototyping, Design Systems, Stakeholder Collaboration",
+      value: "Figma, React Prototyping, Design Systems, Keyboard Accessibility",
     },
   ],
   sectionHeading:
-    "Designing complex healthcare systems that improve efficiency, accuracy, and decision-making.",
+    "Eliminating ambiguity and streamlining procurement for 100,000+ healthcare products.",
   highlightMetrics: [
     "100K+ Healthcare Products",
-    "10K+ Active Pharmacy Users",
-    { value: "28%", label: "Improved Order", secondLine: "Completion Rate" },
-    "35% Faster Design-to-Dev Handoff",
-    "25% Reduced User Errors",
-    { value: "Enterprise Scale", label: "Multi-role System", primaryValue: true },
+    { value: "+28%", label: "Order Completion", secondLine: "Rate" },
+    { value: "-25%", label: "High-Risk", secondLine: "Errors" },
+    { value: "-35%", label: "Design-to-Dev", secondLine: "Handoff" },
+    "40+ Screens Redesigned",
+    { value: "WCAG 2.1 AA", label: "Accessibility", secondLine: "Compliance", primaryValue: true },
   ],
   overview:
-    "Cardinal Health's Order Express is a large-scale B2B platform used by pharmacies and healthcare providers to order medicines, manage inventory, and track expenses. The existing system had grown complex over time, making it difficult for users to efficiently place orders, manage stock, and track financial data. The redesign focused on simplifying workflows, improving usability, and creating a scalable system for long-term growth.",
+    "Order Express is the ordering and inventory backbone Cardinal Health built for pharmacies and hospital procurement teams - the system that decides whether a hospital ward has the medication it needs, when it needs it. It handles everything from routine restocks to time-critical ICU orders, across a catalog of 100,000+ healthcare products. The platform had grown for over a decade, and every new integration got bolted onto the same interface. By the time I joined it was still doing its job, but at a cost: pharmacy directors and clinical buyers were spending more time fighting the tool than managing their supply chain.",
   problemStatement:
-    "The platform faced several critical usability challenges: complex ordering workflows with high cognitive load, inefficient inventory and stock management processes, poor visibility into expenses and reporting, high error rates during order placement, and inconsistent UI patterns across modules. The goal was to streamline workflows, reduce errors, and improve operational efficiency.",
+    "Cardinal Health's own data pointed to where the friction actually lived. 78% of order delays traced back to confusing error states during bulk CSV uploads, and 42% of support tickets were people trying to locate a split shipment invoice. Both point to the same root problem: the system told users something was wrong after they had already done the work. Every redesign decision after that tried to move the feedback earlier - ideally before the user hit a wall at all.",
   goals: [
-    "Simplify ordering and checkout flows",
-    "Improve inventory management experience",
-    "Provide clear financial insights and reporting",
-    "Reduce user errors in critical workflows",
-    "Build a scalable and consistent design system",
+    "Eliminate ambiguity in high-volume ordering with real-time inventory truth",
+    "Catch errors before submission, not after",
+    "Make complexity legible across 100,000+ SKUs, multiple wards, and approval chains",
+    "Move system feedback earlier in every critical flow",
+    "Ship WCAG 2.1 AA with keyboard-first navigation as a speed feature",
   ],
   roleItems: [
-    "Stakeholder interviews and workflow analysis",
-    "UX audits and problem identification",
-    "Information architecture restructuring",
-    "Wireframing complex flows and dashboards",
-    "High-fidelity UI design",
-    "Design system creation and documentation",
-    "Developer handoff and collaboration",
+    "Workflow analysis with pharmacy directors and clinical buyers",
+    "Information architecture for ordering, inventory, and reporting",
+    "Wireframing across 40+ screens",
+    "High-fidelity UI design and interaction states",
+    "Design system, status tokens, and documentation",
+    "AI-assisted prototyping and developer handoff",
+    "Close work with product, engineering, support, and compliance",
+  ],
+  contextCards: [
+    {
+      title: "High-Stakes Clinical Environment",
+      description:
+        "Unlike a typical e-commerce checkout, a mistake here isn't a returned package. It's a wrong dosage on a hospital floor, a stockout during a patient emergency, or a compliance flag on a controlled substance.",
+    },
+    {
+      title: "Ten Years of Features, One Screen",
+      description:
+        "Warehouse inventory, drug registries, split-shipment logistics, and multi-level approvals were each bolted onto the same interface over a decade.",
+    },
+    {
+      title: "100,000+ Healthcare Products",
+      description:
+        "Routine restocks and time-critical ICU orders run through the same catalog, for pharmacy directors, clinical buyers, and hospital procurement teams.",
+    },
+  ],
+  researchIntro:
+    "I talked to the people who order under pressure - pharmacy directors, clinical buyers, and health system supply chain managers. Twenty hours of transcripts were synthesised into a friction map that told us exactly where the platform was losing people.",
+  researchStats: [
+    { value: "78%", label: "Order delays from unclear errors" },
+    { value: "42%", label: "Tickets on split invoices" },
+    { value: "20+", label: "Hours of transcripts" },
+    { value: "40+", label: "Screens audited" },
+  ],
+  researchQuotes: [
+    {
+      quote: "Ordering critical medication shouldn't feel like filling out a 1998 tax form.",
+      name: "Pharmacy Director",
+      role: "Regional Acute Care Network",
+      tag: "Pain: legacy workflow",
+      tagClass: "tag-pain",
+    },
+    {
+      quote: "If an item is out of stock, tell me before I spend 20 minutes building an order.",
+      name: "Clinical Buyer",
+      role: "Health System Supply Chain",
+      tag: "Need: live inventory",
+      tagClass: "tag-need",
+    },
+  ],
+  keyFindings: [
+    {
+      label: "Core root problem",
+      text: "The system told users something was wrong after they'd already done the work. Every redesign decision after this tried to move that feedback earlier - ideally, before the user even hit a wall.",
+      variant: "insight-gap",
+    },
+    {
+      label: "Two concrete brief goals",
+      text: "Eliminate ambiguity in high-volume ordering, and make complexity legible. 100,000+ SKUs, multiple wards, multiple approval chains - none of that should require a tutorial.",
+      variant: "insight-opportunity",
+    },
+  ],
+  pillars: [
+    {
+      badge: "Pillar 01",
+      title: "Real-time inventory & smart search",
+      description:
+        "Search now understands intent, not just exact matches - NDC codes, drug names, fuzzy spelling. When something's backordered, the system immediately surfaces a generic equivalent instead of a dead end.",
+      points: [
+        "Fuzzy search that understands NDC codes and drug names",
+        "Live warehouse availability on every result",
+        "Generic equivalents surfaced the moment an item is backordered",
+      ],
+    },
+    {
+      badge: "Pillar 02",
+      title: "A checkout that catches mistakes before you do",
+      description:
+        "Bulk ordering used to be a rigid five-step flow where an error on step two meant starting over. I redesigned it into a single-page drawer with inline, line-item validation - so a pharmacist ordering for three different hospital wards can split, correct, and confirm without ever leaving the page.",
+      points: [
+        "Inline, line-item validation with one-click correction",
+        "Split one cart across ICU, ER, and Surgery on a single screen",
+        "Average order completion dropped to under 8 minutes",
+      ],
+    },
+    {
+      badge: "Pillar 03",
+      title: "A design system built for density, not decoration",
+      description:
+        "This isn't a consumer app - it's dense data tables, status tokens, and multi-role permissions used all day, every day. I built a WCAG 2.1 AA-compliant component library so that “Approved,” “Backordered,” and “Split Ship” mean the same thing everywhere in the product, for every role.",
+      points: [
+        "Status and density tokens shared with the frontend codebase",
+        "One vocabulary for every state, across every role",
+        "Full keyboard navigation and contrast compliance",
+      ],
+    },
+  ],
+  beforeAfter: {
+    label: "Bulk checkout - before vs after",
+    before: {
+      tag: "Before - legacy system",
+      title: "Five-step fragmented modal with hidden errors",
+      points: [
+        "Five separate modals - an error on step two meant starting over",
+        "CSV upload errors wiped the whole cart with no line-item highlighting",
+        "No multi-ward routing - four departments meant four separate orders",
+        "Average completion: 35 to 45 minutes per order",
+      ],
+    },
+    after: {
+      tag: "After - redesigned system",
+      title: "Single-page progressive drawer with real-time error callouts",
+      points: [
+        "Inline validation with one-click auto-correction at line-item level",
+        "Multi-location ward splitting from a single master cart",
+        "Proactive split-shipment calculation with clear delivery ETAs",
+        "Average completion: under 8 minutes",
+      ],
+    },
+  },
+  aiWorkflow: {
+    heading: "Designing at enterprise scale, faster",
+    intro:
+      "Forty-plus screens across a system this complex used to mean weeks of manual spec work. I brought AI-native tools into the process itself.",
+    items: [
+      {
+        title: "Accelerated ideation",
+        description:
+          "Synthesised 20+ hours of user interview transcripts into workflow friction maps instead of doing it by hand.",
+      },
+      {
+        title: "Live interactive prototypes",
+        description:
+          "Built working prototypes in code (not just static mocks) so pharmacists could test real filtering and table behavior, not a simulation of it.",
+      },
+      {
+        title: "Automated token handoff",
+        description:
+          "Generated design tokens directly in developer-ready format, cutting handoff friction by roughly a third.",
+      },
+    ],
+    note: "The tools changed how fast I could get from insight to a testable prototype. They didn't change the judgment calls - which workflow to prioritize, what “done” looks like for a pharmacist mid-shift - that part stayed mine.",
+  },
+  learnings: [
+    {
+      number: "#1",
+      title: "In enterprise, density isn't the enemy. Ambiguity is.",
+      description:
+        "I went in assuming we'd need to simplify by removing information. What users actually wanted was more information, organized with a clear hierarchy - scannable tables beat minimalist cards for this audience.",
+    },
+    {
+      number: "#2",
+      title: "Every “improvement” is a risk when money and medicine are involved.",
+      description:
+        "Small changes - a different error message, a reordered field - could ripple into real clinical workflows. Working closely with support and compliance teams early kept us from shipping something technically better but operationally dangerous.",
+    },
+    {
+      number: "#3",
+      title: "Keyboard access isn't a checkbox here, it's a workflow requirement.",
+      description:
+        "Pharmacy staff building large orders rely on keyboard navigation to move fast. Accessibility work doubled as a speed improvement.",
+    },
   ],
   process: [
     {
       title: "Workflow Analysis",
       description:
-        "Mapped end-to-end user journeys including ordering, inventory tracking, and billing to identify friction points.",
+        "Mapped end-to-end journeys across ordering, inventory tracking, and billing with procurement teams to locate every friction point.",
     },
     {
-      title: "Information Architecture",
+      title: "Research & Synthesis",
       description:
-        "Reorganized system structure to reduce complexity and improve task clarity.",
+        "Synthesised 20+ hours of interview transcripts into a prioritised friction map, and traced each pain point back to a root cause.",
     },
     {
-      title: "Dashboard & Data Design",
+      title: "Architecture & Wireframing",
       description:
-        "Designed dashboards to provide real-time insights into orders, expenses, and inventory.",
+        "Restructured the information architecture and wireframed ordering, inventory, and dashboard flows across 40+ screens.",
     },
     {
-      title: "System Design",
+      title: "System Design & Validation",
       description:
-        "Created a unified component library to ensure consistency across multiple modules.",
+        "Built the component library and validated complex table and checkout flows with live coded prototypes before handoff.",
     },
   ],
   improvements: [
     {
-      title: "Simplified Ordering Flow",
+      title: "Search That Understands Intent",
       description:
-        "Reduced complexity in product selection, cart management, and checkout.",
+        "NDC codes, drug names, and fuzzy spelling all resolve, with live availability on every result.",
     },
     {
-      title: "Improved Inventory Management",
+      title: "Checkout That Catches Mistakes Early",
       description:
-        "Enabled faster stock tracking and auditing with clearer system feedback.",
+        "A single-page drawer with line-item validation replaced the rigid five-step modal flow.",
     },
     {
-      title: "Better Financial Visibility",
+      title: "One Vocabulary Across Every Role",
       description:
-        "Introduced structured dashboards for tracking expenses, invoices, and reports.",
+        "Status tokens mean the same thing in every module, for every permission level.",
     },
     {
-      title: "Reduced User Errors",
+      title: "Keyboard-First Speed",
       description:
-        "Improved validation, feedback, and system clarity across workflows.",
+        "Full keyboard navigation turned an accessibility requirement into a throughput gain for pharmacy staff.",
     },
   ],
   outcome:
-    "The redesign significantly improved operational efficiency and reduced friction in critical workflows across the platform.",
+    "The redesign moved the numbers that matter in a procurement system: more completed orders, fewer high-risk mistakes, and a faster path from design to production. It shipped fully WCAG 2.1 AA compliant with complete keyboard navigation support.",
   expectedImpact: [
-    "Increased order completion rate",
-    "Reduced user errors in high-risk workflows",
-    "Faster task execution across modules",
-    "Improved clarity in financial and inventory tracking",
-    "Reduced developer handoff time through systemization",
+    "+28% order completion rate boost across regional hospital networks",
+    "-25% reduction in high-risk ordering errors: wrong dosage, duplicate orders, invalid NDCs",
+    "-35% faster design-to-development handoff",
+    "Average order completion down from 35-45 minutes to under 8 minutes",
+    "Fully WCAG 2.1 AA compliant with complete keyboard navigation support",
   ],
   visualStrategyTitle: "System Thinking",
   galleryCaptions: [
@@ -693,7 +861,7 @@ const cardinalHealthCaseStudy = {
     "Before vs After workflow comparison focused on reducing steps and cognitive load",
   ],
   whyThisMatters:
-    "This project demonstrates my ability to design complex enterprise systems where accuracy, efficiency, and scalability directly impact business operations. It highlights my strength in solving high-stakes UX problems beyond visual design.",
+    "“In enterprise B2B, density is not the enemy - ambiguity is. High-volume workflows thrive on clear visual hierarchy, scannable data tables, and keyboard accessibility.” Designing for critical healthcare operations reinforced that every bit of cognitive friction removed from a procurement screen translates into safer, faster hospital operations.",
 };
 
 const brightlineCaseStudy = {
@@ -1852,7 +2020,20 @@ function ResumePage() {
   return (
     <div className="page-view">
       <section className="resume-section">
-        <Reveal as="p" className="section-kicker">Resume</Reveal>
+        <Reveal className="section-kicker-header">
+          <button
+            type="button"
+            className="work-back-button"
+            onClick={() => navigateTo("/")}
+            aria-label="Back to Home"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="19" y1="12" x2="5" y2="12" />
+              <polyline points="12 19 5 12 12 5" />
+            </svg>
+          </button>
+          <span className="section-kicker">Resume</span>
+        </Reveal>
 
         <Reveal className="about-resume-block">
           <div className="section-label">
@@ -1908,54 +2089,28 @@ function ResumePage() {
           <div className="section-label">
             <h2>Work Experience</h2>
           </div>
-          <div className="timeline-list">
+          <div className="xp-list">
             {experienceItems.map((item, index) => (
               <Reveal
                 as="article"
                 key={`${item.company}-${item.range}`}
-                className="timeline-item"
+                className="xp-item"
                 delay={index * 80}
               >
-                <div className="timeline-meta">
-                  <p className="timeline-range">{item.range}</p>
-                  <div className="timeline-company">
-                    {item.logo ? (
-                      <img className="logo-image" src={item.logo} alt={`${item.company} logo`} />
-                    ) : null}
-                    <div>
-                      <h3>{item.company}</h3>
-                      <p>{item.role}</p>
-                    </div>
-                  </div>
+                <p className="xp-range">{item.range}</p>
+                <div className="xp-track" aria-hidden="true">
+                  <span className="xp-dot" />
+                  <span className="xp-line" />
                 </div>
-                <div className="timeline-content">
-                  <p className="timeline-description">{item.description}</p>
-                  {item.highlights?.length ? (
-                    <div className="timeline-tags" aria-label={`${item.company} impact highlights`}>
-                      {item.highlights.map((highlight) => (
-                        <span key={highlight} className="timeline-tag">
-                          {highlight}
-                        </span>
-                      ))}
-                    </div>
-                  ) : null}
+                <div className="xp-body">
+                  <h3 className="xp-role">{item.role}</h3>
+                  <p className="xp-company">{item.company}</p>
+                  <ul className="xp-points">
+                    {item.points.map((point) => (
+                      <li key={point}>{point}</li>
+                    ))}
+                  </ul>
                 </div>
-              </Reveal>
-            ))}
-          </div>
-        </Reveal>
-
-        <div className="section-divider" />
-
-        <Reveal className="impact-block">
-          <div className="section-label">
-            <h2>Selected Impact</h2>
-          </div>
-          <div className="impact-grid">
-            {impactMetrics.map((metric, index) => (
-              <Reveal as="article" key={metric.label} className="impact-card" delay={index * 70}>
-                <span className="impact-value">{metric.value}</span>
-                <span className="impact-label">{metric.label}</span>
               </Reveal>
             ))}
           </div>
@@ -1965,26 +2120,22 @@ function ResumePage() {
 
         <Reveal className="timeline-block">
           <div className="section-label">
-            <h2>
-              <span className="heading-line">Education &amp;</span>
-              <span className="heading-line">Learning</span>
-            </h2>
+            <h2>Education &amp; Learning</h2>
           </div>
-          <div className="timeline-list">
+          <div className="edu-grid">
             {educationItems.map((item, index) => (
               <Reveal
                 as="article"
                 key={`${item.school}-${item.range}`}
-                className="timeline-item timeline-item-education"
-                delay={index * 80}
+                className="edu-card"
+                delay={index * 70}
               >
-                <p className="timeline-range">{item.range}</p>
-                <div className="timeline-company timeline-company-education">
-                  <img className="logo-image" src={item.logo} alt={`${item.school} logo`} />
-                  <div className="timeline-education-copy">
-                    <h3>{item.school}</h3>
-                    <p>{item.degree}</p>
-                  </div>
+                <span className="edu-mark">
+                  <img src={item.logo} alt="" />
+                </span>
+                <div className="edu-copy">
+                  <h3>{item.school}</h3>
+                  <p>{item.degree}</p>
                 </div>
               </Reveal>
             ))}
@@ -2195,523 +2346,309 @@ function ContactPage() {
   );
 }
 
-function CardinalHealthCaseStudyPage() {
-  const [activeSection, setActiveSection] = useState("context-problem");
-  const [beforeAfterTab, setBeforeAfterTab] = useState("after");
+const caseNavIcons = {
+  start: (
+    <>
+      <path d="M12 6.6C10.6 5.3 8.7 4.7 6.2 4.7H3.6v12.2h2.6c2.5 0 4.4.6 5.8 1.9" />
+      <path d="M12 6.6c1.4-1.3 3.3-1.9 5.8-1.9h2.6v12.2h-2.6c-2.5 0-4.4.6-5.8 1.9" />
+      <path d="M12 6.6v12.2" />
+    </>
+  ),
+  quote: (
+    <>
+      <path d="M9.6 7.6H6.1A1.6 1.6 0 0 0 4.5 9.2v2.5a1.6 1.6 0 0 0 1.6 1.6h2.4v1.2a2.2 2.2 0 0 1-2.2 2.2" />
+      <path d="M19.5 7.6H16a1.6 1.6 0 0 0-1.6 1.6v2.5a1.6 1.6 0 0 0 1.6 1.6h2.4v1.2a2.2 2.2 0 0 1-2.2 2.2" />
+    </>
+  ),
+  challenge: (
+    <>
+      <circle cx="12" cy="12" r="8.2" />
+      <circle cx="12" cy="12" r="4.2" />
+      <circle cx="12" cy="12" r="0.9" fill="currentColor" stroke="none" />
+    </>
+  ),
+  role: (
+    <>
+      <rect x="3.6" y="5.2" width="16.8" height="13.6" rx="2.4" />
+      <circle cx="9.1" cy="10.8" r="1.9" />
+      <path d="M6.2 15.9c.5-1.4 1.6-2.1 2.9-2.1s2.4.7 2.9 2.1" />
+      <path d="M14.6 10.4h3.4M14.6 13.6h3.4" />
+    </>
+  ),
+  business: (
+    <>
+      <path d="M3.8 15.4 8 10.9l3 2.9 4.4-5.2" />
+      <path d="M12.9 8.6h2.5v2.5" />
+      <circle cx="8.4" cy="17.4" r="2.6" />
+      <path d="m10.4 19.4 1.8 1.8" />
+    </>
+  ),
+  research: (
+    <>
+      <circle cx="12" cy="12" r="8.2" />
+      <path d="M9.4 10.6h.02M14.6 10.6h.02" />
+      <path d="M8.7 14.4c1 1 2 1.5 3.3 1.5s2.3-.5 3.3-1.5" />
+    </>
+  ),
+  competitors: (
+    <>
+      <rect x="4.4" y="4.2" width="15.2" height="15.6" rx="1.8" />
+      <path d="M8 8h1.2M8 12h1.2M8 16h1.2M14.8 8H16M14.8 12H16M14.8 16H16M11.4 8h1.2M11.4 12h1.2M11.4 16h1.2" />
+    </>
+  ),
+  personas: (
+    <>
+      <circle cx="9" cy="9.4" r="2.9" />
+      <path d="M3.8 18.6c.7-2.7 2.7-4.2 5.2-4.2s4.5 1.5 5.2 4.2" />
+      <path d="M15.8 7.1a2.9 2.9 0 0 1 0 5.6" />
+      <path d="M16.9 14.7c1.7.4 2.9 1.7 3.4 3.9" />
+    </>
+  ),
+  journey: (
+    <>
+      <circle cx="6" cy="7.2" r="2.2" />
+      <circle cx="18" cy="16.8" r="2.2" />
+      <path d="M8.2 7.2h5.4a2.9 2.9 0 0 1 0 5.8h-3.2a2.9 2.9 0 0 0 0 5.8h5.4" />
+    </>
+  ),
+  ia: (
+    <>
+      <rect x="9" y="3.6" width="6" height="4.4" rx="1.2" />
+      <rect x="3.2" y="16" width="6" height="4.4" rx="1.2" />
+      <rect x="14.8" y="16" width="6" height="4.4" rx="1.2" />
+      <path d="M12 8v4.2M6.2 16v-3.8h11.6V16" />
+    </>
+  ),
+  flows: (
+    <>
+      <rect x="3.4" y="8.6" width="6.4" height="6.8" rx="1.6" />
+      <rect x="14.2" y="4.4" width="6.4" height="5.6" rx="1.6" />
+      <rect x="14.2" y="14" width="6.4" height="5.6" rx="1.6" />
+      <path d="M9.8 11.2h2.4a1.6 1.6 0 0 0 1.6-1.6V7.2M9.8 12.8h2.4a1.6 1.6 0 0 1 1.6 1.6v2.4" />
+    </>
+  ),
+  process: (
+    <>
+      <circle cx="6" cy="6.4" r="2.2" />
+      <circle cx="6" cy="17.6" r="2.2" />
+      <path d="M6 8.6v6.8" />
+      <path d="M10.4 6.4h9.4M10.4 12h7M10.4 17.6h9.4" />
+    </>
+  ),
+  solution: (
+    <>
+      <path d="M9.6 3.9 11 8.1l4.2 1.4-4.2 1.4-1.4 4.2-1.4-4.2L4 9.5l4.2-1.4z" />
+      <path d="M17.2 13.4l.8 2.3 2.3.8-2.3.8-.8 2.3-.8-2.3-2.3-.8 2.3-.8z" />
+    </>
+  ),
+  improvements: (
+    <>
+      <path d="M20.2 11.3V12a8.2 8.2 0 1 1-4.9-7.5" />
+      <path d="m8.8 11.4 2.8 2.8 8.6-8.6" />
+    </>
+  ),
+  outcome: (
+    <>
+      <rect x="3.6" y="4.4" width="16.8" height="15.2" rx="2.4" />
+      <path d="m7.6 14.8 3-3.2 2.3 2.2 3.5-4" />
+      <path d="M14.2 9.8h2.2V12" />
+    </>
+  ),
+  visuals: (
+    <>
+      <rect x="3.4" y="4.6" width="17.2" height="14.8" rx="2.4" />
+      <circle cx="8.6" cy="9.6" r="1.6" />
+      <path d="m4.4 17 4.5-4.4 3.1 3 3-2.7 4.6 4.1" />
+    </>
+  ),
+  learnings: (
+    <>
+      <path d="M12 4.2 21 8.6l-9 4.4-9-4.4z" />
+      <path d="M6.6 10.6v4.6c0 1.6 2.4 2.9 5.4 2.9s5.4-1.3 5.4-2.9v-4.6" />
+    </>
+  ),
+  info: (
+    <>
+      <circle cx="12" cy="12" r="8.2" />
+      <path d="M12 11.1v5.1" />
+      <path d="M12 8h.02" />
+    </>
+  ),
+  goals: (
+    <>
+      <path d="M6.2 20.4V4" />
+      <path d="M6.2 5.1h10.9l-2.1 3.5 2.1 3.5H6.2" />
+    </>
+  ),
+  ai: (
+    <>
+      <rect x="5.4" y="5.4" width="13.2" height="13.2" rx="3.2" />
+      <path d="M9.6 2.8v2.6M14.4 2.8v2.6M9.6 18.6v2.6M14.4 18.6v2.6M2.8 9.6h2.6M2.8 14.4h2.6M18.6 9.6h2.6M18.6 14.4h2.6" />
+      <path d="m9.8 14.6 1.6-4.4 1.6 4.4" />
+      <path d="M10.4 13.2h2" />
+      <path d="M15.4 10.2v4.4" />
+    </>
+  ),
+};
 
-  const sections = [
-    { id: "context-problem", label: "01. Context & Problem" },
-    { id: "research-insights", label: "02. Research & Insights" },
-    { id: "solution-pillars", label: "03. Core Solution Pillars" },
-    { id: "ai-workflow", label: "04. AI-Accelerated Workflow" },
-    { id: "outcomes-learnings", label: "05. Outcomes & Learnings" },
-  ];
+function CaseNavIcon({ name }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      focusable="false"
+    >
+      {caseNavIcons[name] ?? caseNavIcons.start}
+    </svg>
+  );
+}
+
+const CASE_NAV_SCROLL_OFFSET = 104;
+
+function scrollToCaseSection(id) {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  const target = document.getElementById(id);
+  if (!target) {
+    return;
+  }
+
+  const top = target.getBoundingClientRect().top + window.scrollY - CASE_NAV_SCROLL_OFFSET;
+  window.scrollTo({ top: Math.max(top, 0), behavior: "smooth" });
+}
+
+/* Tracks which case study section is currently under the reading line. */
+function useActiveCaseSection(sectionIds) {
+  const [activeId, setActiveId] = useState(sectionIds[0] ?? null);
+  /* A click wins over scroll tracking until its smooth scroll settles. */
+  const lockedUntil = useRef(0);
+  const idKey = sectionIds.join("|");
 
   useEffect(() => {
-    const observerOptions = {
-      root: null,
-      rootMargin: "-20% 0px -50% 0px",
-      threshold: 0,
-    };
+    if (typeof window === "undefined" || !idKey) {
+      return undefined;
+    }
 
-    const handleIntersect = (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setActiveSection(entry.target.id);
+    const ids = idKey.split("|");
+
+    const update = () => {
+      if (Date.now() < lockedUntil.current) {
+        return;
+      }
+
+      /* The reading line normally sits just below where a clicked section lands,
+         so clicking and scrolling agree. The last sections are together shorter
+         than a viewport, though, so they can never reach it — as the page runs
+         out of scroll, the line slides down to the foot of the viewport and lets
+         each of them take a turn instead of jumping straight to the last one. */
+      const base = CASE_NAV_SCROLL_OFFSET + 24;
+      const maxScroll = Math.max(
+        0,
+        document.documentElement.scrollHeight - window.innerHeight,
+      );
+      const remaining = maxScroll - window.scrollY;
+      const tail = 240;
+      const tailProgress = remaining >= tail ? 0 : Math.min(1, (tail - remaining) / tail);
+      const readingLine = base + (window.innerHeight - base) * tailProgress;
+
+      let current = ids[0];
+      ids.forEach((id) => {
+        const element = document.getElementById(id);
+        if (element && element.getBoundingClientRect().top <= readingLine) {
+          current = id;
         }
       });
+
+      setActiveId(current);
     };
 
-    const observer = new IntersectionObserver(handleIntersect, observerOptions);
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
 
-    sections.forEach((sec) => {
-      const el = document.getElementById(sec.id);
-      if (el) observer.observe(el);
-    });
+    return () => {
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  }, [idKey]);
 
-    return () => observer.disconnect();
-  }, []);
-
-  const scrollToAnchor = (id) => {
-    const el = document.getElementById(id);
-    if (el) {
-      const yOffset = -90;
-      const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      window.scrollTo({ top: y, behavior: "smooth" });
-      setActiveSection(id);
-    }
+  const selectSection = (id) => {
+    lockedUntil.current = Date.now() + 900;
+    setActiveId(id);
+    scrollToCaseSection(id);
   };
 
+  return { activeId, selectSection };
+}
+
+function CaseStudySidebar({ items, activeId, onSelect }) {
+  const railRef = useRef(null);
+
+  /* Long case studies overflow the rail, so keep the active item in view. */
+  useEffect(() => {
+    const rail = railRef.current;
+    const active = rail?.querySelector(".case-nav-item.is-active");
+    if (!rail || !active) {
+      return;
+    }
+
+    const railBox = rail.getBoundingClientRect();
+    const itemBox = active.getBoundingClientRect();
+    let { scrollTop: top, scrollLeft: left } = rail;
+
+    if (itemBox.top < railBox.top) {
+      top -= railBox.top - itemBox.top + 12;
+    } else if (itemBox.bottom > railBox.bottom) {
+      top += itemBox.bottom - railBox.bottom + 12;
+    }
+
+    if (itemBox.left < railBox.left) {
+      left -= railBox.left - itemBox.left + 12;
+    } else if (itemBox.right > railBox.right) {
+      left += itemBox.right - railBox.right + 12;
+    }
+
+    if (top !== rail.scrollTop || left !== rail.scrollLeft) {
+      rail.scrollTo({ top, left, behavior: "smooth" });
+    }
+  }, [activeId]);
+
   return (
-    <div className="page-view case-study-editorial">
-      {/* 1. Header Navigation & Hero */}
-      <section className="ch-hero-section">
-        <Reveal className="ch-back-bar" delay={40}>
-          <button
-            type="button"
-            className="ch-back-button"
-            onClick={() => navigateTo("/projects")}
-            aria-label="Back to Selected Work"
-          >
-            <span aria-hidden="true">←</span>
-            <span>Back to Selected Work</span>
-          </button>
-        </Reveal>
-
-        <Reveal className="ch-hero-content" delay={80}>
-          <div className="ch-pill-group">
-            <span className="ch-tag-pill">HEALTHCARE / B2B ENTERPRISE / DESIGN SYSTEMS</span>
-          </div>
-          <h1 className="ch-hero-title">
-            Redesigning high-stakes procurement for 100,000+ healthcare professionals.
-          </h1>
-          <p className="ch-hero-subtitle">
-            Transforming a fragmented legacy medical ordering platform into an intuitive, zero-error enterprise system.
-          </p>
-
-          {/* 4-Column Metadata Grid Card */}
-          <div className="ch-metadata-card">
-            <div className="ch-meta-col">
-              <span className="ch-meta-label">Role</span>
-              <span className="ch-meta-val">Lead / Senior Product Designer</span>
-            </div>
-            <div className="ch-meta-col">
-              <span className="ch-meta-label">Timeline</span>
-              <span className="ch-meta-val">6 Months</span>
-            </div>
-            <div className="ch-meta-col">
-              <span className="ch-meta-label">Platform</span>
-              <span className="ch-meta-val">Web / Enterprise Desktop Application</span>
-            </div>
-            <div className="ch-meta-col">
-              <span className="ch-meta-label">Core Focus</span>
-              <span className="ch-meta-val">Complex Workflows, Inventory Architecture, Design Tokens, AI-Assisted Prototyping</span>
-            </div>
-          </div>
-        </Reveal>
-
-        {/* Hero Browser Mockup Frame Container */}
-        <Reveal className="ch-browser-frame" delay={160}>
-          <div className="ch-browser-topbar">
-            <div className="ch-window-dots">
-              <span className="dot dot-red" />
-              <span className="dot dot-yellow" />
-              <span className="dot dot-green" />
-            </div>
-            <div className="ch-browser-address">
-              <span className="lock-icon">🔒</span>
-              <span>orderexpress.cardinalhealth.com/enterprise/dashboard</span>
-            </div>
-            <div className="ch-browser-status">
-              <span className="badge-live">LIVE SYSTEM</span>
-            </div>
-          </div>
-          <div className="ch-browser-viewport">
-            <img
-              src={cardinalHealthPreview}
-              alt="Cardinal Health Order Express Enterprise Dashboard Preview"
-              className="ch-mockup-img"
-            />
-          </div>
-        </Reveal>
-      </section>
-
-      {/* 2. Executive Impact Stat Banner (4 Highlight Cards) */}
-      <section className="ch-impact-banner">
-        <Reveal className="ch-impact-grid" delay={40}>
-          <div className="ch-stat-card">
-            <div className="stat-header">
-              <span className="stat-num">+28%</span>
-              <span className="stat-pill pill-green">Order Rate</span>
-            </div>
-            <h3 className="stat-title">Order Completion Rate</h3>
-            <p className="stat-desc">Eliminated drop-offs during bulk prescription checkout cycles.</p>
-          </div>
-
-          <div className="ch-stat-card">
-            <div className="stat-header">
-              <span className="stat-num">-35%</span>
-              <span className="stat-pill pill-blue">Handoff Efficiency</span>
-            </div>
-            <h3 className="stat-title">Handoff Time</h3>
-            <p className="stat-desc">Via AI-generated tokens and component documentation.</p>
-          </div>
-
-          <div className="ch-stat-card">
-            <div className="stat-header">
-              <span className="stat-num">-25%</span>
-              <span className="stat-pill pill-amber">Error Reduction</span>
-            </div>
-            <h3 className="stat-title">User-Reported Errors</h3>
-            <p className="stat-desc">Prevented wrong-item and duplicate dosage orders.</p>
-          </div>
-
-          <div className="ch-stat-card">
-            <div className="stat-header">
-              <span className="stat-num">WCAG 2.1 AA</span>
-              <span className="stat-pill pill-purple">Compliance</span>
-            </div>
-            <h3 className="stat-title">Accessibility Standard</h3>
-            <p className="stat-desc">Full keyboard navigation &amp; color contrast compliance.</p>
-          </div>
-        </Reveal>
-      </section>
-
-      {/* 3. Main Content Area with Sticky In-Page Left Sidebar Navigation */}
-      <section className="ch-main-layout">
-        {/* Left Column: Sticky Table of Contents */}
-        <aside className="ch-sidebar-nav">
-          <div className="ch-toc-sticky">
-            <span className="ch-toc-title">IN THIS CASE STUDY</span>
-            <nav className="ch-toc-list" aria-label="Case Study Navigation">
-              {sections.map((sec) => (
-                <button
-                  key={sec.id}
-                  type="button"
-                  className={`ch-toc-item ${activeSection === sec.id ? "active" : ""}`}
-                  onClick={() => scrollToAnchor(sec.id)}
-                >
-                  <span className="toc-indicator" />
-                  <span className="toc-label">{sec.label}</span>
-                </button>
-              ))}
-            </nav>
-          </div>
-        </aside>
-
-        {/* Right Column: Case Study Sections */}
-        <div className="ch-content-body">
-          {/* Section 1: Context & Problem */}
-          <section id="context-problem" className="ch-section-block">
-            <Reveal className="ch-section-header" delay={40}>
-              <span className="ch-sec-tag">01 / CONTEXT &amp; PROBLEM</span>
-              <h2 className="ch-sec-title">High stakes, zero margin for error.</h2>
-              <p className="ch-lead-p">
-                Cardinal Health’s Order Express is used daily by hospital procurement teams, clinical buyers, and independent pharmacies to purchase critical medical supplies. Over a decade of feature creep left the platform fragmented with cognitive overload, disconnected inventory data, and disjointed multi-system approvals.
-              </p>
-            </Reveal>
-
-            <Reveal className="ch-context-grid" delay={100}>
-              <div className="ch-context-card">
-                <span className="ctx-icon">🏥</span>
-                <h4>100,000+ Active Users</h4>
-                <p>Pharmacy directors, hospital buyers, and clinical managers depending on daily order accuracy.</p>
-              </div>
-              <div className="ch-context-card">
-                <span className="ctx-icon">📦</span>
-                <h4>Multi-System Complexity</h4>
-                <p>Integrating warehouse inventory, NDC drug registries, split-shipment invoices, and approval chains.</p>
-              </div>
-              <div className="ch-context-card">
-                <span className="ctx-icon">⚡</span>
-                <h4>Critical Timeline</h4>
-                <p>Delayed medication orders immediately impact hospital inventory and patient care timelines.</p>
-              </div>
-            </Reveal>
-          </section>
-
-          {/* Section 2: Research & Insights */}
-          <section id="research-insights" className="ch-section-block">
-            <Reveal className="ch-section-header" delay={40}>
-              <span className="ch-sec-tag">02 / RESEARCH &amp; INSIGHTS</span>
-              <h2 className="ch-sec-title">Voices from the frontlines of pharmacy procurement.</h2>
-            </Reveal>
-
-            {/* Highlight Quotes Block (2 Cards) */}
-            <Reveal className="ch-quotes-grid" delay={80}>
-              <div className="ch-quote-card">
-                <span className="quote-mark">“</span>
-                <p className="quote-body">
-                  Ordering critical medication shouldn't feel like filling out a 1998 tax form.
-                </p>
-                <div className="quote-author">
-                  <span className="author-name">Pharmacy Director</span>
-                  <span className="author-org">Regional Acute Care Network</span>
-                </div>
-              </div>
-
-              <div className="ch-quote-card">
-                <span className="quote-mark">“</span>
-                <p className="quote-body">
-                  If an item is out of stock, tell me before I spend 20 minutes building an order.
-                </p>
-                <div className="quote-author">
-                  <span className="author-name">Clinical Buyer</span>
-                  <span className="author-org">Health System Supply Chain</span>
-                </div>
-              </div>
-            </Reveal>
-
-            {/* Key Finding Callout */}
-            <Reveal className="ch-finding-banner" delay={120}>
-              <div className="finding-badge">KEY RESEARCH FINDING</div>
-              <p className="finding-text">
-                <strong>78% of order delays</strong> were caused by confusing error states during bulk CSV uploads, and <strong>42% of support tickets</strong> involved locating split shipment invoices.
-              </p>
-            </Reveal>
-          </section>
-
-          {/* Section 3: Core Solution Pillars */}
-          <section id="solution-pillars" className="ch-section-block">
-            <Reveal className="ch-section-header" delay={40}>
-              <span className="ch-sec-tag">03 / CORE SOLUTION PILLARS</span>
-              <h2 className="ch-sec-title">Architecting zero-error enterprise ordering.</h2>
-            </Reveal>
-
-            {/* Pillar 1: Real-Time Inventory & Smart Search */}
-            <Reveal className="ch-pillar-block" delay={80}>
-              <div className="pillar-header">
-                <span className="pillar-badge">PILLAR 01</span>
-                <h3>Real-Time Inventory &amp; Smart Search</h3>
-                <p className="pillar-copy">
-                  Redesigned search with fuzzy logic, NDC drug code auto-suggestions, and live warehouse availability badges. Proactive stock warnings suggest direct generic equivalents when items are backordered.
-                </p>
-              </div>
-
-              {/* Component Showcase Card: Smart Search Drawer Preview */}
-              <div className="ch-showcase-card search-showcase">
-                <div className="search-bar-sim">
-                  <span className="search-icon">🔍</span>
-                  <span className="search-query">NDC 00093-0147-01 (Amoxicillin 500mg)</span>
-                  <span className="search-shortcut">⌘K</span>
-                </div>
-                <div className="search-results-sim">
-                  <div className="result-item primary">
-                    <div className="result-main">
-                      <span className="item-title">Amoxicillin 500mg Capsules (100 Count)</span>
-                      <span className="item-ndc">NDC: 00093-0147-01 • Teva Pharmaceuticals</span>
-                    </div>
-                    <span className="status-badge badge-success">In Stock (1,420 units)</span>
-                  </div>
-
-                  <div className="result-item warning">
-                    <div className="result-main">
-                      <span className="item-title">Amoxicillin 500mg Oral Suspension 150mL</span>
-                      <span className="item-ndc">NDC: 00093-4160-73 • Backordered</span>
-                    </div>
-                    <span className="status-badge badge-amber">Low Stock (12 units)</span>
-                  </div>
-
-                  <div className="result-item suggestion">
-                    <div className="result-main">
-                      <span className="item-title">✨ Generic Equiv: Ampicillin 500mg Capsules</span>
-                      <span className="item-ndc">NDC: 00093-0021-01 • Direct Substitute</span>
-                    </div>
-                    <span className="status-badge badge-info">Generic Alternative Available</span>
-                  </div>
-                </div>
-              </div>
-            </Reveal>
-
-            {/* Pillar 2: Frictionless Bulk Checkout Flow */}
-            <Reveal className="ch-pillar-block" delay={120}>
-              <div className="pillar-header">
-                <span className="pillar-badge">PILLAR 02</span>
-                <h3>Frictionless Bulk Checkout Flow</h3>
-                <p className="pillar-copy">
-                  Simplified multi-location cart routing to allow hospital ward splits from one screen. Added inline validation and pre-submission error checking.
-                </p>
-              </div>
-
-              {/* Before / After Comparison Widget */}
-              <div className="ch-before-after-widget">
-                <div className="widget-tab-bar">
-                  <span className="widget-label">INTERACTIVE COMPARISON:</span>
-                  <button
-                    type="button"
-                    className={`widget-tab ${beforeAfterTab === "before" ? "active-before" : ""}`}
-                    onClick={() => setBeforeAfterTab("before")}
-                  >
-                    🔴 Before: Legacy 5-Step Flow
-                  </button>
-                  <button
-                    type="button"
-                    className={`widget-tab ${beforeAfterTab === "after" ? "active-after" : ""}`}
-                    onClick={() => setBeforeAfterTab("after")}
-                  >
-                    🟢 After: Single-Page Drawer
-                  </button>
-                </div>
-
-                {beforeAfterTab === "before" ? (
-                  <div className="comparison-view before-view">
-                    <div className="comp-header">
-                      <span className="comp-tag tag-red">BEFORE (LEGACY SYSTEM)</span>
-                      <h4>5-Step Fragmented Modal with Hidden Errors</h4>
-                    </div>
-                    <ul className="comp-list">
-                      <li>⚠️ <strong>5 Separated Modals:</strong> Hidden errors required stepping back 3 screens to fix invalid quantities.</li>
-                      <li>⚠️ <strong>Bulk Upload Frustrations:</strong> CSV errors resulted in total cart wipeouts without specific line-item highlighting.</li>
-                      <li>⚠️ <strong>No Multi-Ward Routing:</strong> Required 4 individual orders for 4 hospital departments.</li>
-                      <li>⏱️ <strong>Average Completion:</strong> 35-45 minutes per order.</li>
-                    </ul>
-                  </div>
-                ) : (
-                  <div className="comparison-view after-view">
-                    <div className="comp-header">
-                      <span className="comp-tag tag-green">AFTER (REDESIGNED SYSTEM)</span>
-                      <h4>Single-Page Progressive Drawer with Real-Time Error Callouts</h4>
-                    </div>
-                    <ul className="comp-list">
-                      <li>✅ <strong>Inline Real-time Validation:</strong> Line-item level error highlight with 1-click auto-correction.</li>
-                      <li>✅ <strong>Multi-Location Ward Splitting:</strong> Route items to ICU, ER, and Surgery from a single master cart.</li>
-                      <li>✅ <strong>Smart Inventory Allocation:</strong> Proactive split-shipment calculation with clear delivery ETAs.</li>
-                      <li>⚡ <strong>Average Completion:</strong> &lt; 8 minutes (78% speed improvement).</li>
-                    </ul>
-                  </div>
-                )}
-              </div>
-            </Reveal>
-
-            {/* Pillar 3: Scalable Enterprise Design System */}
-            <Reveal className="ch-pillar-block" delay={160}>
-              <div className="pillar-header">
-                <span className="pillar-badge">PILLAR 03</span>
-                <h3>Scalable Enterprise Design System</h3>
-                <p className="pillar-copy">
-                  Built a WCAG 2.1 AA compliant component library in Figma with unified typography, dense data tables, and high-contrast status tokens across 40+ sub-pages.
-                </p>
-              </div>
-
-              {/* Visual Asset Showcase Grid */}
-              <div className="ch-showcase-card system-showcase">
-                <div className="system-tokens-row">
-                  <div className="token-chip chip-success">--token-status-success</div>
-                  <div className="token-chip chip-warning">--token-status-warning</div>
-                  <div className="token-chip chip-error">--token-status-error</div>
-                  <div className="token-chip chip-neutral">--table-density-compact</div>
-                </div>
-
-                <div className="system-table-sim">
-                  <div className="sim-table-head">
-                    <span>ITEM / NDC</span>
-                    <span>CATEGORY</span>
-                    <span>QUANTITY</span>
-                    <span>WARD ALLOCATION</span>
-                    <span>STATUS</span>
-                  </div>
-                  <div className="sim-table-row">
-                    <span className="cell-item">Sodium Chloride 0.9% 1000mL</span>
-                    <span className="cell-sub">IV Fluids</span>
-                    <span className="cell-qty">500 Cases</span>
-                    <span className="cell-ward">ICU &amp; Surgery</span>
-                    <span className="cell-status badge-success">Approved</span>
-                  </div>
-                  <div className="sim-table-row">
-                    <span className="cell-item">Epinephrine 1mg/mL Auto-Inject</span>
-                    <span className="cell-sub">Emergency</span>
-                    <span className="cell-qty">50 Boxes</span>
-                    <span className="cell-ward">Emergency Dept</span>
-                    <span className="cell-status badge-amber">Split Ship</span>
-                  </div>
-                </div>
-              </div>
-            </Reveal>
-          </section>
-
-          {/* Section 4: AI-Accelerated Workflow & Tech Leverage */}
-          <section id="ai-workflow" className="ch-section-block">
-            <Reveal className="ch-section-header" delay={40}>
-              <span className="ch-sec-tag">04 / AI-ACCELERATED WORKFLOW</span>
-              <h2 className="ch-sec-title">AI-Accelerated Workflow &amp; Tech Leverage (2026 Touchpoint)</h2>
-            </Reveal>
-
-            <Reveal className="ch-ai-card" delay={80}>
-              <div className="ai-card-badge">⚡ NEXT-GEN AI DESIGN ENGINE</div>
-              <h3>Supercharging Enterprise Product Delivery</h3>
-              <p className="ai-intro-copy">
-                To move at maximum velocity across 40+ complex screens, I integrated AI-native design engineering practices into every phase of the project:
-              </p>
-
-              <div className="ai-highlights-grid">
-                <div className="ai-highlight-item">
-                  <div className="ai-item-num">01</div>
-                  <h4>Accelerated Ideation</h4>
-                  <p>Synthesized 20+ hours of user transcripts into workflow friction maps using Claude.</p>
-                </div>
-
-                <div className="ai-highlight-item">
-                  <div className="ai-item-num">02</div>
-                  <h4>Live Interactive Prototypes</h4>
-                  <p>Built working React/Tailwind prototypes in Cursor to validate complex table filtering with real pharmacists.</p>
-                </div>
-
-                <div className="ai-highlight-item">
-                  <div className="ai-item-num">03</div>
-                  <h4>Automated Token Handoff</h4>
-                  <p>Generated design token documentation directly compatible with the frontend codebase, cutting handoff friction by 35%.</p>
-                </div>
-              </div>
-            </Reveal>
-          </section>
-
-          {/* Section 5: Outcomes & Lessons Learned */}
-          <section id="outcomes-learnings" className="ch-section-block">
-            <Reveal className="ch-section-header" delay={40}>
-              <span className="ch-sec-tag">05 / OUTCOMES &amp; LEARNINGS</span>
-              <h2 className="ch-sec-title">Outcomes &amp; Senior Product Takeaways</h2>
-            </Reveal>
-
-            <div className="ch-outcomes-grid">
-              <Reveal className="ch-outcome-card impact" delay={80}>
-                <h3>Business &amp; Operational Impact</h3>
-                <ul className="impact-list">
-                  <li>
-                    <span className="imp-val">+28%</span>
-                    <span className="imp-text">28% boost in completed orders across regional hospital networks.</span>
-                  </li>
-                  <li>
-                    <span className="imp-val">-25%</span>
-                    <span className="imp-text">25% drop in high-risk ordering errors (wrong dosage, duplicate orders, or invalid NDCs).</span>
-                  </li>
-                  <li>
-                    <span className="imp-val">100%</span>
-                    <span className="imp-text">Immediate adoption across regional hospital networks &amp; full WCAG 2.1 AA compliance.</span>
-                  </li>
-                </ul>
-              </Reveal>
-
-              <Reveal className="ch-outcome-card takeaway" delay={120}>
-                <h3>Senior Takeaway</h3>
-                <blockquote className="takeaway-quote">
-                  “In enterprise B2B, density is not the enemy—ambiguity is. High-volume workflows thrive on clear visual hierarchy, scannable data tables, and keyboard accessibility.”
-                </blockquote>
-                <p className="takeaway-footer">
-                  Building for critical healthcare operations reinforced that reducing cognitive friction directly translates to safer, more efficient hospital operations.
-                </p>
-              </Reveal>
-            </div>
-          </section>
-
-          {/* Bottom Project Navigation */}
-          <section className="ch-next-project">
-            <Reveal className="ch-next-card" delay={40}>
-              <span className="next-tag">NEXT CASE STUDY</span>
-              <button
-                type="button"
-                className="next-link-btn"
-                onClick={() => navigateTo("/projects/discovery-plus")}
-              >
-                <div className="next-info">
-                  <h3>Discovery+ — Next-Gen Multi-Device OTT Ecosystem</h3>
-                  <p>Cross-platform streaming experience across Mobile, Web, and Smart TV.</p>
-                </div>
-                <span className="next-arrow">→</span>
-              </button>
-            </Reveal>
-          </section>
-        </div>
-      </section>
-    </div>
+    <aside className="case-nav" aria-label="Case study sections">
+      <nav className="case-nav-sticky" ref={railRef}>
+        {items.map((item) => {
+          const isActive = item.id === activeId;
+          return (
+            <button
+              key={item.id}
+              type="button"
+              className={`case-nav-item${isActive ? " is-active" : ""}`}
+              onClick={() => onSelect(item.id)}
+              aria-current={isActive ? "true" : undefined}
+            >
+              <span className="case-nav-icon">
+                <CaseNavIcon name={item.icon} />
+              </span>
+              <span className="case-nav-label">{item.label}</span>
+            </button>
+          );
+        })}
+      </nav>
+    </aside>
   );
 }
 
 function ProjectDetailsPage({ project, projectSlug, onOpenPdf }) {
-  const isCardinalHealth = project?.slug === "cardinal-health-procurement-platform" || projectSlug === "cardinal-health-procurement-platform";
-  if (isCardinalHealth) {
-    return <CardinalHealthCaseStudyPage />;
-  }
-
+  const isCardinalHealth =
+    project?.slug === "cardinal-health-procurement-platform" ||
+    projectSlug === "cardinal-health-procurement-platform";
   const isDiscoveryPlus = project?.slug === "discovery-plus";
   const isAlMaha = project?.slug === "al-maha-island-lusail";
   const isMcDelivery = project?.slug === "mcdelivery-experience-design";
@@ -2730,6 +2667,72 @@ function ProjectDetailsPage({ project, projectSlug, onOpenPdf }) {
   const projectName = project?.title ?? "Work";
   const projectDescription = project?.description ?? "Work details will be updated soon.";
 
+  const caseNavItems = useMemo(() => {
+    if (!caseStudy) {
+      return [];
+    }
+
+    const items = [
+      { id: "cs-start", label: "Getting started", icon: "start" },
+      { id: "cs-impact", label: "Impact", icon: "business" },
+      { id: "cs-overview", label: "Context", icon: "quote" },
+      { id: "cs-challenge", label: "The Challenge", icon: "challenge" },
+      { id: "cs-goals", label: "Goals", icon: "goals" },
+      { id: "cs-role", label: "My Role", icon: "role" },
+    ];
+
+    if (isAlMaha) {
+      items.push(
+        { id: "cs-personas", label: "Personas", icon: "personas" },
+        { id: "cs-research", label: "User Interviews", icon: "research" },
+        { id: "cs-competitors", label: "Competitors", icon: "competitors" },
+      );
+    }
+
+    if (isDiscoveryPlus) {
+      items.push(
+        { id: "cs-research", label: "User Research", icon: "research" },
+        { id: "cs-personas", label: "Personas", icon: "personas" },
+      );
+    }
+
+    if (isCardinalHealth) {
+      items.push(
+        { id: "cs-research", label: "Research", icon: "research" },
+        { id: "cs-pillars", label: "The Solution", icon: "solution" },
+        { id: "cs-ai", label: "AI Workflow", icon: "ai" },
+        { id: "cs-takeaways", label: "Key Learnings", icon: "learnings" },
+      );
+    }
+
+    items.push({ id: "cs-process", label: "Design Process", icon: "process" });
+
+    if (isDiscoveryPlus || isAlMaha) {
+      items.push(
+        { id: "cs-journey", label: "Journey Map", icon: "journey" },
+        { id: "cs-ia", label: "Architecture", icon: "ia" },
+        { id: "cs-flows", label: "User Flows", icon: "flows" },
+      );
+    }
+
+    if (isAlMaha) {
+      items.push({ id: "cs-quotes", label: "User Quotes", icon: "quote" });
+    }
+
+    items.push(
+      { id: "cs-improvements", label: "Improvements", icon: "improvements" },
+      { id: "cs-outcome", label: "Outcome", icon: "outcome" },
+      { id: "cs-visuals", label: caseStudy.visualStrategyTitle ?? "Visuals", icon: "visuals" },
+      { id: "cs-learnings", label: "Learnings", icon: "learnings" },
+    );
+
+    return items;
+  }, [caseStudy, isAlMaha, isDiscoveryPlus, isCardinalHealth]);
+
+  const { activeId: activeCaseSection, selectSection } = useActiveCaseSection(
+    caseNavItems.map((item) => item.id),
+  );
+
   return (
     <div className="page-view">
       <section className="project-detail-section">
@@ -2740,42 +2743,9 @@ function ProjectDetailsPage({ project, projectSlug, onOpenPdf }) {
           Case Study
         </Reveal>
 
-        {!project && projectSlug ? (
-          <Reveal className="project-detail-hero">
-            <div className="project-detail-copy">
-              <p className="project-detail-label">Project not found</p>
-              <h2>That case study is not available.</h2>
-              <p className="project-detail-tagline">
-                The project link may be outdated. Return to Works to choose an available case study.
-              </p>
-              <div className="project-detail-cta-row">
-                <button type="button" className="project-back-button" onClick={() => navigateTo("/projects")}>
-                  <span aria-hidden="true">←</span>
-                  Back to Works
-                </button>
-              </div>
-            </div>
-          </Reveal>
-        ) : null}
-
-        {!caseStudy && project ? (
-          <Reveal className="project-detail-hero">
-            <div className="project-detail-copy">
-              <p className="project-detail-label">
-                {project?.index ?? "--"} / Product Experience
-              </p>
-              <h2>{projectName}</h2>
-              <p className="project-detail-tagline">{projectDescription}</p>
-            </div>
-            <div className="project-detail-preview-wrap">
-              <img className="project-detail-preview-image" src={project?.preview ?? almahaPreview} alt={`${projectName} preview`} />
-            </div>
-          </Reveal>
-        ) : null}
-
         {caseStudy ? (
-          <>
-            <section className="case-section case-section-hero">
+          <div className="case-study-intro">
+            <section id="cs-start" className="case-section case-section-hero">
               <Reveal className="case-hero-layout">
                 <div className="case-hero-main">
                   <p className="case-hero-eyebrow">{projectName} Case Study</p>
@@ -2818,7 +2788,16 @@ function ProjectDetailsPage({ project, projectSlug, onOpenPdf }) {
               </Reveal>
             </section>
 
-            <section className="case-section case-section-quick-info">
+            {caseStudy.disclaimer ? (
+              <section className="case-section case-section-disclaimer">
+                <Reveal className="case-disclaimer">
+                  <span className="case-disclaimer-badge">Disclaimer</span>
+                  <p>{caseStudy.disclaimer}</p>
+                </Reveal>
+              </section>
+            ) : null}
+
+            <section id="cs-quick-info" className="case-section case-section-quick-info">
               <Reveal className="project-detail-card">
                 <h3>Quick Info</h3>
                 <div className="project-quick-info">
@@ -2831,8 +2810,56 @@ function ProjectDetailsPage({ project, projectSlug, onOpenPdf }) {
                 </div>
               </Reveal>
             </section>
+          </div>
+        ) : null}
 
-            <section className="case-section case-section-proof-intro">
+        <div className={`case-study-layout${caseStudy ? "" : " is-single"}`}>
+        {caseStudy ? (
+          <CaseStudySidebar
+            items={caseNavItems}
+            activeId={activeCaseSection}
+            onSelect={selectSection}
+          />
+        ) : null}
+
+        <div className="case-study-main">
+        {!project && projectSlug ? (
+          <Reveal className="project-detail-hero">
+            <div className="project-detail-copy">
+              <p className="project-detail-label">Project not found</p>
+              <h2>That case study is not available.</h2>
+              <p className="project-detail-tagline">
+                The project link may be outdated. Return to Works to choose an available case study.
+              </p>
+              <div className="project-detail-cta-row">
+                <button type="button" className="project-back-button" onClick={() => navigateTo("/projects")}>
+                  <span aria-hidden="true">←</span>
+                  Back to Works
+                </button>
+              </div>
+            </div>
+          </Reveal>
+        ) : null}
+
+        {!caseStudy && project ? (
+          <Reveal className="project-detail-hero">
+            <div className="project-detail-copy">
+              <p className="project-detail-label">
+                {project?.index ?? "--"} / Product Experience
+              </p>
+              <h2>{projectName}</h2>
+              <p className="project-detail-tagline">{projectDescription}</p>
+            </div>
+            <div className="project-detail-preview-wrap">
+              <img className="project-detail-preview-image" src={project?.preview ?? almahaPreview} alt={`${projectName} preview`} />
+            </div>
+          </Reveal>
+        ) : null}
+
+        {caseStudy ? (
+          <>
+
+            <section id="cs-impact" className="case-section case-section-proof-intro">
               <Reveal className="proof-header">
                 <h3>{caseStudy.sectionHeading ?? "Designing products that balance business growth with user delight."}</h3>
               </Reveal>
@@ -2866,17 +2893,17 @@ function ProjectDetailsPage({ project, projectSlug, onOpenPdf }) {
 
             <section className="case-section case-section-summary">
               <Reveal className="project-detail-grid">
-                <article className="project-detail-card">
+                <article id="cs-overview" className="project-detail-card">
                   <h3>Overview</h3>
                   <p>{caseStudy.overview}</p>
                 </article>
 
-                <article className="project-detail-card">
+                <article id="cs-challenge" className="project-detail-card">
                   <h3>Problem Statement</h3>
                   <p>{caseStudy.problemStatement}</p>
                 </article>
 
-                <article className="project-detail-card">
+                <article id="cs-goals" className="project-detail-card">
                   <h3>Goals</h3>
                   <ul>
                     {caseStudy.goals.map((goal) => (
@@ -2885,7 +2912,7 @@ function ProjectDetailsPage({ project, projectSlug, onOpenPdf }) {
                   </ul>
                 </article>
 
-                <article className="project-detail-card">
+                <article id="cs-role" className="project-detail-card">
                   <h3>My Role</h3>
                   <p>I led end-to-end UX/UI design for this initiative, including:</p>
                   <ul>
@@ -2903,7 +2930,7 @@ function ProjectDetailsPage({ project, projectSlug, onOpenPdf }) {
               <>
               <div className="project-summary-divider" aria-hidden="true" />
               {/* ── User Personas ── */}
-              <section className="almaha-section almaha-personas">
+              <section id="cs-personas" className="almaha-section almaha-personas">
                 <Reveal className="almaha-section-inner">
                   <span className="almaha-section-number">User Personas</span>
                   <div className="persona-grid-v2">
@@ -2965,7 +2992,7 @@ function ProjectDetailsPage({ project, projectSlug, onOpenPdf }) {
 
               <div className="project-summary-divider" aria-hidden="true" />
               {/* ── Interview Insights & Affinity Map ── */}
-              <section className="almaha-section almaha-affinity">
+              <section id="cs-research" className="almaha-section almaha-affinity">
                 <Reveal className="almaha-section-inner">
                   <span className="almaha-section-number">Interview Insights &amp; User Pain Points (Affinity Map)</span>
                   <div className="affinity-stats-row">
@@ -3059,7 +3086,7 @@ function ProjectDetailsPage({ project, projectSlug, onOpenPdf }) {
 
               <div className="project-summary-divider" aria-hidden="true" />
               {/* ── Competitive Analysis ── */}
-              <section className="almaha-section almaha-competitive">
+              <section id="cs-competitors" className="almaha-section almaha-competitive">
                 <Reveal className="almaha-section-inner">
                   <span className="almaha-section-number">Competitive Analysis</span>
                   <div className="comp-legend">
@@ -3132,7 +3159,7 @@ function ProjectDetailsPage({ project, projectSlug, onOpenPdf }) {
               <>
               <div className="project-summary-divider" aria-hidden="true" />
               {/* ── User Research ── */}
-              <section className="discovery-section discovery-research">
+              <section id="cs-research" className="discovery-section discovery-research">
                 <Reveal className="discovery-section-inner">
                   <span className="discovery-section-label">User Research</span>
                   <h3 className="discovery-section-heading">Understanding how viewers actually consume content</h3>
@@ -3364,7 +3391,7 @@ function ProjectDetailsPage({ project, projectSlug, onOpenPdf }) {
 
               <div className="project-summary-divider" aria-hidden="true" />
               {/* ── User Personas ── */}
-              <section className="discovery-section discovery-personas">
+              <section id="cs-personas" className="discovery-section discovery-personas">
                 <Reveal className="discovery-section-inner">
                   <span className="discovery-section-label">User Personas</span>
                   <h3 className="discovery-section-heading">Three viewers, three completely different watching habits</h3>
@@ -3469,7 +3496,166 @@ function ProjectDetailsPage({ project, projectSlug, onOpenPdf }) {
               </>
             ) : null}
 
-            <section className="case-section case-section-summary case-section-summary-extended">
+            {isCardinalHealth ? (
+              <>
+              <div className="project-summary-divider" aria-hidden="true" />
+              {/* ── Research & Insights ── */}
+              <section id="cs-research" className="discovery-section cardinal-section">
+                <Reveal className="discovery-section-inner">
+                  <span className="discovery-section-label">Research &amp; Insights</span>
+                  <h3 className="discovery-section-heading">
+                    Talking to the people who order under pressure
+                  </h3>
+                  <p className="discovery-section-description">{caseStudy.researchIntro}</p>
+
+                  <div className="discovery-affinity-stats">
+                    {caseStudy.researchStats.map((stat) => (
+                      <div key={stat.label} className="discovery-affinity-stat">
+                        <span className="discovery-affinity-stat-value">{stat.value}</span>
+                        <span className="discovery-affinity-stat-label">{stat.label}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <span className="discovery-subsection-label">The operating context</span>
+                  <div className="cardinal-context-grid">
+                    {caseStudy.contextCards.map((card) => (
+                      <div key={card.title} className="cardinal-context-card">
+                        <h4>{card.title}</h4>
+                        <p>{card.description}</p>
+                      </div>
+                    ))}
+                  </div>
+
+                  <span className="discovery-subsection-label">What users told us</span>
+                  <div className="discovery-quotes-grid">
+                    {caseStudy.researchQuotes.map((q) => (
+                      <div key={q.name} className="discovery-quote-card">
+                        <span className="discovery-quote-mark" aria-hidden="true">&ldquo;</span>
+                        <blockquote>{q.quote}</blockquote>
+                        <div className="discovery-quote-footer">
+                          <span className="discovery-quote-attribution">
+                            <strong>{q.name}</strong> &middot; {q.role}
+                          </span>
+                          <span className={`discovery-quote-tag ${q.tagClass}`}>{q.tag}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <span className="discovery-subsection-label">Key research findings</span>
+                  <div className="discovery-comp-insights">
+                    {caseStudy.keyFindings.map((finding) => (
+                      <div key={finding.label} className={`discovery-comp-insight ${finding.variant}`}>
+                        <span className="discovery-comp-insight-label">{finding.label}</span>
+                        <p>{finding.text}</p>
+                      </div>
+                    ))}
+                  </div>
+                </Reveal>
+              </section>
+
+              <div className="project-summary-divider" aria-hidden="true" />
+              {/* ── Core Solution Pillars ── */}
+              <section id="cs-pillars" className="discovery-section cardinal-section">
+                <Reveal className="discovery-section-inner">
+                  <span className="discovery-section-label">Core Solution Pillars</span>
+                  <h3 className="discovery-section-heading">
+                    Three pillars, one goal: never let the user hit a dead end
+                  </h3>
+                  <p className="discovery-section-description">
+                    Make stock truth visible at the moment of choice, collapse bulk checkout into one
+                    validated screen, and standardise every surface on a system built for density
+                    rather than decoration.
+                  </p>
+
+                  <div className="cardinal-pillar-list">
+                    {caseStudy.pillars.map((pillar) => (
+                      <article key={pillar.title} className="cardinal-pillar">
+                        <span className="cardinal-pillar-badge">{pillar.badge}</span>
+                        <h4>{pillar.title}</h4>
+                        <p>{pillar.description}</p>
+                        <ul className="cardinal-pillar-points">
+                          {pillar.points.map((point) => (
+                            <li key={point}>{point}</li>
+                          ))}
+                        </ul>
+                      </article>
+                    ))}
+                  </div>
+
+                  <span className="discovery-subsection-label">{caseStudy.beforeAfter.label}</span>
+                  <div className="cardinal-compare-grid">
+                    {[
+                      { ...caseStudy.beforeAfter.before, variant: "is-before" },
+                      { ...caseStudy.beforeAfter.after, variant: "is-after" },
+                    ].map((side) => (
+                      <div key={side.tag} className={`cardinal-compare-card ${side.variant}`}>
+                        <span className="cardinal-compare-tag">{side.tag}</span>
+                        <h4>{side.title}</h4>
+                        <ul>
+                          {side.points.map((point) => (
+                            <li key={point}>{point}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+                </Reveal>
+              </section>
+
+              <div className="project-summary-divider" aria-hidden="true" />
+              {/* ── AI-Accelerated Workflow ── */}
+              <section id="cs-ai" className="discovery-section cardinal-section">
+                <Reveal className="discovery-section-inner">
+                  <span className="discovery-section-label">Working the 2026 Way</span>
+                  <h3 className="discovery-section-heading">{caseStudy.aiWorkflow.heading}</h3>
+                  <p className="discovery-section-description">{caseStudy.aiWorkflow.intro}</p>
+
+                  <div className="cardinal-ai-grid">
+                    {caseStudy.aiWorkflow.items.map((item, index) => (
+                      <article key={item.title} className="cardinal-ai-card">
+                        <span className="cardinal-ai-num">{String(index + 1).padStart(2, "0")}</span>
+                        <h4>{item.title}</h4>
+                        <p>{item.description}</p>
+                      </article>
+                    ))}
+                  </div>
+
+                  {caseStudy.aiWorkflow.note ? (
+                    <p className="cardinal-ai-note">{caseStudy.aiWorkflow.note}</p>
+                  ) : null}
+                </Reveal>
+              </section>
+
+              <div className="project-summary-divider" aria-hidden="true" />
+              {/* ── Key Learnings ── */}
+              <section id="cs-takeaways" className="discovery-section cardinal-section">
+                <Reveal className="discovery-section-inner">
+                  <span className="discovery-section-label">Key Learnings</span>
+                  <h3 className="discovery-section-heading">
+                    What six months in a high-stakes system taught me
+                  </h3>
+
+                  <div className="cardinal-learning-list">
+                    {caseStudy.learnings.map((item) => (
+                      <article key={item.number} className="cardinal-learning-card">
+                        <span className="cardinal-learning-num">{item.number}</span>
+                        <div>
+                          <h4>{item.title}</h4>
+                          <p>{item.description}</p>
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                </Reveal>
+              </section>
+
+              <div className="project-summary-divider" aria-hidden="true" />
+              </>
+            ) : null}
+
+            <section id="cs-process" className="case-section case-section-summary case-section-summary-extended">
               <Reveal className="project-detail-grid">
                 <article className="project-detail-card">
                   <h3>Design Process</h3>
@@ -3497,7 +3683,7 @@ function ProjectDetailsPage({ project, projectSlug, onOpenPdf }) {
               <>
               <div className="project-summary-divider" aria-hidden="true" />
               {/* ── User Journey Map ── */}
-              <section className="discovery-section discovery-journey-map">
+              <section id="cs-journey" className="discovery-section discovery-journey-map">
                 <Reveal className="discovery-section-inner">
                   <span className="discovery-section-label">User Journey Map</span>
                   <h3 className="discovery-section-heading">Mapping the viewer experience - from browse to binge</h3>
@@ -3632,7 +3818,7 @@ function ProjectDetailsPage({ project, projectSlug, onOpenPdf }) {
 
               <div className="project-summary-divider" aria-hidden="true" />
               {/* ── Information Architecture ── */}
-              <section className="discovery-section discovery-ia">
+              <section id="cs-ia" className="discovery-section discovery-ia">
                 <Reveal className="discovery-section-inner">
                   <span className="discovery-section-label">Information Architecture</span>
                   <h3 className="discovery-section-heading">One product, three platforms, five entry points each</h3>
@@ -3704,7 +3890,7 @@ function ProjectDetailsPage({ project, projectSlug, onOpenPdf }) {
 
               <div className="project-summary-divider" aria-hidden="true" />
               {/* ── User Flows ── */}
-              <section className="discovery-section discovery-flows">
+              <section id="cs-flows" className="discovery-section discovery-flows">
                 <Reveal className="discovery-section-inner">
                   <span className="discovery-section-label">User Flows</span>
                   <h3 className="discovery-section-heading">Two flows that defined every design decision</h3>
@@ -3790,7 +3976,7 @@ function ProjectDetailsPage({ project, projectSlug, onOpenPdf }) {
               <>
               <div className="project-summary-divider" aria-hidden="true" />
               {/* ── User Journey Map ── */}
-              <section className="almaha-section almaha-journey">
+              <section id="cs-journey" className="almaha-section almaha-journey">
                 <Reveal className="almaha-section-inner">
                   <span className="almaha-section-number">User Journey Map - Visitor (Before, During, After)</span>
                   <div className="journey-map-v2-wrap">
@@ -3898,7 +4084,7 @@ function ProjectDetailsPage({ project, projectSlug, onOpenPdf }) {
 
               <div className="project-summary-divider" aria-hidden="true" />
               {/* ── Information Architecture  - Sitemap ── */}
-              <section className="almaha-section almaha-ia">
+              <section id="cs-ia" className="almaha-section almaha-ia">
                 <Reveal className="almaha-section-inner">
                   <span className="almaha-section-number">Information Architecture - Sitemap</span>
                   <div className="ia-tree">
@@ -4000,7 +4186,7 @@ function ProjectDetailsPage({ project, projectSlug, onOpenPdf }) {
               <>
               <div className="project-summary-divider" aria-hidden="true" />
               {/* ── Key User Flows ── */}
-              <section className="almaha-section almaha-flows">
+              <section id="cs-flows" className="almaha-section almaha-flows">
                 <Reveal className="almaha-section-inner">
                   <span className="almaha-section-number">Key User Flows - QR Payment &amp; Island Entry</span>
                   <div className="flows-two-col">
@@ -4098,7 +4284,7 @@ function ProjectDetailsPage({ project, projectSlug, onOpenPdf }) {
 
               <div className="project-summary-divider" aria-hidden="true" />
               {/* ── User Quotes ── */}
-              <section className="almaha-section almaha-quotes">
+              <section id="cs-quotes" className="almaha-section almaha-quotes">
                 <Reveal className="almaha-section-inner">
                   <span className="almaha-section-number">User Quotes</span>
                   <div className="quotes-grid-v2">
@@ -4164,7 +4350,7 @@ function ProjectDetailsPage({ project, projectSlug, onOpenPdf }) {
 
             <section className="case-section case-section-summary case-section-summary-extended">
               <Reveal className="project-detail-grid">
-                <article className="project-detail-card">
+                <article id="cs-improvements" className="project-detail-card">
                   <h3>Key UX Improvements</h3>
                   <ul>
                     {caseStudy.improvements.map((item) => (
@@ -4175,7 +4361,7 @@ function ProjectDetailsPage({ project, projectSlug, onOpenPdf }) {
                   </ul>
                 </article>
 
-                <article className="project-detail-card">
+                <article id="cs-outcome" className="project-detail-card">
                   <h3>Outcome</h3>
                   <p>{caseStudy.outcome}</p>
                   <p className="project-detail-subtitle">Key impact areas:</p>
@@ -4186,7 +4372,7 @@ function ProjectDetailsPage({ project, projectSlug, onOpenPdf }) {
                   </ul>
                 </article>
 
-                <article className="project-detail-card">
+                <article id="cs-visuals" className="project-detail-card">
                   <h3>{caseStudy.visualStrategyTitle ?? "Visual Gallery Captions"}</h3>
                   <ul>
                     {caseStudy.galleryCaptions.map((caption) => (
@@ -4195,7 +4381,7 @@ function ProjectDetailsPage({ project, projectSlug, onOpenPdf }) {
                   </ul>
                 </article>
 
-                <article className="project-detail-card">
+                <article id="cs-learnings" className="project-detail-card">
                   <h3>Why This Work Matters</h3>
                   <p>{caseStudy.whyThisMatters}</p>
                 </article>
@@ -4234,6 +4420,8 @@ function ProjectDetailsPage({ project, projectSlug, onOpenPdf }) {
             </article>
           </Reveal>
         ) : null}
+        </div>
+        </div>
       </section>
 
       <Footer />
