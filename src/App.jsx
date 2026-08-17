@@ -1,38 +1,20 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import heroImg from "../Assets/Hero img.webp";
-import profilePhoto from "../Assets/profile photo.png";
 import aiWorkflowImg1 from "../Assets/ai & workflow img 1.webp";
 import aiWorkflowImg2 from "../Assets/ai & workflow img 2.webp";
 import aiWorkflowImg3 from "../Assets/ai & workflow img 3.webp";
 import cardinalHealthVerticalImg from "../Assets/Featured work cardinal health img vertical.webp";
-// Note the capital V — this file is named differently from its siblings.
 import discoveryPlusVerticalImg from "../Assets/Featured work discovery plus img Vertical.webp";
 import brightlineVerticalImg from "../Assets/Featured work bright line img vertical.webp";
 import almahaVerticalImg from "../Assets/Featured work al maha img vertical.webp";
-import robosoftLogo from "../Assets/Robotosoft.svg";
-import deloitteLogo from "../Assets/Delloite.svg";
-import eclerxLogo from "../Assets/Eclerx.svg";
-import cromaLogo from "../Assets/Croma.svg";
+import cromaLogo from "../Assets/Croma optimized.png";
 import njoyLogo from "../Assets/Njoy art.png";
 import kashiLogo from "../Assets/Kashi vidyapith.png";
-import figmaLogo from "../Assets/Figma logo.svg";
-import xdLogo from "../Assets/XD logo.svg";
-import miroLogo from "../Assets/Miro.svg";
-import photoshopLogo from "../Assets/Photoshop.svg";
-import illustratorLogo from "../Assets/Illustrator Logo.svg";
-import keynoteLogo from "../Assets/Keynote logo.svg";
-import htmlLogo from "../Assets/HTML logo.svg";
-import cssLogo from "../Assets/CSS logo.png";
-import discoveryLogo from "../Assets/Discovery logo.svg";
-import discoveryPreview from "../Assets/Discovery Preview img.jpg";
+import discoveryLogo from "../Assets/Discovery logo optimized.png";
 import almahaLogo from "../Assets/AL maha logo.png";
 import almahaPreview from "../Assets/Al maha Preview img.jpg";
-import mcdeliveryLogo from "../Assets/McDelivery logo.png";
-import mcdeliveryPreview from "../Assets/McDelivery Preview img.jpg";
-import cardinalHealthLogo from "../Assets/Cardinal health.svg";
 import cardinalHealthProjectLogo from "../Assets/cardinal-health-logo.svg";
 import brightlineLogo from "../Assets/Brightline_Logo.svg.png";
-import brightlinePreview from "../Assets/Brightline Preview img.png";
 import brightlinePdf from "../Assets/Brightline.pdf";
 import resumePdf from "../Assets/Abhinandan_Singh_Resume.pdf";
 import toolChatgpt from "../Assets/logo_ChatGpt.svg";
@@ -97,7 +79,6 @@ const experienceItems = [
     range: "Mar 2024 - Apr 2026",
     company: "Cardinal Health",
     role: "Senior Product Designer",
-    logo: cardinalHealthLogo,
     points: [
       "Led UX/product design for Order Express, a large-scale healthcare procurement platform used by hospitals and pharmacies",
       "Designed ordering workflows, dashboards, inventory systems, financial tracking experiences, and scalable design systems",
@@ -108,7 +89,6 @@ const experienceItems = [
     range: "Sep 2022 - Jan 2024",
     company: "Robosoft Technologies",
     role: "Senior UX Designer",
-    logo: robosoftLogo,
     points: [
       "Designed OTT and consumer digital products including Discovery+, Willow TV, and Al Maha Island",
       "Led cross-device UX across TV, mobile, and desktop ecosystems",
@@ -119,7 +99,6 @@ const experienceItems = [
     range: "Oct 2021 - Sep 2022",
     company: "Deloitte",
     role: "UX/UI Designer",
-    logo: deloitteLogo,
     points: [
       "Designed enterprise dashboards and workflow systems for Fortune 500 environments",
       "Translated business complexity into usable product experiences",
@@ -129,7 +108,6 @@ const experienceItems = [
     range: "Jan 2020 - Oct 2021",
     company: "eClerx",
     role: "Visual Designer",
-    logo: eclerxLogo,
     points: [
       "Created digital experiences for Dell, Sephora, DFS, and Radisson",
       "Delivered across campaign, landing page, and dashboard ecosystems",
@@ -973,10 +951,37 @@ const brightlineCaseStudy = {
     "This project demonstrates my ability to think beyond screens and design complete service ecosystems where digital products interact with physical environments. It reflects strategic UX thinking, service design maturity, and systems-level problem solving.",
 };
 
-const homeActions = [
-  { label: "Resume", href: "/resume" },
-  { label: "Works", href: "/projects" },
-  { label: "Contact", href: "/contact" },
+const contactEmail = "abhinandansingh77@outlook.com";
+
+const contactChannels = [
+  {
+    icon: "mail",
+    label: "Email",
+    value: contactEmail,
+    href: `mailto:${contactEmail}`,
+    action: "Send an Email",
+    copyable: true,
+  },
+  {
+    icon: "phone",
+    label: "Phone",
+    value: "+91 9097168852",
+    href: "tel:+919097168852",
+    action: "Call Direct",
+  },
+  {
+    icon: "linkedin",
+    label: "LinkedIn",
+    value: "linkedin.com/in/abhinandansingh",
+    href: "https://linkedin.com/in/abhinandansingh",
+    action: "Connect on LinkedIn",
+    external: true,
+  },
+];
+
+const contactQuickDetails = [
+  { label: "Location", value: "India (Open to Remote Worldwide & Hybrid)" },
+  { label: "Timezone", value: "IST (Flexible overlap with US, UK, and APAC teams)" },
 ];
 
 function ProcessStepIcon({ index }) {
@@ -1038,30 +1043,6 @@ function DownloadResumeIcon() {
         strokeLinejoin="round"
         strokeWidth="1.75"
       />
-    </svg>
-  );
-}
-
-function SunIcon() {
-  return (
-    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <circle cx="12" cy="12" r="5" />
-      <line x1="12" y1="1" x2="12" y2="3" />
-      <line x1="12" y1="21" x2="12" y2="23" />
-      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-      <line x1="1" y1="12" x2="3" y2="12" />
-      <line x1="21" y1="12" x2="23" y2="12" />
-      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-    </svg>
-  );
-}
-
-function MoonIcon() {
-  return (
-    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
     </svg>
   );
 }
@@ -1293,18 +1274,6 @@ function Reveal({ as: Tag = "div", className = "", delay = 0, children }) {
   );
 }
 
-function GeometricWolfLogo() {
-  return (
-    <svg width="30" height="30" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="brand-wolf-logo">
-      <path d="M16 2L8 10L11 20L16 28L21 20L24 10L16 2Z" fill="currentColor" />
-      <path d="M8 10L2 14L6 22L11 20L8 10Z" fill="currentColor" />
-      <path d="M24 10L30 14L26 22L21 20L24 10Z" fill="currentColor" />
-      <path d="M12 14L15 17L11 18L12 14Z" fill="var(--bg, #FAF9F6)" />
-      <path d="M20 14L17 17L21 18L20 14Z" fill="var(--bg, #FAF9F6)" />
-    </svg>
-  );
-}
-
 function SiteHeader({ menuOpen, setMenuOpen }) {
   const menuButtonRef = useRef(null);
   const navRef = useRef(null);
@@ -1487,134 +1456,6 @@ const experienceData = [
   },
 ];
 
-function AboutExperienceSection() {
-  return (
-    <section id="about" className="about-experience-section">
-      <Reveal className="section-header-center" delay={40}>
-        <span className="section-kicker">ABOUT &amp; EXPERIENCE</span>
-        <h2 className="section-title">Solving Complexity Through Systems &amp; Strategy</h2>
-        <p className="section-intro-lead">
-          I am a Senior Product Designer who thrives in complex, high-stakes domains. Over the last 6+ years, I’ve led UX initiatives for enterprise leaders like Cardinal Health, global entertainment platforms like Discovery+, and high-volume QSR brands like McDonald&apos;s. My approach combines rigorous design system thinking with modern AI tools to ship business-critical products faster without compromising accessibility or user clarity.
-        </p>
-      </Reveal>
-
-      <div className="experience-timeline">
-        <div className="timeline-connector-line" aria-hidden="true" />
-        {experienceData.map((item, idx) => (
-          <Reveal key={`${item.company}-${item.role}`} className="experience-card" delay={100 + idx * 90}>
-            <div className="experience-card-top">
-              <div className="experience-title-wrap">
-                <h3 className="experience-role">{item.role}</h3>
-                <span className="experience-dot-sep" aria-hidden="true">•</span>
-                <span className="experience-company">{item.company}</span>
-              </div>
-              <span className="experience-period-badge">{item.period}</span>
-            </div>
-
-            <p className="experience-desc">{item.description}</p>
-
-            <div className="experience-metric-badge">
-              <span className="badge-pulse" aria-hidden="true" />
-              <span>{item.metrics}</span>
-            </div>
-          </Reveal>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-function ContactSection() {
-  const [copied, setCopied] = useState(false);
-
-  const handleCopyEmail = () => {
-    if (typeof navigator !== "undefined" && navigator.clipboard) {
-      navigator.clipboard.writeText("abhinandansingh77@outlook.com");
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    }
-  };
-
-  return (
-    <section id="contact" className="contact-hire-section">
-      <Reveal className="contact-card-wrap" delay={40}>
-        <div className="contact-card-inner">
-          <div className="status-pill">
-            <span className="status-dot" aria-hidden="true" />
-            <span>Available for Senior Product Design Roles &amp; Strategic Consulting</span>
-          </div>
-
-          <h2 className="contact-headline">Let’s build something impactful together.</h2>
-
-          <p className="contact-body">
-            Whether you&apos;re scaling an enterprise product, building a next-gen AI platform, or looking for strategic product design leadership, I’d love to connect.
-          </p>
-
-          <div className="contact-actions-bar">
-            <a
-              href="mailto:abhinandansingh77@outlook.com"
-              className="btn-primary contact-btn-primary"
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                <polyline points="22,6 12,13 2,6" />
-              </svg>
-              <span>abhinandansingh77@outlook.com</span>
-            </a>
-
-            <button
-              type="button"
-              className="btn-secondary contact-btn-secondary"
-              onClick={handleCopyEmail}
-            >
-              {copied ? "✓ Copied Email!" : "Copy Email"}
-            </button>
-
-            <a
-              href="tel:+919097168852"
-              className="btn-secondary contact-btn-secondary"
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-              </svg>
-              <span>+91 9097168852</span>
-            </a>
-
-            <a
-              href={resumePdf}
-              download="Abhinandan_Singh_Resume.pdf"
-              className="btn-secondary contact-btn-secondary"
-            >
-              <span>Resume</span>
-              <DownloadResumeIcon />
-            </a>
-          </div>
-
-          <div className="contact-socials-row">
-            <span className="socials-label">Connect on:</span>
-            <a
-              href="https://www.linkedin.com/in/abhinandansingh77/"
-              target="_blank"
-              rel="noreferrer"
-              className="social-pill-link"
-            >
-              LinkedIn ↗
-            </a>
-            <a
-              href="https://www.behance.net/abhinandan77"
-              target="_blank"
-              rel="noreferrer"
-              className="social-pill-link"
-            >
-              Behance ↗
-            </a>
-          </div>
-        </div>
-      </Reveal>
-    </section>
-  );
-}
-
 // Portrait crops, sized for the 3 / 5 cards on the home page. The Work page
 // uses the horizontal `preview` images on each project instead.
 const featuredWorkImages = {
@@ -1760,6 +1601,8 @@ function AIWorkflowSection() {
               src={aiWorkflowImg1}
               alt="Project Hub app mockup on a phone"
               className="aiw-phone-img"
+              loading="lazy"
+              decoding="async"
             />
           </div>
           <p className="aiw-intro-text">
@@ -1777,6 +1620,8 @@ function AIWorkflowSection() {
                 src={aiWorkflowImg2}
                 alt="Keycaps showing Figma, AI, and code symbols"
                 className="aiw-code-img"
+                loading="lazy"
+                decoding="async"
               />
             </div>
             <span className="aiw-code-caption">Figma to Working Code</span>
@@ -1820,6 +1665,8 @@ function AIWorkflowSection() {
               src={aiWorkflowImg3}
               alt="Balanced stack of zen stones"
               className="aiw-photo-img"
+              loading="lazy"
+              decoding="async"
             />
           </Reveal>
         </div>
@@ -1937,6 +1784,8 @@ function LogoRail({ items, ariaLabel }) {
                   className="client-logo-img"
                   src={logo.src}
                   alt={isOriginal ? logo.name : ""}
+                  loading="lazy"
+                  decoding="async"
                   style={logo.width ? { maxWidth: `${logo.width}px` } : undefined}
                 />
               ) : (
@@ -1991,6 +1840,8 @@ function HomePage() {
               src={heroImg}
               alt="Abhinandan Singh - Senior Product Designer"
               className="hero-centered-portrait"
+              fetchpriority="high"
+              decoding="async"
             />
           </Reveal>
 
@@ -2131,7 +1982,7 @@ function ResumePage() {
                 delay={index * 70}
               >
                 <span className="edu-mark">
-                  <img src={item.logo} alt="" />
+                  <img src={item.logo} alt="" loading="lazy" decoding="async" />
                 </span>
                 <div className="edu-copy">
                   <h3>{item.school}</h3>
@@ -2242,6 +2093,8 @@ function ProjectsPage() {
                   className="project-preview-image"
                   src={item.preview}
                   alt={`${item.titleAlt} preview`}
+                  loading="lazy"
+                  decoding="async"
                   style={{
                     transform: item.previewScale ? `scale(${item.previewScale})` : undefined,
                     objectPosition: item.previewPosition,
@@ -2250,7 +2103,7 @@ function ProjectsPage() {
               </div>
 
               <div className="project-meta-row">
-                <img className="project-title-image" src={item.titleImage} alt={item.titleAlt} />
+                <img className="project-title-image" src={item.titleImage} alt={item.titleAlt} loading="lazy" decoding="async" />
 
                 {item.domainTags && (
                   <p className="project-domain-tags">{item.domainTags}</p>
@@ -2293,7 +2146,76 @@ function ProjectsPage() {
   );
 }
 
+function ContactChannelIcon({ name }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      focusable="false"
+    >
+      {name === "mail" ? (
+        <>
+          <rect x="2.8" y="5" width="18.4" height="14" rx="2.4" />
+          <path d="m3.6 7.2 8.4 5.8 8.4-5.8" />
+        </>
+      ) : null}
+      {name === "phone" ? (
+        <path d="M7.2 3.6h3l1.5 3.8-2 1.4a11.4 11.4 0 0 0 5.5 5.5l1.4-2 3.8 1.5v3a2 2 0 0 1-2.2 2A16.8 16.8 0 0 1 5.2 5.8a2 2 0 0 1 2-2.2Z" />
+      ) : null}
+      {name === "linkedin" ? (
+        <>
+          <rect x="3.4" y="3.4" width="17.2" height="17.2" rx="3" />
+          <path d="M7.8 10.6v6M7.8 7.6h.02" />
+          <path d="M11.4 16.6v-6M11.4 13.1a2.5 2.5 0 0 1 5 0v3.5" />
+        </>
+      ) : null}
+    </svg>
+  );
+}
+
 function ContactPage() {
+  const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    if (!copied) {
+      return undefined;
+    }
+
+    const timer = window.setTimeout(() => setCopied(false), 2000);
+    return () => window.clearTimeout(timer);
+  }, [copied]);
+
+  const copyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(contactEmail);
+      setCopied(true);
+      return;
+    } catch {
+      /* The async clipboard needs a focused document and a secure origin. */
+    }
+
+    const field = document.createElement("textarea");
+    field.value = contactEmail;
+    field.setAttribute("readonly", "");
+    field.style.position = "fixed";
+    field.style.opacity = "0";
+    document.body.appendChild(field);
+    field.select();
+
+    try {
+      setCopied(document.execCommand("copy"));
+    } catch {
+      setCopied(false);
+    } finally {
+      document.body.removeChild(field);
+    }
+  };
+
   return (
     <div className="page-view">
       <section className="contact-section">
@@ -2304,42 +2226,63 @@ function ContactPage() {
         <Reveal className="contact-content">
           <span className="availability-pill" aria-label="Availability status">
             <span className="availability-dot" />
-            Available for Full-time &amp; Contract Roles
+            Available for Senior Roles
           </span>
-          <h2>Let&apos;s Work Together.</h2>
+          <h2>Let&apos;s build something impactful together.</h2>
 
           <p className="contact-intro">
-            I&apos;m currently open to full-time roles and select freelance projects. If you&apos;re
-            building something that needs thoughtful UX, drop me a message, I&apos;d love to hear
-            about it.
+            Whether you need a Senior Product Designer to lead complex enterprise systems,
+            streamline high-velocity mobile workflows, or accelerate execution using AI tools,
+            I&apos;m always open to discussing new opportunities.
           </p>
+        </Reveal>
 
-          <div className="contact-get-in-touch">
-            <h3 className="contact-touch-heading">
-              <svg className="contact-touch-icon" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
-                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
-                <path d="M22 6l-10 7L2 6" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-              Get in Touch
-            </h3>
-            <a className="contact-detail" href="tel:+919097168852">
-              +91 9097168852
-            </a>
-            <a className="contact-detail" href="mailto:abhinandansingh77@outlook.com">
-              abhinandansingh77@outlook.com
-            </a>
-          </div>
+        <Reveal className="contact-channels">
+          {contactChannels.map((channel) => (
+            <article key={channel.label} className="contact-channel-card">
+              <span className="contact-channel-icon">
+                <ContactChannelIcon name={channel.icon} />
+              </span>
+              <p className="contact-channel-label">{channel.label}</p>
+              <p className="contact-channel-value">{channel.value}</p>
+              <div className="contact-channel-actions">
+                {channel.copyable ? (
+                  <button type="button" className="contact-channel-copy" onClick={copyEmail}>
+                    {copied ? "Copied" : "Copy Email"}
+                  </button>
+                ) : null}
+                <a
+                  className="contact-channel-action"
+                  href={channel.href}
+                  target={channel.external ? "_blank" : undefined}
+                  rel={channel.external ? "noreferrer" : undefined}
+                >
+                  {channel.action}
+                  <span aria-hidden="true">↗</span>
+                </a>
+              </div>
+            </article>
+          ))}
+        </Reveal>
 
-          <a className="contact-link" href="mailto:abhinandansingh77@outlook.com">
-            Get in Touch → abhinandansingh77@outlook.com
-          </a>
-
-          <a className="hero-button hero-button-secondary contact-resume-cta" href={resumePdf} download>
-            Download Resume
+        <Reveal className="contact-resume-bar">
+          <a className="contact-resume-button" href={resumePdf} download>
+            Download Full Resume (PDF)
             <DownloadResumeIcon />
           </a>
+
+          <dl className="contact-quick-details">
+            {contactQuickDetails.map((detail) => (
+              <div key={detail.label} className="contact-quick-detail">
+                <dt>{detail.label}</dt>
+                <dd>{detail.value}</dd>
+              </div>
+            ))}
+          </dl>
         </Reveal>
       </section>
+
+      <ToolsRailSection />
 
       <Footer />
     </div>
