@@ -1238,7 +1238,7 @@ body.cursor-hidden .cursor-ring {
   letter-spacing: 0.08em;
 }
 
-@media (max-width: 760px) {
+@media (max-width: 1024px) {
 .impact-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -5682,5 +5682,159 @@ hr {
 
 .contact-resume-button {
     width: 100%;
+  }
+}
+
+/* ==========================================================================
+   Mobile-only Resume CTA (home page, below the tools rail)
+   ========================================================================== */
+
+.mobile-resume-cta-wrap {
+  display: none;
+}
+
+@media (max-width: 860px) {
+  /* Declared after the shared CTA scale block, which re-asserts inline-flex on
+     every button and would otherwise win on source order. */
+  .dark-pill-cta-btn {
+    display: none;
+  }
+
+  .mobile-resume-cta-wrap {
+    display: block;
+    width: 100%;
+    max-width: 1160px;
+    margin: 0 auto;
+    padding: 0 24px 8px;
+  }
+
+  .mobile-resume-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    min-height: 50px;
+    padding: 0 24px;
+    border-radius: var(--radius-pill);
+    background: var(--text);
+    color: #ffffff;
+    font-size: 0.92rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .mobile-resume-cta:active {
+    background: var(--accent-hover);
+  }
+}
+
+@media (max-width: 480px) {
+  .mobile-resume-cta-wrap {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+/* ==========================================================================
+   Mobile touch targets and minimum legible text
+   Declared last so it wins over the shared button scale above.
+   ========================================================================== */
+
+@media (max-width: 860px) {
+  /* Comfortable finger targets — these all measured 17–36px tall on a phone. */
+  .menu-button {
+    min-width: 44px;
+    min-height: 44px;
+    place-content: center;
+  }
+
+  .brand-button {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  .footer-socials a,
+  .back-to-top-btn {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  .kicker-back-button {
+    width: 44px;
+    height: 44px;
+  }
+
+  .case-nav-item {
+    min-height: 40px;
+  }
+
+  /* Diagram captions bottomed out near 10px, too small to read on a phone. */
+  .flow-branch-label {
+    font-size: 0.72rem;
+  }
+
+  .flow-node-sub {
+    font-size: 0.72rem;
+  }
+}
+
+/* ==========================================================================
+   Responsive corrections — tablet and mobile
+   Declared last so these win over the earlier per-section breakpoints.
+   ========================================================================== */
+
+/* ── Tablet ── */
+
+@media (max-width: 1180px) {
+  /* The case study rail became a horizontal chip strip here; on touch screens
+     it competed with the page for attention, so drop it entirely. */
+  .case-nav {
+    display: none;
+  }
+}
+
+@media (max-width: 1024px) {
+  /* Five Quick Info columns squeezed every value onto its own line. */
+  .case-section-quick-info .project-quick-info {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* ── Mobile ── */
+
+@media (max-width: 860px) {
+  /* Hero copy sets its own line breaks for wide screens; on a phone the text
+     should wrap naturally to the column. */
+  .wide-only-break {
+    display: none;
+  }
+
+  /* Half the gap between the nav and the first content of every page. */
+  .site-header {
+    margin-bottom: 18px;
+  }
+
+  .hero-centered-section {
+    padding-top: 19px;
+  }
+
+  /* 20% tighter rhythm between sections, site-wide. */
+  .content {
+    gap: 43px;
+  }
+
+  /* The CTA sat 8px off the footer rule. */
+  .mobile-resume-cta-wrap {
+    padding-bottom: 40px;
+  }
+}
+
+@media (max-width: 640px) {
+  /* Overrides the 74px this breakpoint set for the old mobile header. */
+  .site-header {
+    margin-bottom: 18px;
   }
 }

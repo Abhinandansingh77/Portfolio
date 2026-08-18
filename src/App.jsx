@@ -1822,14 +1822,14 @@ function HomePage() {
           {/* Main Title */}
           <Reveal className="hero-title-wrap" delay={40}>
             <h1 className="hero-centered-title">
-              Abhinandan Singh, Senior<br />Product Designer
+              Abhinandan Singh, Senior<br className="wide-only-break" />{" "}Product Designer
             </h1>
           </Reveal>
 
           {/* Subheadline */}
           <Reveal className="hero-sub-wrap" delay={120}>
             <p className="hero-centered-sub">
-              6+ years designing scalable digital products across diverse industries.<br />
+              6+ years designing scalable digital products across diverse industries.<br className="wide-only-break" />{" "}
               Fast execution with AI workflows.
             </p>
           </Reveal>
@@ -1861,6 +1861,17 @@ function HomePage() {
       <FeaturedWorkSection />
 
       <ToolsRailSection />
+
+      <Reveal className="mobile-resume-cta-wrap" delay={40}>
+        <a
+          className="mobile-resume-cta"
+          href={resumePdf}
+          download="Abhinandan_Singh_UX_Resume.pdf"
+        >
+          Download Resume
+          <DownloadResumeIcon />
+        </a>
+      </Reveal>
 
       <Footer />
     </div>
