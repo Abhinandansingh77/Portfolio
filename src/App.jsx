@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import heroImg from "../Assets/Hero img.webp";
+import { AmbientWater, FluidOverlay, HeroLiquid } from "./FluidEffects.jsx";
 import aiWorkflowImg1 from "../Assets/ai & workflow img 1.webp";
 import aiWorkflowImg2 from "../Assets/ai & workflow img 2.webp";
 import aiWorkflowImg3 from "../Assets/ai & workflow img 3.webp";
@@ -1104,126 +1105,6 @@ function navigateTo(href, onDone) {
   onDone?.();
 }
 
-function getInteractiveTarget(target) {
-  if (typeof Element === "undefined" || !(target instanceof Element)) {
-    return null;
-  }
-
-  return target.closest(
-    "button, a, .circle-link, .project-preview-wrap, .skill-card, .timeline-item, .menu-button",
-  );
-}
-
-function CustomCursor() {
-  const dotRef = useRef(null);
-  const ringRef = useRef(null);
-
-  useEffect(() => {
-    if (
-      typeof window === "undefined" ||
-      !window.matchMedia ||
-      window.matchMedia("(pointer: coarse)").matches
-    ) {
-      return undefined;
-    }
-
-    const dot = dotRef.current;
-    const ring = ringRef.current;
-    if (!dot || !ring) {
-      return undefined;
-    }
-
-    let mouseX = window.innerWidth / 2;
-    let mouseY = window.innerHeight / 2;
-    let ringX = mouseX;
-    let ringY = mouseY;
-    let rafId = 0;
-
-    const moveCursor = (event) => {
-      mouseX = event.clientX;
-      mouseY = event.clientY;
-      dot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
-    };
-
-    const updateRing = () => {
-      ringX += (mouseX - ringX) * 0.16;
-      ringY += (mouseY - ringY) * 0.16;
-      ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0)`;
-      rafId = window.requestAnimationFrame(updateRing);
-    };
-
-    const setHoverState = (active) => {
-      document.body.classList.toggle("cursor-hover", active);
-    };
-
-    const setPressedState = (active) => {
-      document.body.classList.toggle("cursor-pressed", active);
-    };
-
-    const setViewState = (target) => {
-      const overCard = Boolean(target?.closest?.(".featured-work-card-btn, .project-row"));
-      document.body.classList.toggle("cursor-view", overCard);
-    };
-
-    const handlePointerOver = (event) => {
-      setHoverState(Boolean(getInteractiveTarget(event.target)));
-      setViewState(event.target);
-    };
-
-    const handlePointerOut = (event) => {
-      if (!event.relatedTarget) {
-        setHoverState(false);
-        setViewState(null);
-        return;
-      }
-
-      setHoverState(Boolean(getInteractiveTarget(event.relatedTarget)));
-      setViewState(event.relatedTarget);
-    };
-
-    const handleMouseLeave = () => {
-      document.body.classList.add("cursor-hidden");
-    };
-
-    const handleMouseEnter = () => {
-      document.body.classList.remove("cursor-hidden");
-    };
-
-    const handleMouseDown = () => setPressedState(true);
-    const handleMouseUp = () => setPressedState(false);
-
-    window.addEventListener("mousemove", moveCursor);
-    window.addEventListener("mouseover", handlePointerOver);
-    window.addEventListener("mouseout", handlePointerOut);
-    window.addEventListener("mousedown", handleMouseDown);
-    window.addEventListener("mouseup", handleMouseUp);
-    document.addEventListener("mouseleave", handleMouseLeave);
-    document.addEventListener("mouseenter", handleMouseEnter);
-    rafId = window.requestAnimationFrame(updateRing);
-
-    return () => {
-      window.cancelAnimationFrame(rafId);
-      window.removeEventListener("mousemove", moveCursor);
-      window.removeEventListener("mouseover", handlePointerOver);
-      window.removeEventListener("mouseout", handlePointerOut);
-      window.removeEventListener("mousedown", handleMouseDown);
-      window.removeEventListener("mouseup", handleMouseUp);
-      document.removeEventListener("mouseleave", handleMouseLeave);
-      document.removeEventListener("mouseenter", handleMouseEnter);
-      document.body.classList.remove("cursor-hover", "cursor-pressed", "cursor-hidden", "cursor-view");
-    };
-  }, []);
-
-  return (
-    <div className="cursor-layer" aria-hidden="true">
-      <div ref={ringRef} className="cursor-ring">
-        <span className="cursor-view-label">View</span>
-      </div>
-      <div ref={dotRef} className="cursor-dot" />
-    </div>
-  );
-}
-
 function Reveal({ as: Tag = "div", className = "", delay = 0, children }) {
   const ref = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -1845,6 +1726,10 @@ function HomePage() {
             />
           </Reveal>
 
+          <HeroLiquid
+            textSelector=".hero-centered-title, .hero-centered-sub"
+            imgSelector=".hero-centered-portrait"
+          />
         </div>
 
         {/* Client Logos Bar — sits outside .hero-centered-container so it can
@@ -4482,7 +4367,8 @@ export default function App() {
         </div>
       </div>
 
-      <CustomCursor />
+      <AmbientWater />
+      <FluidOverlay />
       <SiteHeader menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
 
       <main
