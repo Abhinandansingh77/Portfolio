@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import heroImg from "../Assets/Hero img.webp";
+import liquidFolderIcon from "../Assets/Liquid Glass Icons.svg";
+import abhiLogo from "../Assets/abhi logo.svg";
 import { AmbientWater, FluidOverlay, HeroLiquid } from "./FluidEffects.jsx";
 import aiWorkflowImg1 from "../Assets/ai & workflow img 1.webp";
 import aiWorkflowImg2 from "../Assets/ai & workflow img 2.webp";
@@ -1695,23 +1697,274 @@ function ToolsRailSection() {
   );
 }
 
+// Turntable on the left of the hero. No audio yet: play/pause (or a tap on the
+// record) only drives the spinning record and the tonearm, ready for a real
+// track to be wired in.
+function HeroMusicPlayer() {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [skip, setSkip] = useState(null);
+  const togglePlay = () => setIsPlaying((playing) => !playing);
+
+  useEffect(() => {
+    if (!skip) return undefined;
+    const timer = window.setTimeout(() => setSkip(null), 420);
+    return () => window.clearTimeout(timer);
+  }, [skip]);
+
+  return (
+    <div className={`hero-player ${isPlaying ? "is-playing" : ""}`.trim()}>
+      <div className="hero-turntable">
+        <button
+          type="button"
+          className={`hero-record ${skip ? `is-skip-${skip}` : ""}`.trim()}
+          aria-label={isPlaying ? "Pause music" : "Play music"}
+          onClick={togglePlay}
+        >
+          <svg className="hero-record-disc" viewBox="0 0 200 200" aria-hidden="true">
+            <circle cx="100" cy="100" r="99" fill="#262626" />
+            <circle cx="100" cy="100" r="96" fill="#111" />
+            {[90, 84, 78, 72, 66, 60, 54, 48, 42].map((r) => (
+              <circle key={r} cx="100" cy="100" r={r} fill="none" stroke="rgba(255,255,255,0.07)" strokeWidth="1" />
+            ))}
+            {/* Two light catches pressed into the vinyl. They turn with the
+                record, so the spin reads even at a glance. */}
+            <circle
+              cx="100"
+              cy="100"
+              r="66"
+              fill="none"
+              stroke="rgba(255,255,255,0.09)"
+              strokeWidth="52"
+              strokeDasharray="34 173.35"
+            />
+            <circle cx="100" cy="100" r="33" fill="#D8402C" />
+            <circle cx="100" cy="100" r="27" fill="none" stroke="rgba(255,255,255,0.28)" strokeWidth="1" />
+            <rect x="86" y="80" width="28" height="3.5" rx="1.75" fill="rgba(255,255,255,0.85)" />
+            <rect x="91" y="86" width="18" height="2.5" rx="1.25" fill="rgba(255,255,255,0.6)" />
+            <circle cx="100" cy="100" r="4" fill="#F4F4F4" />
+            <circle cx="100" cy="100" r="1.6" fill="#222" />
+          </svg>
+        </button>
+        <svg className="hero-tonearm" viewBox="0 0 60 170" aria-hidden="true">
+          <circle cx="30" cy="22" r="16" fill="#E4E4E4" stroke="#C9C9C9" strokeWidth="1" />
+          <circle cx="30" cy="22" r="8" fill="#F7F7F7" stroke="#D2D2D2" strokeWidth="1" />
+          <rect x="41" y="16" width="14" height="12" rx="4" fill="#D6D6D6" />
+          <rect x="28" y="22" width="4" height="120" rx="2" fill="#E9E9E9" stroke="#CFCFCF" strokeWidth="0.75" />
+          <path d="M25 140h11l3 20H23z" fill="#F4F4F4" stroke="#CFCFCF" strokeWidth="1" />
+          <rect x="35" y="151" width="9" height="2.5" rx="1.25" fill="#BDBDBD" />
+        </svg>
+      </div>
+
+      <div className="hero-player-controls">
+        <button type="button" className="hero-player-btn" aria-label="Previous track" onClick={() => setSkip("back")}>
+          <i className="ri-skip-back-fill" aria-hidden="true" />
+        </button>
+        <button
+          type="button"
+          className="hero-player-btn hero-player-btn-main lg"
+          aria-label={isPlaying ? "Pause music" : "Play music"}
+          aria-pressed={isPlaying}
+          onClick={togglePlay}
+        >
+          <i className={isPlaying ? "ri-pause-fill" : "ri-play-fill"} aria-hidden="true" />
+        </button>
+        <button type="button" className="hero-player-btn" aria-label="Next track" onClick={() => setSkip("forward")}>
+          <i className="ri-skip-forward-fill" aria-hidden="true" />
+        </button>
+        <span className="hero-player-eq" aria-hidden="true">
+          <span />
+          <span />
+          <span />
+          <span />
+        </span>
+      </div>
+    </div>
+  );
+}
+
+const heroRoles = ["Designer", "Frontend Developer", "Product Engineer"];
+
+// Types each role, holds it, deletes it, and stops on the last one.
+function useTypewriter(words, { startDelay = 2600, typeMs = 70, deleteMs = 38, holdMs = 1200, nextMs = 320 } = {}) {
+  const reduceMotion =
+    typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+  const [text, setText] = useState(reduceMotion ? words[words.length - 1] : "");
+  const [done, setDone] = useState(reduceMotion);
+
+  useEffect(() => {
+    if (reduceMotion) return undefined;
+    let wordIndex = 0;
+    let length = 0;
+    let deleting = false;
+    let timer = 0;
+
+    const step = () => {
+      const word = words[wordIndex];
+      if (!deleting) {
+        length += 1;
+        setText(word.slice(0, length));
+        if (length < word.length) {
+          timer = window.setTimeout(step, typeMs);
+        } else if (wordIndex === words.length - 1) {
+          setDone(true);
+        } else {
+          deleting = true;
+          timer = window.setTimeout(step, holdMs);
+        }
+        return;
+      }
+      length -= 1;
+      setText(word.slice(0, length));
+      if (length > 0) {
+        timer = window.setTimeout(step, deleteMs);
+      } else {
+        deleting = false;
+        wordIndex += 1;
+        timer = window.setTimeout(step, nextMs);
+      }
+    };
+
+    timer = window.setTimeout(step, startDelay);
+    return () => window.clearTimeout(timer);
+  }, [words, reduceMotion, startDelay, typeMs, deleteMs, holdMs, nextMs]);
+
+  return { text, done };
+}
+
+function HeroTypedTitle() {
+  const { text, done } = useTypewriter(heroRoles);
+  const longest = heroRoles.reduce((a, b) => (b.length > a.length ? b : a));
+
+  return (
+    <h1 className="hero-centered-title" aria-label={`I’m Abhinandan Singh, a ${heroRoles[heroRoles.length - 1]}`}>
+      <span aria-hidden="true">I&rsquo;m Abhinandan Singh,</span>
+      <br className="wide-only-break" />{" "}
+      {/* The hidden longest role reserves the line, so nothing below shifts
+          while the words type and delete. */}
+      <span className="hero-typed" aria-hidden="true">
+        <span className="hero-typed-ghost">a {longest}</span>
+        {/* One span per letter so each can ease in as it's typed. */}
+        <span className="hero-typed-live">
+          a{" "}
+          {[...text].map((char, index) => (
+            <span key={index} className="hero-typed-char">
+              {char}
+            </span>
+          ))}
+          <span className={`hero-caret ${done ? "is-done" : "is-typing"}`} />
+        </span>
+      </span>
+    </h1>
+  );
+}
+
+// Folder names, always set on two lines.
+const heroFolderLabels = {
+  "cardinal-health-procurement-platform": ["Cardinal", "Health"],
+  "discovery-plus": ["Discovery", "Plus"],
+  "brightline-future-travel": ["Brightline", "Future Mobility"],
+  "al-maha-island-lusail": ["AL MAHA", "Island Lusail"],
+  "mcdelivery-experience-design": ["McDonald's", "McDelivery"],
+};
+
+function HeroProjectFolders() {
+  return (
+    <nav className="hero-folders" aria-label="Projects">
+      <ul>
+        {projectItems.map((item, index) => (
+          <li key={item.slug} style={{ "--folder-delay": `${320 + index * 70}ms` }}>
+            <a
+              className="hero-folder"
+              href={`/projects/${item.slug}`}
+              onClick={(event) => {
+                event.preventDefault();
+                navigateTo(`/projects/${item.slug}`);
+              }}
+            >
+              <img className="hero-folder-icon" src={liquidFolderIcon} alt="" aria-hidden="true" />
+              <span className="hero-folder-label">
+                {(heroFolderLabels[item.slug] ?? [item.title]).map((line) => (
+                  <span key={line}>{line}</span>
+                ))}
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  );
+}
+
+function HeroDock() {
+  return (
+    <nav className="hero-dock lg" aria-label="Quick links">
+      <a
+        className="hero-dock-item lg-disc"
+        href="/"
+        aria-label="Home"
+        data-tip="Home"
+        onClick={(event) => {
+          event.preventDefault();
+          navigateTo("/");
+        }}
+      >
+        <img className="hero-dock-logo" src={abhiLogo} alt="" aria-hidden="true" />
+      </a>
+      <span className="hero-dock-divider" aria-hidden="true" />
+      <a
+        className="hero-dock-item lg"
+        href="/projects"
+        aria-label="All projects"
+        data-tip="Projects"
+        onClick={(event) => {
+          event.preventDefault();
+          navigateTo("/projects");
+        }}
+      >
+        <i className="ri-folder-fill" aria-hidden="true" />
+      </a>
+      <a
+        className="hero-dock-item lg"
+        href="https://github.com/Abhinandansingh77"
+        target="_blank"
+        rel="noreferrer"
+        aria-label="GitHub"
+        data-tip="GitHub"
+      >
+        <i className="ri-github-fill" aria-hidden="true" />
+      </a>
+      <a
+        className="hero-dock-item lg"
+        href={resumePdf}
+        download="Abhinandan_Singh_UX_Resume.pdf"
+        aria-label="Download resume"
+        data-tip="Resume"
+      >
+        <i className="ri-arrow-down-line" aria-hidden="true" />
+      </a>
+    </nav>
+  );
+}
+
 function HomePage() {
   return (
     <div className="page-view">
-      <section className="hero-centered-section">
+      <section className="hero-stage">
+        <Reveal className="hero-stage-player" delay={260}>
+          <HeroMusicPlayer />
+        </Reveal>
+
         <div className="hero-centered-container">
           {/* Main Title */}
           <Reveal className="hero-title-wrap" delay={40}>
-            <h1 className="hero-centered-title">
-              Abhinandan Singh, Senior<br className="wide-only-break" />{" "}Product Designer
-            </h1>
+            <HeroTypedTitle />
           </Reveal>
 
           {/* Subheadline */}
           <Reveal className="hero-sub-wrap" delay={120}>
             <p className="hero-centered-sub">
-              6+ years designing scalable digital products across diverse industries.<br className="wide-only-break" />{" "}
-              Fast execution with AI workflows.
+              I build responsive web experiences with clean code, combining frontend<br className="wide-only-break" />{" "}
+              development with strong UI/UX design skills.
             </p>
           </Reveal>
 
@@ -1719,7 +1972,7 @@ function HomePage() {
           <Reveal className="hero-portrait-centered-wrap" delay={200}>
             <img
               src={heroImg}
-              alt="Abhinandan Singh - Senior Product Designer"
+              alt="Abhinandan Singh, Product Engineer"
               className="hero-centered-portrait"
               fetchpriority="high"
               decoding="async"
@@ -1732,11 +1985,13 @@ function HomePage() {
           />
         </div>
 
-        {/* Client Logos Bar — sits outside .hero-centered-container so it can
-            use the same 1160px grid width as the AI & Workflow section. */}
-        <Reveal className="hero-client-logos-bar" delay={280}>
-          <ClientLogoRail />
-        </Reveal>
+        <div className="hero-stage-folders">
+          <HeroProjectFolders />
+        </div>
+
+        <div className="hero-stage-dock">
+          <HeroDock />
+        </div>
       </section>
 
       <AIWorkflowSection />
@@ -4369,7 +4624,7 @@ export default function App() {
 
       <AmbientWater />
       <FluidOverlay />
-      <SiteHeader menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+      {/* Header navigation is off for now; the hero dock and folders cover it. */}
 
       <main
         key={`${pathname}-${projectSlug ?? ""}`}

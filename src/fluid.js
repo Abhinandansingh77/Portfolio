@@ -798,6 +798,8 @@ function drawText(ctx, el, origin) {
   const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
   while (walker.nextNode()) {
     const node = walker.currentNode;
+    // Layout-only text (e.g. the typewriter's spacer) isn't on screen.
+    if (getComputedStyle(node.parentElement).visibility === "hidden") continue;
     const re = /\S+/g;
     let m;
     while ((m = re.exec(node.data))) {
@@ -957,6 +959,16 @@ export function createHeroFluid({ container, canvas, texts, img }, baseCfg = FLU
   // Late font or image loads change what the snapshot should contain.
   const markStale = () => (stale = true);
   document.fonts?.addEventListener?.("loadingdone", markStale);
+  // So do text edits (the typewriter heading); while the canvas is showing,
+  // re-snapshot at once so the typing stays visible through the liquid.
+  const mo =
+    typeof MutationObserver !== "undefined"
+      ? new MutationObserver(() => {
+          stale = true;
+          if (live) capture();
+        })
+      : null;
+  for (const el of texts) mo?.observe(el, { childList: true, characterData: true, subtree: true });
 
   layout();
   excludedEl = canvas;
@@ -978,6 +990,7 @@ export function createHeroFluid({ container, canvas, texts, img }, baseCfg = FLU
       loop.destroy();
       io?.disconnect();
       ro?.disconnect();
+      mo?.disconnect();
       clearTimeout(resizeTimer);
       window.removeEventListener("resize", onResize);
       document.fonts?.removeEventListener?.("loadingdone", markStale);
