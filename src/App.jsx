@@ -3,9 +3,8 @@ import heroImg from "../Assets/Hero img.webp";
 import liquidFolderIcon from "../Assets/Liquid Glass Icons.svg";
 import abhiLogo from "../Assets/abhi logo.svg";
 import { AmbientWater, FluidOverlay, HeroLiquid } from "./FluidEffects.jsx";
-import aiWorkflowImg1 from "../Assets/ai & workflow img 1.webp";
-import aiWorkflowImg2 from "../Assets/ai & workflow img 2.webp";
-import aiWorkflowImg3 from "../Assets/ai & workflow img 3.webp";
+import { EngineeringMap } from "./EngineeringSection.jsx";
+import { ProcessSection } from "./ProcessSection.jsx";
 import cardinalHealthVerticalImg from "../Assets/Featured work cardinal health img vertical.webp";
 import discoveryPlusVerticalImg from "../Assets/Featured work discovery plus img Vertical.webp";
 import brightlineVerticalImg from "../Assets/Featured work bright line img vertical.webp";
@@ -1396,164 +1395,91 @@ const worksTabs = featuredWorkTabs.map((tab) => ({
   items: worksTabProjects[tab.id] ?? [],
 }));
 
-function FeaturedWorkSection() {
-  const [activeTab, setActiveTab] = useState(featuredWorkTabs[0].id);
-  const currentTab = featuredWorkTabs.find((tab) => tab.id === activeTab) ?? featuredWorkTabs[0];
+// Home page "Selected Work": expanding cards. The hovered (or focused) card
+// widens and slides its image in; the first card is open by default.
+const selectedWork = [
+  {
+    slug: "cardinal-health-procurement-platform",
+    title: "Order Express",
+    description: "Healthcare procurement platform",
+    image: cardinalHealthVerticalImg,
+  },
+  {
+    slug: "discovery-plus",
+    title: "Discovery+",
+    description: "Streaming and content discovery experience",
+    image: discoveryPlusVerticalImg,
+  },
+  {
+    slug: "brightline-future-travel",
+    title: "Brightline",
+    description: "Connected travel and journey companion",
+    image: brightlineVerticalImg,
+  },
+];
+
+function SelectedWorkSection() {
+  const [active, setActive] = useState(0);
 
   return (
-    <section id="projects" className="featured-work-section">
-      <Reveal delay={40}>
-        <h2 className="featured-work-title">Featured Work</h2>
+    <section id="projects" className="sw-section">
+      <Reveal className="section-header-center" delay={40}>
+        <h2 className="sw-title">Selected Work</h2>
+        <p className="sw-sub">
+          A selection of digital products and experiments showcasing my approach to building user-focused experiences.
+        </p>
       </Reveal>
 
-      <Reveal className="featured-work-tabs-wrap" delay={100}>
-        <div className="featured-work-tabs" role="tablist" aria-label="Featured work categories">
-          {featuredWorkTabs.map((tab) => (
-            <button
-              key={tab.id}
-              type="button"
-              role="tab"
-              id={`featured-tab-${tab.id}`}
-              aria-selected={tab.id === activeTab}
-              aria-controls={`featured-panel-${tab.id}`}
-              className={`featured-work-tab${tab.id === activeTab ? " is-active" : ""}`}
-              onClick={() => setActiveTab(tab.id)}
+      <Reveal delay={120}>
+        <div className="sw-row" onMouseLeave={() => setActive(0)}>
+          {selectedWork.map((item, index) => (
+            <a
+              key={item.slug}
+              className={`sw-card ${index === active ? "is-active" : ""}`.trim()}
+              href={`/projects/${item.slug}`}
+              aria-label={`${item.title}: ${item.description}. View case study`}
+              onMouseEnter={() => setActive(index)}
+              onFocus={() => setActive(index)}
+              onClick={(event) => {
+                event.preventDefault();
+                navigateTo(`/projects/${item.slug}`);
+              }}
             >
-              {tab.label}
-            </button>
+              <span className="sw-card-text">
+                <span className="sw-card-num">{String(index + 1).padStart(2, "0")}</span>
+                <span className="sw-card-copy">
+                  <span className="sw-card-title">{item.title}</span>
+                  <span className="sw-card-desc">{item.description}</span>
+                </span>
+              </span>
+              <span className="sw-card-media">
+                <img src={item.image} alt="" loading="lazy" decoding="async" />
+              </span>
+            </a>
           ))}
         </div>
       </Reveal>
 
-      <div
-        className="featured-work-grid"
-        role="tabpanel"
-        id={`featured-panel-${currentTab.id}`}
-        aria-labelledby={`featured-tab-${currentTab.id}`}
-      >
-        {currentTab.items.map((item, index) => (
-          <Reveal as="article" key={item.slug} className="featured-work-card" delay={160 + index * 80}>
-            <button
-              type="button"
-              className="featured-work-card-btn"
-              onClick={() => navigateTo(`/projects/${item.slug}`)}
-              aria-label={`View ${item.title} case study`}
-            >
-              <img
-                className="featured-work-card-img"
-                src={item.image}
-                alt={`${item.titleAlt} case study preview`}
-                loading="lazy"
-                style={item.imagePosition ? { objectPosition: item.imagePosition } : undefined}
-              />
-              <span className="featured-work-card-overlay">
-                <img className="featured-work-card-logo" src={item.hoverLogo} alt="" />
-              </span>
-            </button>
-          </Reveal>
-        ))}
-
-        {currentTab.items.length === 0 && (
-          <Reveal className="featured-work-empty" delay={160}>
-            <p>Brand design case studies are coming soon.</p>
-          </Reveal>
-        )}
-      </div>
-
-      <Reveal className="featured-work-footer" delay={480}>
+      <Reveal className="sw-footer" delay={200}>
         <button type="button" className="btn-secondary" onClick={() => navigateTo("/projects")}>
-          View All Work
+          View All Projects
+          <i className="ri-arrow-right-line" aria-hidden="true" />
         </button>
       </Reveal>
     </section>
   );
 }
 
-function AIWorkflowSection() {
+function EngineeringSection() {
   return (
-    <section id="ai-workflow" className="ai-workflow-section">
+    <section id="engineering" className="em-section">
       <Reveal className="section-header-center" delay={40}>
-        <h2 className="ai-workflow-title">AI &amp; Workflow</h2>
+        <h2 className="em-title">Engineering Meets Design</h2>
+        <p className="em-sub">
+          I bridge the gap between design and development, turning ideas into functional, polished digital products.
+        </p>
       </Reveal>
-
-      <div className="aiw-grid">
-        {/* Column 1: Phone mockup + lead text */}
-        <Reveal className="aiw-card aiw-card-intro" delay={100}>
-          <div className="aiw-phone-frame">
-            <img
-              src={aiWorkflowImg1}
-              alt="Project Hub app mockup on a phone"
-              className="aiw-phone-img"
-              loading="lazy"
-              decoding="async"
-            />
-          </div>
-          <p className="aiw-intro-text">
-            <strong>AI speeds up my workflow</strong> — but human intuition
-            drives the final product. I use modern AI tools to skip repetitive
-            tasks, test ideas fast, and keep my focus on real user problems.
-          </p>
-        </Reveal>
-
-        {/* Column 2: Keycaps + stats */}
-        <div className="aiw-column">
-          <Reveal className="aiw-card aiw-card-code" delay={160}>
-            <div className="aiw-code-frame">
-              <img
-                src={aiWorkflowImg2}
-                alt="Keycaps showing Figma, AI, and code symbols"
-                className="aiw-code-img"
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
-            <span className="aiw-code-caption">Figma to Working Code</span>
-          </Reveal>
-
-          <Reveal className="aiw-card aiw-card-stats" delay={220}>
-            <div className="aiw-stat">
-              <h3 className="aiw-stat-value">6+ Years</h3>
-              <p className="aiw-stat-label">
-                Designing scalable products across multiple domains
-              </p>
-            </div>
-            <div className="aiw-stat">
-              <h3 className="aiw-stat-value">35% Faster</h3>
-              <p className="aiw-stat-label">
-                Design-to-dev handoff using AI tools
-              </p>
-            </div>
-          </Reveal>
-        </div>
-
-        {/* Column 3: Mindset + zen stones */}
-        <div className="aiw-column">
-          <Reveal className="aiw-card aiw-card-mindset" delay={280}>
-            <div className="aiw-mindset-group">
-              <h3 className="aiw-mindset-title">Mindset</h3>
-              <p className="aiw-mindset-desc">
-                Synthesizing user data in seconds, turning Figma tokens into real code,
-                and validating interaction patterns before developer handoff.
-              </p>
-            </div>
-            <div className="aiw-pills">
-              <span className="aiw-pill">Research</span>
-              <span className="aiw-pill">Prototype</span>
-              <span className="aiw-pill">Ship</span>
-            </div>
-          </Reveal>
-
-          <Reveal className="aiw-card aiw-card-photo" delay={340}>
-            <img
-              src={aiWorkflowImg3}
-              alt="Balanced stack of zen stones"
-              className="aiw-photo-img"
-              loading="lazy"
-              decoding="async"
-            />
-          </Reveal>
-        </div>
-      </div>
+      <EngineeringMap />
     </section>
   );
 }
@@ -1994,11 +1920,13 @@ function HomePage() {
         </div>
       </section>
 
-      <AIWorkflowSection />
+      <EngineeringSection />
 
       <ImpactMetricsSection />
 
-      <FeaturedWorkSection />
+      <SelectedWorkSection />
+
+      <ProcessSection />
 
       <ToolsRailSection />
 
