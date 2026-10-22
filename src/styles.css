@@ -5669,8 +5669,8 @@ hr {
   border-radius: 4px;
 }
 
-/* .hero-contact scoping beats .lg, which sets position: relative later on. */
-.hero-contact .hero-contact-menu {
+/* Row scoping beats .lg, which sets position: relative later on. */
+.hero-contact-row .hero-contact-menu {
   position: absolute;
   left: -10px;
   bottom: calc(100% + 10px);
@@ -5698,7 +5698,7 @@ hr {
   --lg-fill: rgba(28, 28, 28, 0.86);
 }
 
-.hero-contact .hero-contact-menu.is-open {
+.hero-contact-row .hero-contact-menu.is-open {
   opacity: 1;
   visibility: visible;
   transform: none;
@@ -5710,7 +5710,7 @@ hr {
 
 /* Bridges the gap down to the row, so the pointer can move into the menu
    without it closing. */
-.hero-contact .hero-contact-menu::after {
+.hero-contact-row .hero-contact-menu::after {
   content: "";
   position: absolute;
   left: 0;
@@ -7620,15 +7620,16 @@ hr {
 }
 
 /* ── About me ──
-   After deformo.framer.website. A tall section with a pinned panel: the
-   heading writes itself in letter by letter as it arrives (their hero
-   title), then scrolling lifts it and types the body in through a soft,
-   blurred edge (their scroll statement; scrubbed in AboutSection.jsx). */
+   After the showreel on forma-design-studio.framer.website. A tall section
+   with a pinned panel: the body types itself in, then the heading, then a
+   small contact card sitting where their reel does grows out of its slot
+   to nearly fill the screen, its content blurred until it lands and then
+   coming into focus piece by piece (all scrubbed in AboutSection.jsx). */
 
 .about-section {
   position: relative;
-  height: 320vh;
-  height: 320svh;
+  height: 420vh;
+  height: 420svh;
 }
 
 /* Like the hero: flex: 1 from .page-view > section would override the
@@ -7651,17 +7652,30 @@ hr {
 .about-inner {
   width: 100%;
   max-width: 980px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
+  will-change: transform, opacity, filter;
+}
+
+.about-body {
+  max-width: 760px;
+  margin: 0;
+  font-size: clamp(1rem, min(1.55vw, 2.5vh), 1.3rem);
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: -0.015em;
+  color: var(--text-soft);
 }
 
 .about-title {
-  margin: 0;
-  font-size: clamp(2.4rem, 6.4vw, 5.25rem);
+  margin: clamp(28px, 5vh, 52px) 0 0;
+  font-size: clamp(2.2rem, min(5.6vw, 8.5vh), 4.75rem);
   font-weight: 600;
   line-height: 1.05;
   letter-spacing: -0.045em;
   color: var(--text);
-  will-change: transform;
 }
 
 .about-line {
@@ -7676,44 +7690,199 @@ hr {
   white-space: nowrap;
 }
 
-/* Each letter waits its turn; with a short fade against the stagger only a
-   handful are part-way in at once, so it reads as writing, not a fade. */
-.about-char {
-  display: inline-block;
-  opacity: 0;
-  transition: opacity 420ms cubic-bezier(0.44, 0, 0.56, 1);
-  transition-delay: calc(120ms + var(--c) * 38ms);
-}
-
-.about-section.is-in .about-char {
-  opacity: 1;
-}
-
-.about-body {
-  max-width: 820px;
-  margin: 48px auto 0;
-  display: grid;
-  gap: 0.9em;
-  font-size: clamp(1.2rem, 2.05vw, 1.85rem);
-}
-
-.about-para {
-  margin: 0;
-  font-size: inherit;
-  font-weight: 500;
-  line-height: 1.38;
-  letter-spacing: -0.025em;
-  color: var(--text-secondary);
-}
-
-.about-para:first-child {
-  color: var(--text);
-}
-
 /* Opacity and blur are set per letter from scroll position. */
+.about-char,
 .about-type-char {
   display: inline-block;
   opacity: 0;
+}
+
+/* Holds the card's starting place in the flow; its height is set from the
+   card's proportions so the card can scale straight down into it. */
+.about-slot {
+  width: clamp(180px, min(24vw, 34vh), 300px);
+  margin-top: clamp(28px, 5.5vh, 56px);
+}
+
+/* Centred on the viewport rather than the panel, which sits inside the
+   page's side gutters and is narrower than the open card. */
+.about-card {
+  --card-w: min(1120px, calc(100vw - 48px));
+  --card-h: min(600px, calc(100svh - 48px));
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 1;
+  width: var(--card-w);
+  height: var(--card-h);
+  margin: calc(var(--card-h) / -2) 0 0 calc(var(--card-w) / -2);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  background: var(--surface);
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+.about-card.is-open {
+  pointer-events: auto;
+}
+
+.about-card-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 32px;
+  height: 100%;
+  padding: clamp(32px, 6vw, 76px);
+  box-sizing: border-box;
+}
+
+/* Blur, fade and rise are set per piece from scroll position; hover
+   transitions wait until the card is open so they never lag the scrub. */
+.about-card [data-focus] {
+  will-change: transform, opacity, filter;
+}
+
+.about-card:not(.is-open) [data-focus] {
+  transition: none;
+}
+
+.about-card-intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  text-align: center;
+}
+
+.about-card-title {
+  margin: 0;
+  font-size: clamp(2rem, 4.4vw, 3.5rem);
+  font-weight: 500;
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+  color: var(--text);
+}
+
+.about-card-sub {
+  max-width: 680px;
+  margin: 0;
+  font-size: clamp(0.98rem, 1.3vw, 1.15rem);
+  line-height: 1.75;
+  color: var(--text-soft);
+}
+
+.about-card-foot {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.about-card .hero-contact-rows {
+  gap: 12px;
+  margin: 0;
+}
+
+.about-card .hero-contact-value {
+  gap: 10px;
+  font-size: clamp(1rem, 1.3vw, 1.15rem);
+}
+
+.about-card .hero-contact-value i {
+  display: inline-block;
+  font-size: 1.15rem;
+  transform-origin: 50% 70%;
+}
+
+/* The icons answer the hover that opens their menu: the envelope lifts and
+   tips like a letter going out, the handset rings. */
+.about-card .hero-contact-row[data-kind="email"]:hover .hero-contact-value i,
+.about-card .hero-contact-row[data-kind="email"] .hero-contact-value:focus-visible i {
+  animation: about-icon-send 620ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.about-card .hero-contact-row[data-kind="phone"]:hover .hero-contact-value i,
+.about-card .hero-contact-row[data-kind="phone"] .hero-contact-value:focus-visible i {
+  animation: about-icon-ring 700ms ease-in-out;
+}
+
+@keyframes about-icon-send {
+  0% { transform: none; }
+  40% { transform: translate3d(2px, -4px, 0) rotate(-10deg); }
+  70% { transform: translate3d(0, 1px, 0) rotate(3deg); }
+  100% { transform: none; }
+}
+
+@keyframes about-icon-ring {
+  0%, 100% { transform: rotate(0deg); }
+  12% { transform: rotate(-16deg); }
+  26% { transform: rotate(14deg); }
+  40% { transform: rotate(-11deg); }
+  54% { transform: rotate(8deg); }
+  68% { transform: rotate(-4deg); }
+  82% { transform: rotate(2deg); }
+}
+
+.about-card-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 48px;
+  padding: 0 7px 0 22px;
+  border-radius: 999px;
+  background: var(--text);
+  color: var(--bg);
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1), opacity 200ms ease;
+}
+
+.about-card-cta:hover {
+  transform: translateY(-2px);
+}
+
+.about-card-cta:focus-visible {
+  outline: 2px solid #0A84FF;
+  outline-offset: 3px;
+}
+
+/* Two arrows stacked in a disc: on hover the first drops out of the bottom
+   as the second drops in from the top. */
+.about-card-cta-icon {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 1.05rem;
+  overflow: hidden;
+}
+
+.about-card-cta-icon i {
+  grid-area: 1 / 1;
+  transition: transform 460ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.about-card-cta-icon i + i {
+  transform: translateY(-150%);
+}
+
+.about-card-cta:hover .about-card-cta-icon i:first-child,
+.about-card-cta:focus-visible .about-card-cta-icon i:first-child {
+  transform: translateY(150%);
+}
+
+.about-card-cta:hover .about-card-cta-icon i + i,
+.about-card-cta:focus-visible .about-card-cta-icon i + i {
+  transform: none;
 }
 
 .about-sr {
@@ -7729,17 +7898,27 @@ hr {
 }
 
 @media (max-width: 760px) {
-  .about-section {
-    height: 300vh;
-    height: 300svh;
-  }
-
   .about-pin {
     padding: 0 20px;
   }
 
-  .about-body {
-    margin-top: 32px;
+  .about-slot {
+    width: clamp(110px, 30vw, 140px);
+  }
+
+  .about-card {
+    --card-w: calc(100vw - 32px);
+    --card-h: min(520px, calc(100svh - 32px));
+  }
+
+  .about-card-foot {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .about-card .hero-contact-rows {
+    justify-items: center;
   }
 }
 
@@ -7750,12 +7929,44 @@ hr {
 
 .about-section.is-static .about-pin {
   position: static;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 64px;
   height: auto;
   padding-block: 96px;
+}
+
+.about-section.is-static .about-slot {
+  display: none;
+}
+
+.about-section.is-static .about-card {
+  position: relative;
+  top: auto;
+  left: auto;
+  width: 100%;
+  max-width: 1120px;
+  height: auto;
+  margin: 0;
+  min-height: min(600px, calc(100svh - 48px));
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.about-section.is-static .about-card-content {
+  min-height: inherit;
 }
 
 .about-section.is-static .about-char,
 .about-section.is-static .about-type-char {
   opacity: 1;
-  transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-card .hero-contact-value i,
+  .about-card-cta-icon i {
+    animation: none !important;
+    transition: none;
+  }
 }
