@@ -68,6 +68,10 @@ export const FLUID_CONFIG = {
   overlayBlend: "screen",
 
   // --- Rendering ---------------------------------------------------------------
+  // The hero canvas reaches this far (CSS px) above and below the hero and
+  // fades out over that band while the site-wide overlay fades in, so the
+  // two liquids blend instead of meeting on a hard horizontal line.
+  heroFeatherPx: 56,
   maxDpr: 2,
   overlayMaxDpr: 1,
   // Go idle this long after the last movement (the liquid has faded by then).
@@ -131,8 +135,10 @@ const forTheme = (cfg) => (isLightTheme() && cfg.light ? { ...cfg, ...cfg.light 
 export const isTouchOnly = () =>
   typeof window !== "undefined" && window.matchMedia("(hover: none), (pointer: coarse)").matches;
 
-// The hero registers its canvas here so the overlay can leave that area alone.
+// The hero registers its canvas here so the overlay can leave that area alone;
+// `excludedFeather` is the canvas's faded band at its top and bottom (px).
 let excludedEl = null;
+let excludedFeather = 0;
 
 // ---------------------------------------------------------------------------
 // Shaders
@@ -261,8 +267,8 @@ const FS = {
       outColor = clamp(vec4(vec3(r.r, g.g, b.b) + s, a + s + shade(grad)), 0.0, 1.0);
     }`,
 
-  // Overlay: highlight only, premultiplied; nothing inside uExclude (the
-  // hero canvas, in this canvas's UV).
+  // Overlay: highlight only, premultiplied; fades out into uExclude (the
+  // hero canvas, in this canvas's UV) over uFeather, as the hero fades in.
   // Ambient water ("swell"): a few directional waves (spread by the golden
   // angle so they never line up) give a rolling surface; light glints where
   // it tilts towards the light. A slow large-scale swell keeps it from
@@ -296,11 +302,12 @@ const FS = {
       outColor = uInk > 0.5 ? vec4(uTint * v, v) : vec4(uTint * v, max(uTint.r, max(uTint.g, uTint.b)) * v);
     }`,
 
-  overlay: `uniform vec3 tint; uniform vec4 uExclude;
+  overlay: `uniform vec3 tint; uniform vec4 uExclude; uniform float uFeather;
     void main () {
-      vec2 e = step(uExclude.xy, vUv) * step(vUv, uExclude.zw);
+      float ex = step(uExclude.x, vUv.x) * step(vUv.x, uExclude.z);
+      float ey = clamp(min(vUv.y - uExclude.y, uExclude.w - vUv.y) / uFeather, 0.0, 1.0);
       vec2 grad = slope();
-      float keep = 1.0 - e.x * e.y;
+      float keep = 1.0 - ex * ey;
       vec3 c = clamp(tint * shine(grad), 0.0, 1.0) * keep;
       float a = max(c.r, max(c.g, c.b)) + shade(grad) * keep;
       outColor = vec4(c, clamp(a, 0.0, 1.0));
@@ -719,6 +726,7 @@ export function createFluidOverlay(canvas, baseCfg = FLUID_CONFIG) {
     sim.bindSurface(display, 0);
     gl.uniform3f(display.u.tint, ...cfg.overlayColor);
     gl.uniform4f(display.u.uExclude, ...exclusion());
+    gl.uniform1f(display.u.uFeather, Math.max(excludedFeather, 1) / window.innerHeight);
     sim.blit(null);
   }
 
@@ -741,10 +749,13 @@ export function createFluidOverlay(canvas, baseCfg = FLUID_CONFIG) {
   const viewport = { left: 0, top: 0, width: 0, height: 0 };
   function onMove(e) {
     if (e.pointerType === "touch") return;
-    // The hero renders its own liquid; don't double it.
+    // The hero renders its own liquid; don't double it. In its faded band
+    // both draw, so a stroke carries across without a seam.
     if (excludedEl) {
       const r = excludedEl.getBoundingClientRect();
-      if (e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom) {
+      const top = r.top + excludedFeather;
+      const bottom = r.bottom - excludedFeather;
+      if (e.clientX >= r.left && e.clientX <= r.right && e.clientY >= top && e.clientY <= bottom) {
         pointer.reset();
         return;
       }
@@ -851,17 +862,22 @@ export function createHeroFluid({ container, canvas, texts, img }, baseCfg = FLU
   let live = false;
   let stale = true;
 
-  // Full-bleed: span the viewport width, the container's height.
+  // Full-bleed: span the viewport width, and the container's height plus
+  // the feather band above and below (faded out by the canvas's CSS mask).
+  const feather = cfg.heroFeatherPx;
   function layout() {
     const box = container.getBoundingClientRect();
     const vw = document.documentElement.clientWidth;
+    const h = box.height + feather * 2;
     canvas.style.left = `${-box.left}px`;
+    canvas.style.top = `${-feather}px`;
     canvas.style.width = `${vw}px`;
-    canvas.style.height = `${box.height}px`;
+    canvas.style.height = `${h}px`;
+    canvas.style.setProperty("--hero-liquid-feather", `${feather}px`);
     const dpr = Math.min(window.devicePixelRatio || 1, cfg.maxDpr);
     canvas.width = Math.round(vw * dpr);
-    canvas.height = Math.round(box.height * dpr);
-    sim.resize(vw, box.height);
+    canvas.height = Math.round(h * dpr);
+    sim.resize(vw, h);
     stale = true;
   }
 
@@ -972,6 +988,7 @@ export function createHeroFluid({ container, canvas, texts, img }, baseCfg = FLU
 
   layout();
   excludedEl = canvas;
+  excludedFeather = feather;
   window.addEventListener("pointermove", onPointerMove, { passive: true });
   container.addEventListener("touchstart", onTouchStart, { passive: true });
   container.addEventListener("touchmove", onTouchMove, { passive: true });
@@ -998,7 +1015,10 @@ export function createHeroFluid({ container, canvas, texts, img }, baseCfg = FLU
       container.removeEventListener("touchstart", onTouchStart);
       container.removeEventListener("touchmove", onTouchMove);
       container.classList.remove("is-liquid");
-      if (excludedEl === canvas) excludedEl = null;
+      if (excludedEl === canvas) {
+        excludedEl = null;
+        excludedFeather = 0;
+      }
       sim.destroy();
       gl.deleteTexture(sceneTex);
       gl.deleteProgram(display.p);

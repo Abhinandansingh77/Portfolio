@@ -555,6 +555,10 @@ button {
   z-index: 1;
   pointer-events: none;
   visibility: hidden;
+  /* It reaches past the hero by --hero-liquid-feather (set from fluid.js)
+     and fades out there while the site-wide overlay fades in: no seam. */
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 var(--hero-liquid-feather, 0px), #000 calc(100% - var(--hero-liquid-feather, 0px)), transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 var(--hero-liquid-feather, 0px), #000 calc(100% - var(--hero-liquid-feather, 0px)), transparent);
 }
 
 .hero-centered-container.is-liquid .hero-liquid-canvas {
@@ -5314,54 +5318,11 @@ hr {
   }
 }
 
-/* ==========================================================================
-   Mobile-only Resume CTA (home page, below the tools rail)
-   ========================================================================== */
-
-.mobile-resume-cta-wrap {
-  display: none;
-}
-
 @media (max-width: 860px) {
   /* Declared after the shared CTA scale block, which re-asserts inline-flex on
      every button and would otherwise win on source order. */
   .dark-pill-cta-btn {
     display: none;
-  }
-
-  .mobile-resume-cta-wrap {
-    display: block;
-    width: 100%;
-    max-width: 1160px;
-    margin: 0 auto;
-    padding: 0 24px 8px;
-  }
-
-  .mobile-resume-cta {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    width: 100%;
-    min-height: 50px;
-    padding: 0 24px;
-    border-radius: var(--radius-pill);
-    background: var(--text);
-    color: var(--on-accent);
-    font-size: 0.92rem;
-    font-weight: 600;
-    letter-spacing: -0.01em;
-  }
-
-  .mobile-resume-cta:active {
-    background: var(--accent-hover);
-  }
-}
-
-@media (max-width: 480px) {
-  .mobile-resume-cta-wrap {
-    padding-left: 16px;
-    padding-right: 16px;
   }
 }
 
@@ -5453,11 +5414,6 @@ hr {
   /* 20% tighter rhythm between sections, site-wide. */
   .content {
     gap: 43px;
-  }
-
-  /* The CTA sat 8px off the footer rule. */
-  .mobile-resume-cta-wrap {
-    padding-bottom: 40px;
   }
 }
 
@@ -5596,39 +5552,10 @@ hr {
   66% { transform: translate3d(2px, -3px, 0) rotate(0.3deg); }
 }
 
-.hero-contact-head {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.hero-contact-avatar {
-  flex: none;
-  width: 44px;
-  height: 44px;
-  border-radius: 10px;
-  object-fit: cover;
-  filter: grayscale(1);
-}
-
-.hero-contact-name {
-  margin: 0;
-  font-size: 1rem;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  color: var(--text);
-}
-
-.hero-contact-role {
-  margin: 2px 0 0;
-  font-size: 0.875rem;
-  color: var(--text-secondary);
-}
-
 .hero-contact-rows {
   display: grid;
   gap: 10px;
-  margin: 18px 0 0;
+  margin: 0;
   padding: 0;
   list-style: none;
 }
@@ -5651,14 +5578,12 @@ hr {
   text-decoration-color: transparent;
   text-underline-offset: 3px;
   cursor: pointer;
-  transition:
-    color 200ms ease,
-    text-decoration-color 200ms ease;
+  transition: text-decoration-color 200ms ease;
 }
 
+/* Hover underlines the value at full strength; nothing fades. */
 .hero-contact-value:hover,
 .hero-contact-value[aria-expanded="true"] {
-  color: var(--text-secondary);
   text-decoration-color: currentColor;
 }
 
@@ -5694,12 +5619,14 @@ hr {
     visibility 0s linear 180ms;
 }
 
-:root[data-theme="light"] .hero-contact-menu {
-  --lg-fill: rgba(255, 255, 255, 0.86);
+/* Solid, so the row underneath never shows through the menu. Row scoping
+   beats the themed .lg fills declared later on. */
+:root[data-theme="light"] .hero-contact-row .hero-contact-menu {
+  --lg-fill: #FFFFFF;
 }
 
-:root:not([data-theme="light"]) .hero-contact-menu {
-  --lg-fill: rgba(28, 28, 28, 0.86);
+:root:not([data-theme="light"]) .hero-contact-row .hero-contact-menu {
+  --lg-fill: #1C1C1E;
 }
 
 .hero-contact-row .hero-contact-menu.is-open {
@@ -5994,22 +5921,26 @@ hr {
 .lg {
   --lg-fill: rgba(236, 238, 243, 0.55);
   --lg-sheen: rgba(255, 255, 255, 0.75);
+  --lg-sheen-end: rgba(255, 255, 255, 0.22);
   --lg-rim-a: rgba(255, 255, 255, 1);
   --lg-rim-b: rgba(255, 255, 255, 0.85);
   --lg-edge: rgba(0, 0, 0, 0.07);
   --lg-glow: rgba(255, 255, 255, 0.6);
+  --lg-lip: rgba(255, 255, 255, 0);
+  --lg-base: rgba(0, 0, 0, 0.025);
   --lg-drop: 0 10px 28px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.05);
   position: relative;
   isolation: isolate;
   background:
-    linear-gradient(135deg, var(--lg-sheen) 0%, rgba(255, 255, 255, 0) 42%, rgba(255, 255, 255, 0) 70%, rgba(255, 255, 255, 0.22) 100%),
+    linear-gradient(135deg, var(--lg-sheen) 0%, rgba(255, 255, 255, 0) 42%, rgba(255, 255, 255, 0) 70%, var(--lg-sheen-end) 100%),
     var(--lg-fill);
   backdrop-filter: blur(24px) saturate(170%);
   -webkit-backdrop-filter: blur(24px) saturate(170%);
   box-shadow:
     0 0 0 0.5px var(--lg-edge),
+    inset 0 1px 0 var(--lg-lip),
     inset 0 0 12px var(--lg-glow),
-    inset 0 -8px 14px rgba(0, 0, 0, 0.025),
+    inset 0 -8px 14px var(--lg-base),
     var(--lg-drop);
   transition:
     transform 420ms cubic-bezier(0.34, 1.56, 0.64, 1),
@@ -6040,14 +5971,20 @@ hr {
   pointer-events: none;
 }
 
+/* Dark glass: a near-clear smoky body lit from above. A thin top lip and
+   a soft top-left rim catch the light; the lower edge stays dark instead of
+   rimmed, so pieces read as glass rather than bevelled grey plastic. */
 :root:not([data-theme="light"]) .lg {
-  --lg-fill: rgba(255, 255, 255, 0.09);
-  --lg-sheen: rgba(255, 255, 255, 0.12);
-  --lg-rim-a: rgba(255, 255, 255, 0.6);
-  --lg-rim-b: rgba(255, 255, 255, 0.32);
-  --lg-edge: rgba(255, 255, 255, 0.05);
-  --lg-glow: rgba(255, 255, 255, 0.05);
-  --lg-drop: 0 12px 32px rgba(0, 0, 0, 0.45), 0 2px 6px rgba(0, 0, 0, 0.3);
+  --lg-fill: rgba(255, 255, 255, 0.045);
+  --lg-sheen: rgba(255, 255, 255, 0.1);
+  --lg-sheen-end: rgba(255, 255, 255, 0.025);
+  --lg-rim-a: rgba(255, 255, 255, 0.34);
+  --lg-rim-b: rgba(255, 255, 255, 0.08);
+  --lg-edge: rgba(255, 255, 255, 0.08);
+  --lg-glow: rgba(255, 255, 255, 0.025);
+  --lg-lip: rgba(255, 255, 255, 0.1);
+  --lg-base: rgba(0, 0, 0, 0.28);
+  --lg-drop: 0 14px 34px rgba(0, 0, 0, 0.55), 0 2px 6px rgba(0, 0, 0, 0.35);
 }
 
 .lg-disc {
@@ -6317,7 +6254,9 @@ hr {
   }
 }
 
-/* Phone: one column. Title, portrait, a compact player, then the dock. Still one screen tall where the phone allows. */
+/* Phone: one column. Title near the top, the portrait and dock at the
+   bottom of the screen (spare height opens up above the portrait). Still one
+   screen tall where the phone allows. No turntable. */
 @media (max-width: 760px) {
   .hero-stage {
     display: flex;
@@ -6325,47 +6264,36 @@ hr {
     align-items: stretch;
     height: auto;
     min-height: calc(100svh - var(--page-pad-top));
-    padding: 8px 0 12px;
+    padding: 40px 0 12px;
     gap: 14px;
   }
 
-  .hero-stage {
-    justify-content: center;
-  }
-
   .hero-stage .hero-centered-container {
-    flex: none;
+    flex: 1 0 auto;
     order: 1;
     height: auto;
   }
 
+  /* 20% up on the earlier clamp(1.52rem, 6.56vw, 2.08rem), and bold. */
   .hero-stage .hero-centered-title {
-    font-size: clamp(1.52rem, 6.56vw, 2.08rem);
-  }
-
-  .hero-stage .hero-portrait-centered-wrap {
-    height: clamp(240px, 41.6svh, 390px);
-    max-width: 364px;
-    margin-top: 0;
+    font-size: clamp(1.824rem, 7.872vw, 2.496rem);
+    font-weight: 700;
   }
 
   .hero-stage-player {
-    order: 3;
-    align-self: center;
-    margin-top: 0;
-    margin-left: 0;
+    display: none;
   }
 
-  .hero-player {
-    --disc: 44px;
-    display: flex;
-    align-items: center;
-    gap: 14px;
+  /* The pinned logos overlap the portrait's edges: keep them in front. */
+  .hero-bubbles {
+    z-index: 2;
   }
 
-  /* Room for the arm, which overhangs the record. */
-  .hero-turntable {
-    margin-right: calc(var(--disc) * 0.2);
+  /* A little taller than before (41.6svh / 390px): the turntable's room. */
+  .hero-stage .hero-portrait-centered-wrap {
+    height: clamp(240px, 47svh, 430px);
+    max-width: 364px;
+    margin-top: auto;
   }
 
   .hero-stage-dock {
@@ -6373,9 +6301,28 @@ hr {
     padding-top: 0;
   }
 
+  /* 40% larger dock than the 40px phone buttons it had. */
+  .hero-dock {
+    padding: 8px;
+  }
+
+  /* Down to 52px on a 360px phone, so the dock keeps the 16px gutters. */
   .hero-dock-item {
-    width: 40px;
-    height: 40px;
+    width: min(56px, calc(20vw - 20px));
+    height: min(56px, calc(20vw - 20px));
+  }
+
+  /* On the icons, since the theme button's font: inherit resets its own. */
+  .hero-dock-item i {
+    font-size: 1.47rem;
+  }
+
+  .hero-dock-logo {
+    width: 24px;
+  }
+
+  .hero-dock-divider {
+    height: 25px;
   }
 }
 
@@ -6422,7 +6369,7 @@ hr {
   --em-label: #A3A3A3;
   --em-caption: #8A8A8A;
   --em-tile-off: #6E6E74;
-  --em-tile-on-edge: rgba(255, 255, 255, 0.45);
+  --em-tile-on-edge: rgba(255, 255, 255, 0.26);
   --em-dot-off: #3A3A40;
   --em-glow: rgba(255, 255, 255, 0.06);
   --em-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
@@ -6431,8 +6378,8 @@ hr {
   --em-card-bg-0: rgba(255, 255, 255, 0.04);
   --em-card-bg-1: rgba(255, 255, 255, 0.09);
   --em-card-bg-code: rgba(8, 8, 10, 0.6);
-  --em-card-rim-a: rgba(255, 255, 255, 0.55);
-  --em-card-rim-b: rgba(255, 255, 255, 0.25);
+  --em-card-rim-a: rgba(255, 255, 255, 0.36);
+  --em-card-rim-b: rgba(255, 255, 255, 0.08);
   --em-card-edge: rgba(255, 255, 255, 0.06);
   --em-card-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
   --em-card-text: #F5F5F5;
@@ -6947,17 +6894,18 @@ hr {
   }
 }
 
-/* ── Selected Work: expanding cards ──
-   After the expanding step cards reference: the open card is twice as wide
-   as each of the others and shows a portrait image inset on its right; hover
-   or focus opens a card, and the first opens again when the pointer leaves. */
+/* ── Selected Work: stacked cards ──
+   After "Services we offer" on forma-design-studio.framer.website: full-width
+   cards that pin near the top one after another. As the next card slides up
+   over one, it shrinks and tips back (transform set from SelectedWorkSection
+   in App.jsx). Text on the left, the project image on the right. */
 
 .sw-section {
-  --sw-row-h: clamp(400px, 34vw, 480px);
-  /* Fitted to the reference's spring (≈850ms, no overshoot): a soft start,
-     halfway at about a quarter of the time, then a long gentle settle. */
+  /* Where each card pins, and its height (one screen less some breathing
+     room, so the next card's top edge shows as it arrives). */
+  --sw-pin: 60px;
+  --sw-card-h: clamp(420px, calc(100svh - 140px), 620px);
   --sw-ease: cubic-bezier(0.3, 0.4, 0.25, 1);
-  --sw-duration: 900ms;
   width: 100%;
   max-width: 1160px;
   margin: 0 auto;
@@ -6965,31 +6913,31 @@ hr {
   scroll-margin-top: 100px;
 }
 
-.sw-row {
-  /* One "unit" is a closed card's width: three cards share four units (the
-     open card takes two) after the two 10px gaps. */
-  --sw-unit: calc((100cqw - 20px) / 4);
-  container-type: inline-size;
+.sw-stack {
   display: flex;
-  gap: 10px;
-  height: var(--sw-row-h);
+  flex-direction: column;
+  gap: 32px;
+}
+
+.sw-slot {
+  position: sticky;
+  top: var(--sw-pin);
 }
 
 .sw-card {
-  position: relative;
-  flex: 1 1 0;
-  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 24px;
+  height: var(--sw-card-h);
+  box-sizing: border-box;
+  padding: 24px;
   overflow: hidden;
-  border-radius: var(--radius-card);
+  border-radius: 24px;
   background: var(--surface);
+  box-shadow: 0 0 0 1px var(--line);
   color: var(--text);
-  transition:
-    flex-grow var(--sw-duration) var(--sw-ease),
-    background-color 300ms ease;
-}
-
-.sw-card.is-active {
-  flex-grow: 2;
+  transform-origin: 50% 50%;
+  will-change: transform;
 }
 
 .sw-card:focus-visible {
@@ -6997,65 +6945,90 @@ hr {
   outline-offset: 3px;
 }
 
-/* Text column: one unit wide, pinned left, so nothing re-wraps while the
-   card resizes. */
 .sw-card-text {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  width: var(--sw-unit);
-  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 24px;
+  min-width: 0;
+  padding: 16px;
 }
 
 .sw-card-num {
-  font-size: 0.8rem;
+  font-size: clamp(2.4rem, 4vw, 3.5rem);
   font-weight: 500;
-  color: var(--text-secondary);
+  line-height: 1;
+  letter-spacing: -0.04em;
   font-variant-numeric: tabular-nums;
+}
+
+.sw-card-bottom {
+  display: grid;
+  justify-items: start;
+  gap: 32px;
 }
 
 .sw-card-copy {
   display: grid;
-  gap: 6px;
-  max-width: 320px;
+  gap: 10px;
+  max-width: 420px;
 }
 
 .sw-card-title {
-  font-size: 1.5rem;
+  font-size: clamp(1.6rem, 2.4vw, 2.1rem);
   font-weight: 500;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
 }
 
 .sw-card-desc {
-  font-size: 0.9rem;
-  line-height: 1.45;
+  font-size: 1rem;
+  line-height: 1.5;
   color: var(--text-secondary);
 }
 
-/* Image: parked just right of the text column at full strength. The card
-   itself does the revealing: as it widens, its edge wipes across the image
-   (and covers it again as it narrows), exactly as on the reference. */
+/* A pill like the reference's card button; the whole card is the link. */
+.sw-card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border-radius: var(--radius-pill);
+  background: var(--text);
+  color: var(--bg);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.sw-card-link i {
+  font-size: 1rem;
+  transition: transform 300ms var(--sw-ease);
+}
+
 .sw-card-media {
-  position: absolute;
-  top: 12px;
-  bottom: 12px;
-  left: var(--sw-unit);
-  width: calc(var(--sw-unit) - 12px);
+  position: relative;
+  min-height: 0;
   overflow: hidden;
-  border-radius: 12px;
+  border-radius: 16px;
 }
 
 .sw-card-media img {
+  position: absolute;
+  inset: 0;
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 900ms var(--sw-ease);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .sw-card:hover .sw-card-media img {
+    transform: scale(1.03);
+  }
+
+  .sw-card:hover .sw-card-link i {
+    transform: translateX(3px);
+  }
 }
 
 .sw-footer {
@@ -7073,36 +7046,51 @@ hr {
   transform: translateX(3px);
 }
 
-/* Narrow screens: no room to expand sideways, so stack the cards with their
-   images always showing. */
+/* Narrow screens: the image on top, text under it, same stacking. */
 @media (max-width: 900px) {
-  .sw-row {
-    flex-direction: column;
-    gap: 14px;
-    height: auto;
+  .sw-section {
+    --sw-pin: 24px;
+    --sw-card-h: clamp(440px, calc(100svh - 96px), 600px);
+  }
+
+  .sw-stack {
+    gap: 20px;
   }
 
   .sw-card {
-    display: flex;
-    flex-direction: column;
-    flex: none;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) auto;
+    gap: 0;
     padding: 12px;
+    border-radius: 20px;
   }
 
   .sw-card-media {
-    position: relative;
-    inset: auto;
     order: -1;
-    width: 100%;
-    height: clamp(240px, 62vw, 420px);
+    border-radius: 12px;
   }
 
   .sw-card-text {
-    position: relative;
-    inset: auto;
-    width: auto;
-    gap: 8px;
-    padding: 16px 8px 8px;
+    gap: 16px;
+    padding: 18px 8px 8px;
+  }
+
+  .sw-card-num {
+    font-size: 1rem;
+    color: var(--text-secondary);
+  }
+
+  .sw-card-bottom {
+    gap: 18px;
+  }
+
+  .sw-card-copy {
+    gap: 6px;
+  }
+
+  .sw-card-link {
+    padding: 10px 16px;
+    font-size: 0.85rem;
   }
 }
 
@@ -7118,6 +7106,10 @@ hr {
 
 @media (prefers-reduced-motion: reduce) {
   .sw-card {
+    will-change: auto;
+  }
+
+  .sw-card-media img {
     transition: none;
   }
 }
@@ -7126,7 +7118,7 @@ hr {
    After the team-page reference: one big heading with a text-selection
    highlight, process steps as floating chat cards, tools as captioned glass
    tiles, all on a faint grid. Desktop is a 1440 × 720 artboard scaled to
-   fit; narrower screens stack it. */
+   fit; narrower screens stack it (phones drop the tool tiles). */
 
 .pd-section {
   --pd-grid: rgba(255, 255, 255, 0.06);
@@ -7436,29 +7428,9 @@ hr {
     animation: none;
   }
 
+  /* Phones: just the heading and the steps, no tool logos. */
   .pd-compact-tools {
-    gap: 16px 12px;
-  }
-
-  .pd-compact .pd-tool-frame {
-    width: 68px;
-    height: 68px;
-    padding: 5px;
-    border-radius: 12px;
-  }
-
-  .pd-compact .pd-tool-inner {
-    font-size: 28px;
-  }
-
-  .pd-compact .pd-js {
-    width: 30px;
-    height: 30px;
-    font-size: 13px;
-  }
-
-  .pd-compact .pd-tool-label {
-    font-size: 9px;
+    display: none;
   }
 }
 
@@ -7554,6 +7526,35 @@ hr {
   }
 }
 
+/* "View All": a ghost button under the grid. */
+.tools-grid-more {
+  display: block;
+  margin: 44px auto 0;
+  padding: 10px 22px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  transition:
+    background-color 200ms ease,
+    border-color 200ms ease;
+}
+
+.tools-grid-more:hover {
+  border-color: var(--text);
+  background: color-mix(in srgb, var(--text) 6%, transparent);
+}
+
+.tools-grid-more:focus-visible {
+  outline: 2px solid #0A84FF;
+  outline-offset: 3px;
+}
+
 .tools-grid-sr {
   position: absolute;
   width: 1px;
@@ -7613,6 +7614,10 @@ hr {
   .tools-grid-logo {
     gap: 5px;
     font-size: 13px;
+  }
+
+  .tools-grid-more {
+    margin-top: 36px;
   }
 }
 

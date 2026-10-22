@@ -2,12 +2,11 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import heroImg from "../Assets/Hero img.webp";
 import heroImgDark from "../Assets/Hero img-darkMode.webp";
 import abhiLogo from "../Assets/abhi logo.svg";
-import profilePhoto from "../Assets/profile photo.png";
 import { AmbientWater, FluidOverlay, HeroLiquid } from "./FluidEffects.jsx";
-import { EngineeringMap } from "./EngineeringSection.jsx";
+import { EngineeringMap, useMediaQuery } from "./EngineeringSection.jsx";
 import { ProcessSection } from "./ProcessSection.jsx";
 import { AboutSection } from "./AboutSection.jsx";
-import { ContactRows } from "./ContactRows.jsx";
+import { ContactRows, contactRows } from "./ContactRows.jsx";
 import { toggleTheme, useTheme } from "./theme.js";
 import cardinalHealthVerticalImg from "../Assets/Featured work cardinal health img vertical.webp";
 import discoveryPlusVerticalImg from "../Assets/Featured work discovery plus img Vertical.webp";
@@ -957,7 +956,10 @@ const brightlineCaseStudy = {
     "This project demonstrates my ability to think beyond screens and design complete service ecosystems where digital products interact with physical environments. It reflects strategic UX thinking, service design maturity, and systems-level problem solving.",
 };
 
-const contactEmail = "abhinandansingh77@outlook.com";
+// Email and phone come from the home page's contact rows, so every page
+// shows the same details.
+const [emailRow, phoneRow] = contactRows;
+const contactEmail = emailRow.value;
 
 const contactChannels = [
   {
@@ -971,8 +973,8 @@ const contactChannels = [
   {
     icon: "phone",
     label: "Phone",
-    value: "+91 9097168852",
-    href: "tel:+919097168852",
+    value: phoneRow.value,
+    href: phoneRow.actions.find((action) => action.kind === "link").href,
     action: "Call Direct",
   },
   {
@@ -1422,8 +1424,60 @@ const selectedWork = [
   },
 ];
 
+// Selected Work as stacked cards, after the "Services we offer" section on
+// forma-design-studio.framer.website: each card pins near the top, and as the
+// next one slides up over it, it shrinks and tips back in 3D (scrubbed by
+// scroll), so the stack reads as pages falling away behind the new one.
+const SW_STACK_SCALE = 0.3;
+const SW_STACK_TILT = 56;
+const SW_STACK_PERSPECTIVE = 2000;
+
 function SelectedWorkSection() {
-  const [active, setActive] = useState(0);
+  const stackRef = useRef(null);
+
+  useEffect(() => {
+    const stack = stackRef.current;
+    if (!stack || window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return undefined;
+    // Slots are the sticky wrappers (measured); cards inside them move.
+    const slots = [...stack.children];
+    const cards = slots.map((slot) => slot.firstElementChild);
+    let frame = 0;
+    let visible = false;
+
+    // A card's progress runs 0 → 1 while the next slot rises from where it
+    // sits when this card pins (or the bottom of the screen, if lower) to its
+    // own pinned spot.
+    const update = () => {
+      frame = 0;
+      const pin = parseFloat(getComputedStyle(slots[0]).top) || 0;
+      const gap = parseFloat(getComputedStyle(stack).rowGap) || 0;
+      for (let i = 0; i < cards.length - 1; i += 1) {
+        const start = Math.min(window.innerHeight, pin + slots[i].offsetHeight + gap);
+        const next = slots[i + 1].getBoundingClientRect().top;
+        const p = Math.min(1, Math.max(0, (start - next) / (start - pin)));
+        cards[i].style.transform = p
+          ? `perspective(${SW_STACK_PERSPECTIVE}px) scale(${1 - SW_STACK_SCALE * p}) rotateX(${SW_STACK_TILT * p}deg)`
+          : "";
+      }
+    };
+    const onScroll = () => {
+      if (visible && !frame) frame = requestAnimationFrame(update);
+    };
+
+    const io = new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+      if (visible) onScroll();
+    });
+    io.observe(stack);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      io.disconnect();
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, []);
 
   return (
     <section id="projects" className="sw-section">
@@ -1434,16 +1488,13 @@ function SelectedWorkSection() {
         </p>
       </Reveal>
 
-      <Reveal delay={120}>
-        <div className="sw-row" onMouseLeave={() => setActive(0)}>
-          {selectedWork.map((item, index) => (
+      <div ref={stackRef} className="sw-stack">
+        {selectedWork.map((item, index) => (
+          <div key={item.slug} className="sw-slot">
             <a
-              key={item.slug}
-              className={`sw-card ${index === active ? "is-active" : ""}`.trim()}
+              className="sw-card"
               href={`/projects/${item.slug}`}
               aria-label={`${item.title}: ${item.description}. View case study`}
-              onMouseEnter={() => setActive(index)}
-              onFocus={() => setActive(index)}
               onClick={(event) => {
                 event.preventDefault();
                 navigateTo(`/projects/${item.slug}`);
@@ -1451,18 +1502,24 @@ function SelectedWorkSection() {
             >
               <span className="sw-card-text">
                 <span className="sw-card-num">{String(index + 1).padStart(2, "0")}</span>
-                <span className="sw-card-copy">
-                  <span className="sw-card-title">{item.title}</span>
-                  <span className="sw-card-desc">{item.description}</span>
+                <span className="sw-card-bottom">
+                  <span className="sw-card-copy">
+                    <span className="sw-card-title">{item.title}</span>
+                    <span className="sw-card-desc">{item.description}</span>
+                  </span>
+                  <span className="sw-card-link" aria-hidden="true">
+                    View case study
+                    <i className="ri-arrow-right-line" />
+                  </span>
                 </span>
               </span>
               <span className="sw-card-media">
                 <img src={item.image} alt="" loading="lazy" decoding="async" />
               </span>
             </a>
-          ))}
-        </div>
-      </Reveal>
+          </div>
+        ))}
+      </div>
 
       <Reveal className="sw-footer" delay={200}>
         <button type="button" className="btn-secondary" onClick={() => navigateTo("/projects")}>
@@ -1670,8 +1727,10 @@ function ToolLogo({ tool }) {
 // Twelve cells (two rows of six) showing part of the list. After the
 // reference, one cell at a time quietly swaps its tool for the next one
 // waiting: the old logo fades out, the new one fades in, then a pause. Tools
-// leave and join a queue, so every tool takes its turn.
+// leave and join a queue, so every tool takes its turn. Phones show just the
+// frontend tools (two rows of three), held still. "View All" lists every tool.
 const TOOL_CELLS = 12;
+const TOOL_CELLS_SMALL = 6;
 const TOOL_FADE_OUT = 1400;
 const TOOL_FADE_IN = 2000;
 const TOOL_SWAP_EVERY = 3200;
@@ -1680,13 +1739,19 @@ function ToolsGridSection() {
   const reduce =
     typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
   const sectionRef = useRef(null);
+  const small = useMediaQuery("(max-width: 640px)");
+  const [expanded, setExpanded] = useState(false);
   const [cells, setCells] = useState(() => gridTools.slice(0, TOOL_CELLS).map((_, i) => i));
   const [fading, setFading] = useState(-1);
+  const still = reduce || small || expanded;
 
   useEffect(() => {
-    if (reduce) return undefined;
+    if (still) return undefined;
     const queue = gridTools.map((_, i) => i).slice(TOOL_CELLS);
     let shown = gridTools.slice(0, TOOL_CELLS).map((_, i) => i);
+    // Restarting (e.g. after "Show Less"): the grid starts over in step with
+    // the queue.
+    setCells(shown);
     let lastCell = -1;
     let visible = false;
     const timers = new Set();
@@ -1726,10 +1791,12 @@ function ToolsGridSection() {
       io.disconnect();
       timers.forEach((id) => window.clearTimeout(id));
     };
-  }, [reduce]);
+  }, [still]);
 
-  // Reduced motion: no swapping, so show every tool at once.
-  const visibleTools = reduce ? gridTools : cells.map((index) => gridTools[index]);
+  // Expanded or reduced motion: every tool at once. Phones: the frontend six.
+  let visibleTools = cells.map((index) => gridTools[index]);
+  if (expanded || reduce) visibleTools = gridTools;
+  else if (small) visibleTools = gridTools.slice(0, TOOL_CELLS_SMALL);
 
   return (
     <section ref={sectionRef} className="tools-grid-section">
@@ -1744,7 +1811,7 @@ function ToolsGridSection() {
         <ul className="tools-grid" aria-hidden="true">
           {visibleTools.map((tool, cell) => (
             <li
-              key={reduce ? tool.name : cell}
+              key={still ? tool.name : cell}
               className={`tools-grid-item ${cell === fading ? "is-out" : ""}`.trim()}
             >
               {/* Keyed by tool, so an incoming tool mounts fresh and fades in. */}
@@ -1754,6 +1821,16 @@ function ToolsGridSection() {
             </li>
           ))}
         </ul>
+        {reduce ? null : (
+          <button
+            type="button"
+            className="tools-grid-more"
+            aria-expanded={expanded}
+            onClick={() => setExpanded((open) => !open)}
+          >
+            {expanded ? "Show Less" : "View All"}
+          </button>
+        )}
       </Reveal>
     </section>
   );
@@ -2001,7 +2078,8 @@ function HeroDock() {
 // soft round opening, rippled and blurred until it is clear, then bobbing a
 // little before it closes back into the surface. Spots
 // are picked against the live layout, so a bubble never lands on the heading,
-// subtitle, portrait, player or dock.
+// subtitle, portrait, player or dock. Phones instead pin six logos, three on
+// each side of the portrait, that stay up (see BUBBLE_PINNED).
 const bubbleLogos = [
   { name: "React", icon: "ri-reactjs-line" },
   { name: "JavaScript", icon: "ri-javascript-fill" },
@@ -2037,6 +2115,17 @@ const BUBBLE_SWAP_OVERLAP = 800;
 const BUBBLE_OUT = 1300;
 const BUBBLE_RETRY = 1500;
 const BUBBLE_AVOID = ".hero-centered-title, .hero-centered-sub, .hero-centered-portrait, .hero-player, .hero-dock, .hero-contact";
+// Phones: [logo, side, height down the portrait (0–1) of its centre], in the
+// order they come up. Figma leads and stays.
+const BUBBLE_PINNED = [
+  ["Figma", "left", 0.1],
+  ["Next.js", "right", 0.1],
+  ["React", "left", 0.31],
+  ["Tailwind CSS", "right", 0.31],
+  ["JavaScript", "left", 0.52],
+  ["Claude", "right", 0.52],
+];
+const BUBBLE_PINNED_GAP = 260;
 
 const boxesOverlap = (a, b) => a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
 
@@ -2161,6 +2250,42 @@ function HeroBubbles() {
         : null;
     io?.observe(stage);
 
+    // Phones: the pinned set, placed from the portrait's layout box (offsets
+    // ignore its entrance transform) and kept there on resize.
+    if (window.innerWidth <= 760) {
+      const pinnedSpot = (side, at) => {
+        const container = stage.querySelector(".hero-centered-container");
+        const wrap = stage.querySelector(".hero-portrait-centered-wrap");
+        const size = BUBBLE_SIZE_SMALL;
+        if (!container || !wrap) return null;
+        return {
+          x: side === "left" ? 0 : layer.clientWidth - size,
+          y: container.offsetTop + wrap.offsetTop + wrap.offsetHeight * at - size / 2,
+          size,
+        };
+      };
+      const placeAll = () => {
+        alive = alive.map((b) => ({ ...b, ...pinnedSpot(BUBBLE_PINNED[b.id][1], BUBBLE_PINNED[b.id][2]) }));
+        commit();
+      };
+      BUBBLE_PINNED.forEach(([name, side, at], i) => {
+        later(() => {
+          const spot = pinnedSpot(side, at);
+          if (!spot) return;
+          const logo = bubbleLogos.findIndex((l) => l.name === name);
+          alive = [...alive, { id: i, logo, ...spot, out: false, still: reduce, bob: -Math.random() * 4 }];
+          commit();
+        }, reduce ? 0 : BUBBLE_FIRST + i * BUBBLE_PINNED_GAP);
+      });
+      const ro = typeof ResizeObserver !== "undefined" ? new ResizeObserver(placeAll) : null;
+      ro?.observe(stage);
+      return () => {
+        timers.forEach(clearTimeout);
+        io?.disconnect();
+        ro?.disconnect();
+      };
+    }
+
     // Reduced motion: three still bubbles, no swapping.
     later(() => {
       if (!reduce) fill();
@@ -2259,18 +2384,11 @@ function HeroBubble({ bubble }) {
   );
 }
 
-// Hero contact card: name and role over the shared email and phone rows.
+// Hero contact card: just the shared email and phone rows.
 // The card itself drifts gently.
 function HeroContactCard() {
   return (
     <div className="hero-contact">
-      <div className="hero-contact-head">
-        <img className="hero-contact-avatar" src={profilePhoto} alt="" />
-        <div>
-          <p className="hero-contact-name">Abhinandan Singh</p>
-          <p className="hero-contact-role">Product Engineer</p>
-        </div>
-      </div>
       <ContactRows />
     </div>
   );
@@ -2338,17 +2456,6 @@ function HomePage() {
       <ProcessSection />
 
       <AboutSection />
-
-      <Reveal className="mobile-resume-cta-wrap" delay={40}>
-        <a
-          className="mobile-resume-cta"
-          href={resumePdf}
-          download="Abhinandan_Singh_UX_Resume.pdf"
-        >
-          Download Resume
-          <DownloadResumeIcon />
-        </a>
-      </Reveal>
 
       <Footer />
     </div>
