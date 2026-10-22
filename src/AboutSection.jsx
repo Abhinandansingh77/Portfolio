@@ -1,8 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 
-// "About me": the heading writes itself in letter by letter as the section
-// arrives (after the Deformo hero title), then the panel pins while the
-// heading lifts and each paragraph slides up into place as you keep scrolling.
+// "About me", after deformo.framer.website: the heading writes itself in
+// letter by letter as the section arrives (their hero title), then the panel
+// pins and the body types itself in as you scroll (their "We approach every
+// project…" statement), each letter coming through a soft, blurred edge.
 
 const LINES = ["A Designer's Eye.", "An Engineer's Mindset."];
 
@@ -11,36 +12,36 @@ const PARAGRAPHS = [
   "I bring together visual precision, user-centered thinking, and hands-on frontend development to build better digital experiences.",
 ];
 
-// Scroll progress (0–1 across the pinned stretch) where each paragraph
-// starts and finishes arriving.
-const PARA_WINDOWS = [
-  [0.12, 0.42],
-  [0.34, 0.64],
-];
-const LIFT_WINDOW = [0.02, 0.36];
-const PARA_SHIFT = 120;
+// Scroll progress (0–1 across the pinned stretch): the heading lifts first,
+// then the body types in, then it holds before the panel unpins.
+const LIFT_WINDOW = [0, 0.16];
+const TYPE_WINDOW = [0.14, 0.86];
+// How many letters are part-way in at once: the width of the soft edge.
+const EDGE = 9;
+const EDGE_BLUR = 8;
 
 const clamp01 = (v) => Math.min(1, Math.max(0, v));
-const easeOut = (t) => 1 - Math.pow(1 - t, 3);
-const along = (p, [start, end]) => easeOut(clamp01((p - start) / (end - start)));
+const easeInOut = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+const along = (p, [start, end]) => clamp01((p - start) / (end - start));
 
-// Words stay on one line; each character fades on its own delay.
-function SplitLine({ text, offset, className }) {
-  let i = offset;
-  return (
-    <span className={`about-line ${className}`.trim()} aria-hidden="true">
-      {text.split(" ").map((word, w) => (
-        <span key={w} className="about-word">
-          {[...word].map((ch, c) => (
-            <span key={c} className="about-char" style={{ "--c": i++ }}>
-              {ch}
-            </span>
-          ))}
-          {w < text.split(" ").length - 1 ? " " : null}
-        </span>
-      ))}
-    </span>
-  );
+// Words stay on one line; each letter is its own span so it can fade alone.
+// The spaces sit between the word spans so lines can still break there.
+// `start` numbers the letters across the whole block.
+function SplitText({ text, start, charClass }) {
+  const words = text.split(" ");
+  let i = start;
+  return words.map((word, w) => (
+    <Fragment key={w}>
+      {w > 0 ? " " : null}
+      <span className="about-word">
+        {[...word].map((ch, c) => (
+          <span key={c} className={charClass} style={{ "--c": i++ }}>
+            {ch}
+          </span>
+        ))}
+      </span>
+    </Fragment>
+  ));
 }
 
 function usePrefersReducedMotion() {
@@ -61,11 +62,11 @@ export function AboutSection() {
   const sectionRef = useRef(null);
   const headRef = useRef(null);
   const bodyRef = useRef(null);
-  const paraRefs = useRef([]);
   const [titleIn, setTitleIn] = useState(false);
   const reduced = usePrefersReducedMotion();
 
-  // Start the letter-by-letter title once it is well into the viewport.
+  // Start the letter-by-letter title once it is well into the viewport (in
+  // the top three quarters), so it writes itself where it can be read.
   useEffect(() => {
     const node = headRef.current;
     if (!node || typeof IntersectionObserver === "undefined") {
@@ -79,13 +80,13 @@ export function AboutSection() {
           io.disconnect();
         }
       },
-      { threshold: 0.6 },
+      { threshold: 0.6, rootMargin: "0px 0px -25% 0px" },
     );
     io.observe(node);
     return () => io.disconnect();
   }, []);
 
-  // Scroll-scrubbed: lift the heading and bring each paragraph up in turn.
+  // Scroll-scrubbed: lift the heading, then type the body in letter by letter.
   useEffect(() => {
     if (reduced) return undefined;
     const section = sectionRef.current;
@@ -93,6 +94,8 @@ export function AboutSection() {
     const body = bodyRef.current;
     if (!section || !head || !body) return undefined;
 
+    const chars = [...body.querySelectorAll(".about-type-char")];
+    const shown = new Float32Array(chars.length).fill(-1);
     let frame = 0;
     let lift = 0;
 
@@ -109,13 +112,19 @@ export function AboutSection() {
       const travel = rect.height - window.innerHeight;
       const p = travel > 0 ? clamp01(-rect.top / travel) : 1;
 
-      head.style.transform = `translate3d(0, ${(1 - along(p, LIFT_WINDOW)) * lift}px, 0)`;
-      paraRefs.current.forEach((el, i) => {
-        if (!el) return;
-        const t = along(p, PARA_WINDOWS[i]);
-        el.style.opacity = t;
-        el.style.transform = `translate3d(0, ${(1 - t) * PARA_SHIFT}px, 0)`;
-      });
+      head.style.transform = `translate3d(0, ${(1 - easeInOut(along(p, LIFT_WINDOW))) * lift}px, 0)`;
+
+      // The edge runs from before the first letter to past the last, so the
+      // first starts from nothing and the last ends fully in.
+      const head0 = along(p, TYPE_WINDOW) * (chars.length + EDGE);
+      for (let i = 0; i < chars.length; i += 1) {
+        const t = Math.round(clamp01((head0 - i) / EDGE) * 100) / 100;
+        if (t === shown[i]) continue;
+        shown[i] = t;
+        const style = chars[i].style;
+        style.opacity = t;
+        style.filter = t > 0 && t < 1 ? `blur(${((1 - t) * EDGE_BLUR).toFixed(1)}px)` : "";
+      }
     };
 
     const schedule = () => {
@@ -139,6 +148,8 @@ export function AboutSection() {
     };
   }, [reduced]);
 
+  let bodyStart = 0;
+
   return (
     <section
       ref={sectionRef}
@@ -148,21 +159,26 @@ export function AboutSection() {
       <div className="about-pin">
         <div className="about-inner">
           <h2 ref={headRef} className="about-title" aria-label={LINES.join(" ")}>
-            <SplitLine text={LINES[0]} offset={0} />
-            <SplitLine text={LINES[1]} offset={LINES[0].length} className="is-muted" />
+            <span className="about-line" aria-hidden="true">
+              <SplitText text={LINES[0]} start={0} charClass="about-char" />
+            </span>
+            <span className="about-line is-muted" aria-hidden="true">
+              <SplitText text={LINES[1]} start={LINES[0].length} charClass="about-char" />
+            </span>
           </h2>
           <div ref={bodyRef} className="about-body">
-            {PARAGRAPHS.map((text, i) => (
-              <p
-                key={i}
-                ref={(el) => {
-                  paraRefs.current[i] = el;
-                }}
-                className="about-para"
-              >
-                {text}
-              </p>
-            ))}
+            {PARAGRAPHS.map((text) => {
+              const start = bodyStart;
+              bodyStart += text.length;
+              return (
+                <p key={start} className="about-para">
+                  <span className="about-sr">{text}</span>
+                  <span aria-hidden="true">
+                    <SplitText text={text} start={start} charClass="about-type-char" />
+                  </span>
+                </p>
+              );
+            })}
           </div>
         </div>
       </div>
