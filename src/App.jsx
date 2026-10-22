@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import heroImg from "../Assets/Hero img.webp";
+import heroImgDark from "../Assets/Hero img-darkMode.webp";
 import abhiLogo from "../Assets/abhi logo.svg";
 import profilePhoto from "../Assets/profile photo.png";
 import { AmbientWater, FluidOverlay, HeroLiquid } from "./FluidEffects.jsx";
@@ -7,6 +8,7 @@ import { EngineeringMap } from "./EngineeringSection.jsx";
 import { ProcessSection } from "./ProcessSection.jsx";
 import { AboutSection } from "./AboutSection.jsx";
 import { ContactRows } from "./ContactRows.jsx";
+import { toggleTheme, useTheme } from "./theme.js";
 import cardinalHealthVerticalImg from "../Assets/Featured work cardinal health img vertical.webp";
 import discoveryPlusVerticalImg from "../Assets/Featured work discovery plus img Vertical.webp";
 import brightlineVerticalImg from "../Assets/Featured work bright line img vertical.webp";
@@ -1486,7 +1488,21 @@ function EngineeringSection() {
   );
 }
 
+// The icon names the theme you'd switch to; it spins in on each change.
+function ThemeIcon({ theme }) {
+  return (
+    <i
+      key={theme}
+      className={`theme-icon ${theme === "dark" ? "ri-sun-line" : "ri-moon-line"}`}
+      aria-hidden="true"
+    />
+  );
+}
+
+const themeToggleLabel = (theme) => (theme === "dark" ? "Switch to light mode" : "Switch to dark mode");
+
 function Footer() {
+  const theme = useTheme();
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -1501,6 +1517,16 @@ function Footer() {
         <div className="footer-right-actions">
           <button type="button" className="back-to-top-btn" onClick={scrollToTop}>
             <span>↑ Back to Top</span>
+          </button>
+
+          <button
+            type="button"
+            className="footer-theme-btn"
+            onClick={toggleTheme}
+            aria-label={themeToggleLabel(theme)}
+            title={themeToggleLabel(theme)}
+          >
+            <ThemeIcon theme={theme} />
           </button>
 
           <div className="footer-socials">
@@ -1906,6 +1932,7 @@ function HeroTypedTitle() {
 }
 
 function HeroDock() {
+  const theme = useTheme();
   return (
     <nav className="hero-dock lg" aria-label="Quick links">
       <a
@@ -1952,6 +1979,16 @@ function HeroDock() {
       >
         <i className="ri-arrow-down-line" aria-hidden="true" />
       </a>
+      <span className="hero-dock-divider" aria-hidden="true" />
+      <button
+        type="button"
+        className="hero-dock-item lg"
+        onClick={toggleTheme}
+        aria-label={themeToggleLabel(theme)}
+        data-tip={theme === "dark" ? "Light mode" : "Dark mode"}
+      >
+        <ThemeIcon theme={theme} />
+      </button>
     </nav>
   );
 }
@@ -2240,6 +2277,7 @@ function HeroContactCard() {
 }
 
 function HomePage() {
+  const theme = useTheme();
   return (
     <div className="page-view">
       <section className="hero-stage">
@@ -2264,8 +2302,9 @@ function HomePage() {
 
           {/* Centered Visual Image */}
           <Reveal className="hero-portrait-centered-wrap" delay={200}>
+            {/* A dark-shirt portrait for the dark theme. */}
             <img
-              src={heroImg}
+              src={theme === "dark" ? heroImgDark : heroImg}
               alt="Abhinandan Singh, Product Engineer"
               className="hero-centered-portrait"
               fetchpriority="high"
@@ -2273,7 +2312,9 @@ function HomePage() {
             />
           </Reveal>
 
+          {/* Re-captures the heading and portrait in the new colours. */}
           <HeroLiquid
+            key={theme}
             textSelector=".hero-centered-title, .hero-centered-sub"
             imgSelector=".hero-centered-portrait"
           />
@@ -4831,6 +4872,7 @@ function ProjectDetailsPage({ project, projectSlug, onOpenPdf }) {
 }
 
 export default function App() {
+  const theme = useTheme();
   const [{ pathname, projectSlug }, setRouteState] = useState(getRouteState);
   const [menuOpen, setMenuOpen] = useState(false);
   const [isEntering, setIsEntering] = useState(false);
@@ -4918,8 +4960,9 @@ export default function App() {
         </div>
       </div>
 
-      <AmbientWater />
-      <FluidOverlay />
+      {/* The effects take their look from the theme when they start. */}
+      <AmbientWater key={`water-${theme}`} />
+      <FluidOverlay key={`overlay-${theme}`} />
       {/* Header navigation is off for now; the hero dock covers it. */}
 
       <main

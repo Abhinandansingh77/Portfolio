@@ -38,6 +38,10 @@
   --cta-padding-x: 20px;
   --cta-font-size: 0.9rem;
   --cta-font-weight: 600;
+
+  /* Space between neighbouring home sections; each gives half above and
+     below its content. */
+  --section-gap: 120px;
 }
 
 /* Light theme, for testing: add ?theme=light to the URL. Same token names,
@@ -6444,7 +6448,8 @@ hr {
 
   position: relative;
   width: 100%;
-  padding: 90px 0;
+  /* The full gap on top, less the 12px the hero leaves under its dock. */
+  padding: calc(var(--section-gap) - 12px) 0 calc(var(--section-gap) / 2);
   scroll-margin-top: 100px;
   /* The centre glow spills past the edges; never let it scroll the page. */
   overflow-x: clip;
@@ -6926,10 +6931,6 @@ hr {
 }
 
 @media (max-width: 640px) {
-  .em-section {
-    padding: 67px 0;
-  }
-
   .em-title {
     font-size: 1.6rem;
   }
@@ -6960,7 +6961,7 @@ hr {
   width: 100%;
   max-width: 1160px;
   margin: 0 auto;
-  padding: 90px 24px;
+  padding: calc(var(--section-gap) / 2) 24px;
   scroll-margin-top: 100px;
 }
 
@@ -7107,7 +7108,7 @@ hr {
 
 @media (max-width: 640px) {
   .sw-section {
-    padding: 67px 0;
+    padding-inline: 0;
   }
 
   .sw-card-title {
@@ -7136,7 +7137,7 @@ hr {
   --pd-icon-fg: #0A0A0A;
   --pd-ease: cubic-bezier(0.22, 1, 0.36, 1);
   position: relative;
-  padding: 56px 0 64px;
+  padding: calc(var(--section-gap) / 2) 0;
   overflow-x: clip;
 }
 
@@ -7426,10 +7427,6 @@ hr {
 }
 
 @media (max-width: 760px) {
-  .pd-section {
-    padding: 34px 0 48px;
-  }
-
   .pd-compact-steps {
     grid-template-columns: minmax(0, 1fr);
     width: 100%;
@@ -7485,8 +7482,7 @@ hr {
   width: 100%;
   max-width: 1160px;
   margin: 0 auto;
-  /* Bottom: 40% under the original 72px. */
-  padding: 34px 24px 60px;
+  padding: calc(var(--section-gap) / 2) 24px;
 }
 
 .tools-grid-title {
@@ -7594,13 +7590,14 @@ hr {
 /* Dark theme: the logo files are drawn for a white page. Invert them (black
    marks turn white), then turn the hues back so coloured parts keep their
    colour; square app icons such as Ps and Ai keep their letters. */
-:root:not([data-theme="light"]) .tools-grid-logo img {
+:root:not([data-theme="light"]) .tools-grid-logo img,
+:root:not([data-theme="light"]) .tools-rail-section .client-logo-img {
   filter: invert(1) hue-rotate(180deg);
 }
 
 @media (max-width: 640px) {
   .tools-grid-section {
-    padding: 22px 0 48px;
+    padding-inline: 0;
   }
 
   .tools-grid {
@@ -7968,5 +7965,73 @@ hr {
   .about-card-cta-icon i {
     animation: none !important;
     transition: none;
+  }
+}
+
+/* ── Theme toggle ──
+   A sun/moon button in the hero dock and the footer (src/theme.js). The new
+   theme spreads out from the button as a circle; the browser's default
+   cross-fade is switched off so only that circle moves. */
+
+button.hero-dock-item {
+  padding: 0;
+  border: 0;
+  font: inherit;
+  cursor: pointer;
+}
+
+.footer-theme-btn {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: var(--cta-height);
+  height: var(--cta-height);
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--text-soft);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 200ms ease, border-color 200ms ease, color 200ms ease;
+}
+
+.footer-theme-btn:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.footer-theme-btn:focus-visible {
+  outline: 2px solid #0A84FF;
+  outline-offset: 3px;
+}
+
+.theme-icon {
+  display: block;
+  line-height: 1;
+  animation: theme-icon-in 520ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes theme-icon-in {
+  from {
+    opacity: 0;
+    transform: rotate(-120deg) scale(0.4);
+  }
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-new(root) {
+  z-index: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-icon {
+    animation: none;
   }
 }

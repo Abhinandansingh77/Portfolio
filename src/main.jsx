@@ -3,9 +3,10 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 import "./styles.css";
 
-// Light is the default on this branch (set on <html> in index.html, so there's
-// no dark flash). ?theme=dark switches for comparison. Set before the first
-// render so the WebGL effects pick the matching look.
+// Light is the default (set on <html> in index.html, which also applies a
+// saved choice from the theme toggle). ?theme=dark or ?theme=light overrides
+// it for this visit. Set before the first render so the WebGL effects pick
+// the matching look.
 const requestedTheme = new URLSearchParams(window.location.search).get("theme");
 if (requestedTheme === "light" || requestedTheme === "dark") {
   document.documentElement.dataset.theme = requestedTheme;
