@@ -4880,19 +4880,6 @@ export default function App() {
   const selectedProject = projectItems.find((item) => item.slug === projectSlug) ?? null;
 
   useEffect(() => {
-    if (!pdfSrc) return undefined;
-    const handleKey = (e) => {
-      if (e.key === "Escape") setPdfSrc(null);
-    };
-    window.addEventListener("keydown", handleKey);
-    document.body.style.overflow = "hidden";
-    return () => {
-      window.removeEventListener("keydown", handleKey);
-      document.body.style.overflow = "";
-    };
-  }, [pdfSrc]);
-
-  useEffect(() => {
     const handlePopState = () => {
       setRouteState(getRouteState());
       setMenuOpen(false);
