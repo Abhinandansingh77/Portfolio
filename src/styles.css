@@ -6464,6 +6464,14 @@ hr {
 .em-step.is-active { color: var(--text); font-weight: 600; }
 .em-step.is-active .em-step-dot { background: var(--text); }
 
+/* The AI tools, as one quiet line over the AI pill. */
+.em-caption.is-tools {
+  font-family: var(--em-mono);
+  font-size: 11px;
+  letter-spacing: 0.01em;
+  white-space: pre;
+}
+
 /* ── Build card (240 × 240, positions from the reference) ── */
 
 .em-card-slot {

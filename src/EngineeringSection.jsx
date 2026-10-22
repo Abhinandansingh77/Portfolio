@@ -350,43 +350,36 @@ const groupOn = (group, stage) => (group === "design" ? stage <= 1 : stage === 2
 // ── Desktop: horizontal map on the 1440 artboard, scaled to fit ──
 
 const DESK_W = 1440;
-// The artboard's heading band (y < 150) is replaced by the section header.
-const DESK_Y = 150;
-const DESK_H = 520;
-const Y1 = 260 - DESK_Y;
+// The artboard's heading band (y < 232) is replaced by the section header.
+const DESK_Y = 232;
+const DESK_H = 440;
+const Y1 = 292 - DESK_Y;
 const Y2 = 500 - DESK_Y;
 const CARD_TOP = 380 - DESK_Y;
 
 // x, mono, label, above the line?, line y, group.
 const DESK_STATIONS = [
-  [120, "UX", "UI/UX Design", false, Y2, "design"],
-  [200, "RWD", "Responsive Design", true, Y2, "design"],
-  [280, "DS", "Design Systems", false, Y2, "design"],
-  [360, "Pr", "Prototyping", true, Y2, "design"],
-  [440, "A11y", "Accessibility", false, Y2, "design"],
-  [1036, "</>", "HTML", true, Y2, "dev"],
-  [1078, "{}", "CSS", false, Y2, "dev"],
-  [1120, "JS", "JavaScript", true, Y2, "dev"],
-  [1162, "Re", "React", false, Y2, "dev"],
-  [1204, "Nx", "Next.js", true, Y2, "dev"],
-  [1246, "Vi", "Vite", false, Y2, "dev"],
-  [1288, "Tw", "Tailwind CSS", true, Y2, "dev"],
-  [1330, "git", "Git", false, Y2, "dev"],
-  [1372, "GH", "GitHub", true, Y2, "dev"],
-  [400, "AI", "AI coding tools", true, Y1, "ai"],
-  [1000, "Rp", "Rapid prototyping", true, Y1, "ai"],
-  [1160, "Wf", "Dev workflows", true, Y1, "ai"],
+  [203, "UX", "UI/UX Design", false, Y2, "design"],
+  [283, "RWD", "Responsive Design", true, Y2, "design"],
+  [363, "DS", "Design Systems", false, Y2, "design"],
+  [443, "Pr", "Prototyping", true, Y2, "design"],
+  [523, "A11y", "Accessibility", false, Y2, "design"],
+  [936, "JS", "JavaScript", true, Y2, "dev"],
+  [1000, "Re", "React", false, Y2, "dev"],
+  [1064, "Nx", "Next.js", true, Y2, "dev"],
+  [1128, "Vi", "Vite", false, Y2, "dev"],
+  [1192, "Tw", "Tailwind CSS", true, Y2, "dev"],
+  [1256, "git", "Git", false, Y2, "dev"],
 ];
+
+// AI isn't a set of stations: it is the one line feeding the card from above.
+const AI_TOOLS = ["AI coding tools", "Rapid prototyping", "Dev workflows"];
 
 // Rails: x1, y1, x2, y2, light direction by stage (as on the reference: into
 // the card while designing, out to the tools in Code, back out when live).
 const DESK_RAILS = [
-  [48, Y2, 600, Y2, { 0: "fwd", 1: "fwd", 3: "rev" }],
-  [840, Y2, 1416, Y2, { 2: "rev", 3: "fwd" }],
-  [120, Y1, 720, Y1, { 2: "fwd" }],
-  [1416, Y1, 720, Y1, { 2: "fwd" }],
-  [120, Y2, 120, Y1, { 2: "fwd" }],
-  [1416, Y2, 1416, Y1, { 2: "fwd" }],
+  [155, Y2, 600, Y2, { 0: "fwd", 1: "fwd", 3: "rev" }],
+  [840, Y2, 1280, Y2, { 2: "rev", 3: "fwd" }],
   [720, Y1, 720, CARD_TOP, { 2: "fwd" }],
 ];
 
@@ -407,7 +400,7 @@ function DesktopMap({ stage, onStage }) {
   return (
     <div ref={wrapRef} className="em-map-desktop" style={{ height: DESK_H * scale }}>
       <div className="em-stage" style={{ width: DESK_W, height: DESK_H, transform: `translateX(-50%) scale(${scale})` }}>
-        <div className="em-glow" style={{ left: 470, top: 250 - DESK_Y, width: 500, height: 500 }} />
+        <div className="em-glow" style={{ left: 470, top: 270 - DESK_Y, width: 500, height: 460 }} />
 
         <svg className="em-lines" width={DESK_W} height={DESK_H} viewBox={`0 0 ${DESK_W} ${DESK_H}`} aria-hidden="true">
           <GlowFilter />
@@ -418,21 +411,22 @@ function DesktopMap({ stage, onStage }) {
             <Line key={`stub-${x}-${y}`} x1={x} y1={y} x2={x} y2={up ? y - 28 : y + 28} />
           ))}
           {/* Rings on every joint and loose end. */}
-          <Joint x={48} y={Y2} />
-          <Joint x={1416} y={Y2} />
-          <Joint x={120} y={Y1} />
-          <Joint x={1416} y={Y1} />
+          <Joint x={155} y={Y2} />
+          <Joint x={1280} y={Y2} />
           {DESK_STATIONS.map(([x, , , , y]) => (
             <Joint key={`j-${x}-${y}`} x={x} y={y} />
           ))}
         </svg>
 
+        <div className="em-caption is-tools" style={{ left: 720, top: Y1 - 39 }}>
+          {AI_TOOLS.join("  ·  ")}
+        </div>
         <Pill style={{ left: 720, top: Y1 }}>AI-Assisted Development</Pill>
-        <div className="em-caption" style={{ left: 720, top: 222 - DESK_Y }}>Speeds up the loop</div>
-        <Pill style={{ left: 530, top: Y2 }}>Product Design</Pill>
-        <div className="em-caption" style={{ left: 530, top: 532 - DESK_Y }}>Shapes the experience</div>
-        <Pill style={{ left: 942, top: Y2 }}>Frontend Development</Pill>
-        <div className="em-caption" style={{ left: 942, top: 532 - DESK_Y }}>Builds the interface</div>
+        {/* Each group's name sits above its own stations, off the rail. */}
+        <Pill style={{ left: 363, top: Y2 - 160 }}>Product Design</Pill>
+        <div className="em-caption" style={{ left: 363, top: Y2 - 132 }}>Shapes the experience</div>
+        <Pill style={{ left: 1096, top: Y2 - 160 }}>Frontend Development</Pill>
+        <div className="em-caption" style={{ left: 1096, top: Y2 - 132 }}>Builds the interface</div>
 
         {DESK_STATIONS.map(([x, mono, label, up, y, group]) => (
           <div key={`st-${x}-${y}`} className="em-station" style={{ left: x }}>
@@ -541,7 +535,7 @@ function MobileMap({ stage, onStage }) {
       {MOB_DEV.map(([y, mono, label, left]) => (
         <MobileStation key={mono} y={y} mono={mono} label={label} left={left} group="dev" stage={stage} />
       ))}
-      <Pill small style={{ left: "50%", top: 1090 - MOB_Y }}>+5 more</Pill>
+      <Pill small style={{ left: "50%", top: 1090 - MOB_Y }}>+2 more</Pill>
     </div>
   );
 }
