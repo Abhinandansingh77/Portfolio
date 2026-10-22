@@ -1484,30 +1484,6 @@ function EngineeringSection() {
   );
 }
 
-const impactMetrics = [
-  { value: "+28%", label: "Order Completion" },
-  { value: "+40%", label: "UI Production Speed" },
-  { value: "1.5M+", label: "Platform Audience Reach" },
-  { value: "2.1 AA", label: "WCAG Compliance" },
-];
-
-function ImpactMetricsSection() {
-  return (
-    <section className="impact-section">
-      <div className="impact-inner">
-        <div className="impact-grid">
-          {impactMetrics.map((item, index) => (
-            <Reveal key={item.label} className="impact-item" delay={80 + index * 80}>
-              <span className="impact-value">{item.value}</span>
-              <span className="impact-label">{item.label}</span>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function Footer() {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -1610,6 +1586,149 @@ function LogoRail({ items, ariaLabel }) {
 
 function ClientLogoRail() {
   return <LogoRail items={clientLogos} ariaLabel="Clients and brands" />;
+}
+
+// Git's mark (Simple Icons, CC0); Remix only has branch/merge glyphs.
+function GitMark() {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M23.546 10.93L13.067.452c-.604-.603-1.582-.603-2.188 0L8.708 2.627l2.76 2.76c.645-.215 1.379-.07 1.889.441.516.515.658 1.258.438 1.9l2.658 2.66c.645-.223 1.387-.078 1.9.435.721.72.721 1.884 0 2.604-.719.719-1.881.719-2.6 0-.539-.541-.674-1.337-.404-1.996L12.86 8.955v6.525c.176.086.342.203.488.348.713.721.713 1.883 0 2.6-.719.721-1.889.721-2.609 0-.719-.719-.719-1.879 0-2.598.182-.18.387-.316.605-.406V8.835c-.217-.091-.424-.222-.6-.401-.545-.545-.676-1.342-.396-2.009L7.636 3.7.45 10.881c-.6.605-.6 1.584 0 2.189l10.48 10.477c.604.604 1.582.604 2.186 0l10.43-10.43c.605-.603.605-1.582 0-2.187" />
+    </svg>
+  );
+}
+
+// Home page tools grid, in order: frontend, Figma, then everything else.
+// Tools without a wordmark file are drawn as a mark plus their name: Remix
+// brand icons for frontend (black and white, in the text colour), the app
+// icons for Photoshop and Illustrator.
+const gridTools = [
+  { name: "HTML", icon: "ri-html5-fill" },
+  { name: "CSS", icon: "ri-css3-fill" },
+  { name: "JavaScript", icon: "ri-javascript-fill" },
+  { name: "React", icon: "ri-reactjs-line" },
+  { name: "Next.js", icon: "ri-nextjs-fill" },
+  { name: "Tailwind CSS", icon: "ri-tailwind-css-fill" },
+  { name: "Git", mark: <GitMark /> },
+  { name: "GitHub", icon: "ri-github-fill" },
+  { name: "Figma", src: toolFigma },
+  { name: "ChatGPT", src: toolChatgpt },
+  { name: "Gemini", src: toolGemini },
+  { name: "Claude", src: toolClaude },
+  { name: "Cursor", src: toolCursor },
+  { name: "Antigravity", src: toolAntigravity },
+  { name: "Perplexity", src: toolPerplexity },
+  { name: "Midjourney", src: toolMidjourney },
+  { name: "Photoshop", src: toolPhotoshop, labelled: true },
+  { name: "Illustrator", src: toolIllustrator, labelled: true },
+  { name: "Canva", src: toolCanva },
+  { name: "Miro", src: toolMiro },
+  { name: "Webflow", src: toolWebflow },
+  { name: "Framer", src: toolFramer },
+  { name: "Zeplin", src: toolZeplin },
+];
+
+function ToolLogo({ tool }) {
+  const named = Boolean(tool.icon || tool.mark || tool.labelled);
+  return (
+    <span className="tools-grid-logo">
+      {tool.src ? <img src={tool.src} alt="" loading="lazy" decoding="async" /> : null}
+      {tool.icon ? <i className={tool.icon} aria-hidden="true" /> : null}
+      {tool.mark ?? null}
+      {named ? <span>{tool.name}</span> : null}
+    </span>
+  );
+}
+
+// Twelve cells (two rows of six) showing part of the list. After the
+// reference, one cell at a time quietly swaps its tool for the next one
+// waiting: the old logo fades out, the new one fades in, then a pause. Tools
+// leave and join a queue, so every tool takes its turn.
+const TOOL_CELLS = 12;
+const TOOL_FADE_OUT = 1400;
+const TOOL_FADE_IN = 2000;
+const TOOL_SWAP_EVERY = 3200;
+
+function ToolsGridSection() {
+  const reduce =
+    typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+  const sectionRef = useRef(null);
+  const [cells, setCells] = useState(() => gridTools.slice(0, TOOL_CELLS).map((_, i) => i));
+  const [fading, setFading] = useState(-1);
+
+  useEffect(() => {
+    if (reduce) return undefined;
+    const queue = gridTools.map((_, i) => i).slice(TOOL_CELLS);
+    let shown = gridTools.slice(0, TOOL_CELLS).map((_, i) => i);
+    let lastCell = -1;
+    let visible = false;
+    const timers = new Set();
+    const later = (fn, ms) => {
+      const id = window.setTimeout(() => {
+        timers.delete(id);
+        fn();
+      }, ms);
+      timers.add(id);
+    };
+
+    const swap = () => {
+      if (visible && !document.hidden && queue.length) {
+        let cell;
+        do cell = Math.floor(Math.random() * TOOL_CELLS);
+        while (cell === lastCell);
+        lastCell = cell;
+        setFading(cell);
+        later(() => {
+          const incoming = queue.shift();
+          queue.push(shown[cell]);
+          shown = shown.map((tool, i) => (i === cell ? incoming : tool));
+          setCells(shown);
+          setFading(-1);
+        }, TOOL_FADE_OUT);
+      }
+      later(swap, TOOL_SWAP_EVERY);
+    };
+
+    const io = new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+    });
+    if (sectionRef.current) io.observe(sectionRef.current);
+    later(swap, TOOL_SWAP_EVERY);
+
+    return () => {
+      io.disconnect();
+      timers.forEach((id) => window.clearTimeout(id));
+    };
+  }, [reduce]);
+
+  // Reduced motion: no swapping, so show every tool at once.
+  const visibleTools = reduce ? gridTools : cells.map((index) => gridTools[index]);
+
+  return (
+    <section ref={sectionRef} className="tools-grid-section">
+      <Reveal className="tools-grid-wrap" delay={40}>
+        <h5 className="tools-grid-title">Tools</h5>
+        {/* The full list for screen readers; the grid below keeps changing. */}
+        <ul className="tools-grid-sr">
+          {gridTools.map((tool) => (
+            <li key={tool.name}>{tool.name}</li>
+          ))}
+        </ul>
+        <ul className="tools-grid" aria-hidden="true">
+          {visibleTools.map((tool, cell) => (
+            <li
+              key={reduce ? tool.name : cell}
+              className={`tools-grid-item ${cell === fading ? "is-out" : ""}`.trim()}
+            >
+              {/* Keyed by tool, so an incoming tool mounts fresh and fades in. */}
+              <span key={tool.name} className="tools-grid-cell">
+                <ToolLogo tool={tool} />
+              </span>
+            </li>
+          ))}
+        </ul>
+      </Reveal>
+    </section>
+  );
 }
 
 function ToolsRailSection() {
@@ -1922,13 +2041,12 @@ function HomePage() {
 
       <EngineeringSection />
 
-      <ImpactMetricsSection />
+      <ToolsGridSection />
 
       <SelectedWorkSection />
 
       <ProcessSection />
 
-      <ToolsRailSection />
 
       <Reveal className="mobile-resume-cta-wrap" delay={40}>
         <a
