@@ -110,6 +110,9 @@ function BuildCard({ onStage }) {
   const rootRef = useRef(null);
   const hoverRef = useRef(false);
   const visibleRef = useRef(true);
+  const rafRef = useRef(0);
+  const pauseRef = useRef(() => {});
+  const resumeRef = useRef(() => {});
   const [t, setT] = useState(reduce ? STILL_T : 0);
 
   useEffect(() => {
@@ -119,28 +122,41 @@ function BuildCard({ onStage }) {
     }
     let time = 0;
     let last = performance.now();
-    let raf = 0;
     const tick = (now) => {
+      rafRef.current = 0;
       const dt = Math.min(now - last, 100);
       last = now;
-      if (!hoverRef.current && visibleRef.current) {
-        time = (time + dt) % CYCLE;
-        setT(time);
-      }
-      raf = requestAnimationFrame(tick);
+      time = (time + dt) % CYCLE;
+      setT(time);
+      rafRef.current = requestAnimationFrame(tick);
     };
-    raf = requestAnimationFrame(tick);
+    const pause = () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      rafRef.current = 0;
+    };
+    const resume = () => {
+      if (rafRef.current || hoverRef.current || !visibleRef.current) return;
+      last = performance.now();
+      rafRef.current = requestAnimationFrame(tick);
+    };
+    pauseRef.current = pause;
+    resumeRef.current = resume;
 
     const io =
       typeof IntersectionObserver !== "undefined"
         ? new IntersectionObserver(([entry]) => {
             visibleRef.current = entry.isIntersecting;
+            if (visibleRef.current) resume();
+            else pause();
           })
         : null;
     if (rootRef.current) io?.observe(rootRef.current);
+    if (!io) resume();
 
     return () => {
-      cancelAnimationFrame(raf);
+      pause();
+      pauseRef.current = () => {};
+      resumeRef.current = () => {};
       io?.disconnect();
     };
   }, [reduce]);
@@ -183,8 +199,14 @@ function BuildCard({ onStage }) {
       data-stage={st}
       role="img"
       aria-label="A profile card for Abhi being built: wireframe, high-fidelity design, React code, then the live card"
-      onMouseEnter={() => (hoverRef.current = true)}
-      onMouseLeave={() => (hoverRef.current = false)}
+      onMouseEnter={() => {
+        hoverRef.current = true;
+        pauseRef.current();
+      }}
+      onMouseLeave={() => {
+        hoverRef.current = false;
+        resumeRef.current();
+      }}
     >
       {/* Wireframe */}
       <div className="em-card-dash" style={{ opacity: wireO }} />
