@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import heroImg from "../Assets/Hero img.webp";
-import liquidFolderIcon from "../Assets/Liquid Glass Icons.svg";
 import abhiLogo from "../Assets/abhi logo.svg";
+import profilePhoto from "../Assets/profile photo.png";
 import { AmbientWater, FluidOverlay, HeroLiquid } from "./FluidEffects.jsx";
 import { EngineeringMap } from "./EngineeringSection.jsx";
 import { ProcessSection } from "./ProcessSection.jsx";
@@ -1807,7 +1807,7 @@ function HeroMusicPlayer() {
         </button>
         <button
           type="button"
-          className="hero-player-btn hero-player-btn-main lg"
+          className="hero-player-btn hero-player-btn-main"
           aria-label={isPlaying ? "Pause music" : "Play music"}
           aria-pressed={isPlaying}
           onClick={togglePlay}
@@ -1904,43 +1904,6 @@ function HeroTypedTitle() {
   );
 }
 
-// Folder names, always set on two lines.
-const heroFolderLabels = {
-  "cardinal-health-procurement-platform": ["Cardinal", "Health"],
-  "discovery-plus": ["Discovery", "Plus"],
-  "brightline-future-travel": ["Brightline", "Future Mobility"],
-  "al-maha-island-lusail": ["AL MAHA", "Island Lusail"],
-  "mcdelivery-experience-design": ["McDonald's", "McDelivery"],
-};
-
-function HeroProjectFolders() {
-  return (
-    <nav className="hero-folders" aria-label="Projects">
-      <ul>
-        {projectItems.map((item, index) => (
-          <li key={item.slug} style={{ "--folder-delay": `${320 + index * 70}ms` }}>
-            <a
-              className="hero-folder"
-              href={`/projects/${item.slug}`}
-              onClick={(event) => {
-                event.preventDefault();
-                navigateTo(`/projects/${item.slug}`);
-              }}
-            >
-              <img className="hero-folder-icon" src={liquidFolderIcon} alt="" aria-hidden="true" />
-              <span className="hero-folder-label">
-                {(heroFolderLabels[item.slug] ?? [item.title]).map((line) => (
-                  <span key={line}>{line}</span>
-                ))}
-              </span>
-            </a>
-          </li>
-        ))}
-      </ul>
-    </nav>
-  );
-}
-
 function HeroDock() {
   return (
     <nav className="hero-dock lg" aria-label="Quick links">
@@ -1992,10 +1955,421 @@ function HeroDock() {
   );
 }
 
+// Skill logos that surface in the hero's empty space: one by one until three
+// are up, then a rolling swap, where a new logo surfaces somewhere else and,
+// once it is out, the oldest goes back under, so there are always logos on
+// screen (three, briefly four). Each logo
+// comes up out of the surface where it sits, towards you: swelling through a
+// soft round opening, rippled and blurred until it is clear, then bobbing a
+// little before it closes back into the surface. Spots
+// are picked against the live layout, so a bubble never lands on the heading,
+// subtitle, portrait, player or dock.
+const bubbleLogos = [
+  { name: "React", icon: "ri-reactjs-line" },
+  { name: "JavaScript", icon: "ri-javascript-fill" },
+  { name: "Next.js", icon: "ri-nextjs-fill" },
+  { name: "Figma", icon: "ri-figma-fill" },
+  { name: "Git", mark: <GitMark /> },
+  { name: "Tailwind CSS", icon: "ri-tailwind-css-fill" },
+  { name: "GitHub", icon: "ri-github-fill" },
+  { name: "Claude", icon: "ri-claude-fill" },
+  { name: "Vercel", icon: "ri-vercel-fill" },
+  { name: "ChatGPT", icon: "ri-openai-fill" },
+  { name: "Node.js", icon: "ri-nodejs-line" },
+  { name: "Gemini", icon: "ri-gemini-fill" },
+];
+
+const BUBBLE_SIZE = 50;
+const BUBBLE_SIZE_SMALL = 42;
+// Clear space kept around the hero's content, the stage edges, and each other
+// (tighter on phones, where the free space is a few narrow bands).
+const BUBBLE_CLEARANCE = 28;
+const BUBBLE_CLEARANCE_SMALL = 14;
+const BUBBLE_EDGE = 16;
+const BUBBLE_APART = 24;
+// A new spot is at least this far from the last few spots used, if possible.
+const BUBBLE_FRESH = 140;
+const BUBBLE_FRESH_SMALL = 90;
+// Timing. BUBBLE_OUT matches the sink animation in CSS.
+const BUBBLE_SHOWN = 3;
+const BUBBLE_FIRST = 900;
+const BUBBLE_APPEAR_GAP = 900;
+const BUBBLE_SWAP_EVERY = 2600;
+const BUBBLE_SWAP_OVERLAP = 800;
+const BUBBLE_OUT = 1300;
+const BUBBLE_RETRY = 1500;
+const BUBBLE_AVOID = ".hero-centered-title, .hero-centered-sub, .hero-centered-portrait, .hero-player, .hero-dock, .hero-contact";
+
+const boxesOverlap = (a, b) => a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
+
+function HeroBubbles() {
+  const layerRef = useRef(null);
+  const [bubbles, setBubbles] = useState([]);
+
+  useEffect(() => {
+    const layer = layerRef.current;
+    const stage = layer?.parentElement;
+    if (!layer || !stage) return undefined;
+
+    const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    const timers = new Set();
+    const later = (fn, ms) => {
+      const id = setTimeout(() => {
+        timers.delete(id);
+        fn();
+      }, ms);
+      timers.add(id);
+    };
+
+    let alive = [];
+    let recent = [];
+    let visible = true;
+    let nextId = 0;
+    // Logos take turns from a shuffled queue.
+    const queue = bubbleLogos.map((_, i) => i).sort(() => Math.random() - 0.5);
+
+    const commit = () => setBubbles(alive.slice());
+
+    const pickSpot = (size, small) => {
+      const area = layer.getBoundingClientRect();
+      const clear = small ? BUBBLE_CLEARANCE_SMALL : BUBBLE_CLEARANCE;
+      const fresh = small ? BUBBLE_FRESH_SMALL : BUBBLE_FRESH;
+      const blocked = [...stage.querySelectorAll(BUBBLE_AVOID)].map((el) => {
+        const r = el.getBoundingClientRect();
+        return { x: r.left - area.left - clear, y: r.top - area.top - clear, w: r.width + clear * 2, h: r.height + clear * 2 };
+      });
+      // Nothing level with or below the dock, so bubbles never read as a
+      // second row of dock buttons.
+      const dock = stage.querySelector(".hero-dock")?.getBoundingClientRect();
+      if (dock) blocked.push({ x: 0, y: dock.top - area.top - clear, w: area.width, h: area.height });
+      alive.forEach((b) => {
+        blocked.push({ x: b.x - BUBBLE_APART, y: b.y - BUBBLE_APART, w: b.size + BUBBLE_APART * 2, h: b.size + BUBBLE_APART * 2 });
+      });
+      const spanX = area.width - BUBBLE_EDGE * 2 - size;
+      const spanY = area.height - BUBBLE_EDGE * 2 - size;
+      if (spanX <= 0 || spanY <= 0) return null;
+      // Free spots first; a fresh one (away from recent spots) if there is one.
+      const free = [];
+      for (let tries = 0; tries < 120; tries += 1) {
+        const spot = { x: BUBBLE_EDGE + Math.random() * spanX, y: BUBBLE_EDGE + Math.random() * spanY, w: size, h: size };
+        if (blocked.some((box) => boxesOverlap(spot, box))) continue;
+        if (!recent.some((r) => Math.hypot(r.x - spot.x, r.y - spot.y) < fresh)) return spot;
+        free.push(spot);
+      }
+      return free[0] ?? null;
+    };
+
+    const nextLogo = () => {
+      const showing = new Set(alive.map((b) => b.logo));
+      const at = queue.findIndex((i) => !showing.has(i));
+      const [logo] = queue.splice(at, 1);
+      queue.push(logo);
+      return logo;
+    };
+
+    // Adds one bubble; false when there is no free spot for it.
+    const surface = () => {
+      const small = window.innerWidth <= 760;
+      const size = small ? BUBBLE_SIZE_SMALL : BUBBLE_SIZE;
+      const spot = pickSpot(size, small);
+      if (!spot) return false;
+      alive = [
+        ...alive,
+        { id: nextId++, logo: nextLogo(), x: spot.x, y: spot.y, size, out: false, still: reduce, bob: -Math.random() * 4 },
+      ];
+      commit();
+      return true;
+    };
+
+    // Sends the oldest logo still up back under, and frees its spot after.
+    const sinkOldest = () => {
+      const oldest = alive.find((b) => !b.out);
+      if (!oldest) return;
+      alive = alive.map((b) => (b.id === oldest.id ? { ...b, out: true } : b));
+      commit();
+      later(() => {
+        alive = alive.filter((b) => b.id !== oldest.id);
+        recent = [...recent, oldest].slice(-6);
+        commit();
+      }, BUBBLE_OUT);
+    };
+
+    // A new logo surfaces; once it is out, the oldest one sinks.
+    const swap = () => {
+      if (visible) {
+        if (surface()) later(sinkOldest, BUBBLE_SWAP_OVERLAP);
+        // No room for a new one: free a spot for next time.
+        else if (alive.filter((b) => !b.out).length >= BUBBLE_SHOWN) sinkOldest();
+      }
+      later(swap, BUBBLE_SWAP_EVERY);
+    };
+
+    // First logos come up one by one, then the swapping starts.
+    const fill = () => {
+      if (!visible) {
+        later(fill, BUBBLE_RETRY);
+        return;
+      }
+      surface();
+      if (alive.length < BUBBLE_SHOWN) later(fill, BUBBLE_APPEAR_GAP);
+      else later(swap, BUBBLE_SWAP_EVERY);
+    };
+
+    const io =
+      typeof IntersectionObserver !== "undefined"
+        ? new IntersectionObserver(([entry]) => {
+            visible = entry.isIntersecting;
+          })
+        : null;
+    io?.observe(stage);
+
+    // Reduced motion: three still bubbles, no swapping.
+    later(() => {
+      if (!reduce) fill();
+      else for (let i = 0; i < BUBBLE_SHOWN; i += 1) surface();
+    }, BUBBLE_FIRST);
+
+    return () => {
+      timers.forEach(clearTimeout);
+      io?.disconnect();
+    };
+  }, []);
+
+  return (
+    <div ref={layerRef} className="hero-bubbles" aria-hidden="true">
+      {bubbles.map((bubble) => (
+        <HeroBubble key={bubble.id} bubble={bubble} />
+      ))}
+    </div>
+  );
+}
+
+// The "water" each logo passes through: turbulence displacing it in soft
+// horizontal waves, plus a blur. Both are full while it is under or crossing
+// the surface and fade to nothing once it is out, then come back as it sinks.
+// Set per frame from JS, since CSS can't animate inside an SVG filter.
+const WATER_DISTORT = 9;
+const WATER_BLUR = 4;
+const WATER_CLEAR = 1100;
+const WATER_SINK = 1200;
+
+const easeInOutCubic = (t) => (t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2);
+
+function HeroBubble({ bubble }) {
+  const logo = bubbleLogos[bubble.logo];
+  const displaceRef = useRef(null);
+  const blurRef = useRef(null);
+  const frameRef = useRef(0);
+  const filterId = `hero-water-${bubble.id}`;
+
+  // Runs the water amount (1 = fully distorted, 0 = clear) from one value to
+  // another.
+  const runWater = (from, to, ms) => {
+    cancelAnimationFrame(frameRef.current);
+    const start = performance.now();
+    const step = (now) => {
+      const t = Math.min(1, (now - start) / ms);
+      const amount = from + (to - from) * easeInOutCubic(t);
+      displaceRef.current?.setAttribute("scale", (amount * WATER_DISTORT).toFixed(2));
+      blurRef.current?.setAttribute("stdDeviation", (amount * WATER_BLUR).toFixed(2));
+      if (t < 1) frameRef.current = requestAnimationFrame(step);
+    };
+    frameRef.current = requestAnimationFrame(step);
+  };
+
+  useEffect(() => {
+    if (!bubble.still) runWater(1, 0, WATER_CLEAR);
+    return () => cancelAnimationFrame(frameRef.current);
+  }, []);
+
+  useEffect(() => {
+    if (bubble.out) runWater(0, 1, WATER_SINK);
+  }, [bubble.out]);
+
+  return (
+    <div
+      className={`hero-bubble ${bubble.out ? "is-out" : ""} ${bubble.still ? "is-still" : ""}`.replace(/\s+/g, " ").trim()}
+      style={{ left: bubble.x, top: bubble.y, "--size": `${bubble.size}px`, "--bob-delay": `${bubble.bob}s` }}
+    >
+      {bubble.still ? null : (
+        <svg className="hero-bubble-defs" width="0" height="0" aria-hidden="true">
+          <filter id={filterId} x="-20%" y="-20%" width="140%" height="140%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.015 0.09" numOctaves="2" seed={bubble.id % 97} result="noise">
+              <animate attributeName="baseFrequency" values="0.015 0.09;0.022 0.12;0.015 0.09" dur="3s" repeatCount="indefinite" />
+            </feTurbulence>
+            <feDisplacementMap
+              ref={displaceRef}
+              in="SourceGraphic"
+              in2="noise"
+              scale={WATER_DISTORT}
+              xChannelSelector="R"
+              yChannelSelector="G"
+              result="wave"
+            />
+            <feGaussianBlur ref={blurRef} in="wave" stdDeviation={WATER_BLUR} />
+          </filter>
+        </svg>
+      )}
+      <span className="hero-bubble-surface">
+        <span className="hero-bubble-bob">
+          <span className="hero-bubble-chip lg" style={bubble.still ? undefined : { filter: `url(#${filterId})` }}>
+            {logo.icon ? <i className={logo.icon} /> : logo.mark}
+          </span>
+        </span>
+      </span>
+    </div>
+  );
+}
+
+// Hero contact card, after the Smart Contact Link reference: hovering a detail
+// dims and underlines it and opens a small menu above it (send or copy); focus
+// and tap open it too, for keyboards and touch. The menu eases up from slightly
+// small and low, and closes when the pointer leaves, on an outside tap, on
+// Escape, or once an action is done. The card itself drifts gently.
+const heroContactRows = [
+  {
+    id: "email",
+    icon: "ri-mail-line",
+    value: "hello.abhinandansingh@gmail.com",
+    label: "Email address",
+    actions: [
+      { kind: "link", icon: "ri-send-plane-line", text: "Send email", href: "mailto:hello.abhinandansingh@gmail.com" },
+      { kind: "copy", icon: "ri-file-copy-line", text: "Copy email" },
+    ],
+  },
+  {
+    id: "phone",
+    icon: "ri-phone-line",
+    value: "+91-8544999007",
+    label: "Phone number",
+    actions: [
+      { kind: "link", icon: "ri-phone-line", text: "Call", href: "tel:+918544999007" },
+      { kind: "copy", icon: "ri-file-copy-line", text: "Copy number" },
+    ],
+  },
+];
+
+const CONTACT_COPIED_FOR = 1200;
+// Grace period before a hover menu closes, so the pointer can cross into it.
+const CONTACT_CLOSE_DELAY = 160;
+
+function HeroContactCard() {
+  const cardRef = useRef(null);
+  const closeTimer = useRef(0);
+  const [open, setOpen] = useState(null);
+  const [copied, setCopied] = useState(null);
+
+  const openRow = (id) => {
+    clearTimeout(closeTimer.current);
+    setOpen(id);
+  };
+  const closeSoon = () => {
+    clearTimeout(closeTimer.current);
+    closeTimer.current = setTimeout(() => setOpen(null), CONTACT_CLOSE_DELAY);
+  };
+  useEffect(() => () => clearTimeout(closeTimer.current), []);
+
+  useEffect(() => {
+    if (!open) return undefined;
+    const onPointer = (event) => {
+      if (!cardRef.current?.contains(event.target)) setOpen(null);
+    };
+    const onKey = (event) => {
+      if (event.key === "Escape") {
+        cardRef.current?.querySelector(`[data-row="${open}"]`)?.focus();
+        setOpen(null);
+      }
+    };
+    document.addEventListener("pointerdown", onPointer);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("pointerdown", onPointer);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
+  useEffect(() => {
+    if (!copied) return undefined;
+    const id = setTimeout(() => {
+      setCopied(null);
+      setOpen(null);
+    }, CONTACT_COPIED_FOR);
+    return () => clearTimeout(id);
+  }, [copied]);
+
+  const copy = async (row) => {
+    try {
+      await navigator.clipboard.writeText(row.value);
+      setCopied(row.id);
+    } catch {
+      setOpen(null);
+    }
+  };
+
+  return (
+    <div ref={cardRef} className="hero-contact">
+      <div className="hero-contact-head">
+        <img className="hero-contact-avatar" src={profilePhoto} alt="" />
+        <div>
+          <p className="hero-contact-name">Abhinandan Singh</p>
+          <p className="hero-contact-role">Product Engineer</p>
+        </div>
+      </div>
+      <ul className="hero-contact-rows">
+        {heroContactRows.map((row) => {
+          const isOpen = open === row.id;
+          return (
+            <li
+              key={row.id}
+              className="hero-contact-row"
+              onMouseEnter={() => openRow(row.id)}
+              onMouseLeave={() => {
+                if (!copied) closeSoon();
+              }}
+            >
+              <div className={`hero-contact-menu lg ${isOpen ? "is-open" : ""}`.trim()} aria-hidden={!isOpen} inert={isOpen ? undefined : ""}>
+                <span className="hero-contact-menu-label">{row.label}</span>
+                <div className="hero-contact-menu-actions">
+                  {row.actions.map((action) =>
+                    action.kind === "link" ? (
+                      <a key={action.text} className="hero-contact-action" href={action.href} onClick={() => setOpen(null)}>
+                        <i className={action.icon} aria-hidden="true" />
+                        {action.text}
+                      </a>
+                    ) : (
+                      <button key={action.text} type="button" className="hero-contact-action" onClick={() => copy(row)}>
+                        <i className={copied === row.id ? "ri-check-line" : action.icon} aria-hidden="true" />
+                        {copied === row.id ? "Copied" : action.text}
+                      </button>
+                    ),
+                  )}
+                </div>
+              </div>
+              <button
+                type="button"
+                className="hero-contact-value"
+                data-row={row.id}
+                aria-expanded={isOpen}
+                aria-label={`${row.label}: ${row.value}`}
+                onFocus={() => openRow(row.id)}
+                onClick={() => openRow(row.id)}
+              >
+                <i className={row.icon} aria-hidden="true" />
+                {row.value}
+              </button>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+}
+
 function HomePage() {
   return (
     <div className="page-view">
       <section className="hero-stage">
+        <HeroBubbles />
         <Reveal className="hero-stage-player" delay={260}>
           <HeroMusicPlayer />
         </Reveal>
@@ -2031,9 +2405,9 @@ function HomePage() {
           />
         </div>
 
-        <div className="hero-stage-folders">
-          <HeroProjectFolders />
-        </div>
+        <Reveal className="hero-stage-contact" delay={320}>
+          <HeroContactCard />
+        </Reveal>
 
         <div className="hero-stage-dock">
           <HeroDock />
@@ -4672,7 +5046,7 @@ export default function App() {
 
       <AmbientWater />
       <FluidOverlay />
-      {/* Header navigation is off for now; the hero dock and folders cover it. */}
+      {/* Header navigation is off for now; the hero dock covers it. */}
 
       <main
         key={`${pathname}-${projectSlug ?? ""}`}

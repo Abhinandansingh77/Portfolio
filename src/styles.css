@@ -5465,8 +5465,8 @@ hr {
 }
 
 /* ── Hero stage: one 100vh screen ──
-   Turntable left, title + portrait centre, project folders right, glass dock
-   along the bottom. Nothing in it scrolls; the portrait absorbs the slack. */
+   Turntable left, title + portrait centre, floating skill bubbles in the
+   space around them, glass dock along the bottom. Nothing in it scrolls; the portrait absorbs the slack. */
 
 .hero-stage {
   position: relative;
@@ -5480,9 +5480,9 @@ hr {
   height: calc(100svh - var(--page-pad-top));
   min-height: 560px;
   width: 100%;
-  /* Top: 30% under where the centred heading used to sit. Bottom: 12px
-     under the dock. */
-  padding: clamp(24px, 9.6vh, 104px) 0 12px;
+  /* Top: half the earlier clamp(24px, 9.6vh, 104px), so the heading sits
+     higher. Bottom: 12px under the dock. */
+  padding: clamp(12px, 4.8vh, 52px) 0 12px;
 }
 
 /* .page-view > section sets flex: 1, whose 0% basis would override the
@@ -5492,18 +5492,12 @@ hr {
 }
 
 /* Desktop and tablet: break out of the 1440px page to the full window, with
-   the reference's side margins: 24px left, 48px right. The padding stays
-   even so the centre column is truly centred; the folders add the other
-   24px themselves. */
+   24px side margins. */
 @media (min-width: 761px) {
   .page-view > .hero-stage {
     width: auto;
     margin-inline: calc((100% - (100vw - var(--scrollbar-width, 0px))) / 2);
     padding-inline: 24px;
-  }
-
-  .hero-stage-folders {
-    margin-right: 24px;
   }
 }
 
@@ -5552,20 +5546,237 @@ hr {
   max-height: none;
 }
 
+/* Turntable in the upper left, level with the subtitle (as the reference
+   places it); the contact card sits opposite, lower right. */
 .hero-stage-player {
   grid-column: 1;
   grid-row: 1;
-  align-self: center;
+  align-self: start;
   justify-self: start;
+  margin-top: clamp(96px, 22vh, 280px);
+  margin-left: clamp(40px, 6.2vw, 120px);
 }
 
-.hero-stage-folders {
+.hero-stage-contact {
   grid-column: 3;
   grid-row: 1;
   align-self: center;
   justify-self: end;
-  min-height: 0;
-  max-height: 100%;
+  /* Half of this lowers the card's centre below the middle. */
+  margin-top: 38vh;
+  margin-right: 5px;
+  position: relative;
+  z-index: 2;
+}
+
+/* ── Hero contact card ──
+   After the Smart Contact Link reference: a dashed card whose email and
+   phone are buttons. Hover dims and underlines a value; a click opens a
+   small glass menu above it that eases up from slightly small and low. */
+
+/* Sized to its content, so both sides keep the same 24px. */
+.hero-contact {
+  width: max-content;
+  box-sizing: border-box;
+  padding: 22px 24px;
+  border: 1px dashed var(--border-strong);
+  border-radius: 18px;
+  background: color-mix(in srgb, var(--bg) 72%, transparent);
+  animation: contact-drift 7s ease-in-out infinite;
+}
+
+/* A slow drift with the slightest tilt, so the card feels afloat. */
+@keyframes contact-drift {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  33% { transform: translate3d(-3px, -6px, 0) rotate(-0.4deg); }
+  66% { transform: translate3d(2px, -3px, 0) rotate(0.3deg); }
+}
+
+.hero-contact-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.hero-contact-avatar {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  object-fit: cover;
+  filter: grayscale(1);
+}
+
+.hero-contact-name {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+.hero-contact-role {
+  margin: 2px 0 0;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.hero-contact-rows {
+  display: grid;
+  gap: 10px;
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hero-contact-row {
+  position: relative;
+}
+
+.hero-contact-value {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-size: 0.9rem;
+  color: var(--text);
+  text-align: left;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 3px;
+  cursor: pointer;
+  transition:
+    color 200ms ease,
+    text-decoration-color 200ms ease;
+}
+
+.hero-contact-value:hover,
+.hero-contact-value[aria-expanded="true"] {
+  color: var(--text-secondary);
+  text-decoration-color: currentColor;
+}
+
+.hero-contact-value i {
+  font-size: 1rem;
+  color: var(--text-secondary);
+}
+
+.hero-contact-value:focus-visible {
+  outline: 2px solid #0A84FF;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* .hero-contact scoping beats .lg, which sets position: relative later on. */
+.hero-contact .hero-contact-menu {
+  position: absolute;
+  left: -10px;
+  bottom: calc(100% + 10px);
+  z-index: 3;
+  display: grid;
+  gap: 8px;
+  padding: 10px;
+  border-radius: 14px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(6px) scale(0.94);
+  transform-origin: 30% 100%;
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease,
+    visibility 0s linear 180ms;
+}
+
+:root[data-theme="light"] .hero-contact-menu {
+  --lg-fill: rgba(255, 255, 255, 0.86);
+}
+
+:root:not([data-theme="light"]) .hero-contact-menu {
+  --lg-fill: rgba(28, 28, 28, 0.86);
+}
+
+.hero-contact .hero-contact-menu.is-open {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition:
+    opacity 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0s;
+}
+
+/* Bridges the gap down to the row, so the pointer can move into the menu
+   without it closing. */
+.hero-contact .hero-contact-menu::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  height: 12px;
+}
+
+.hero-contact-menu-label {
+  padding-left: 4px;
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.hero-contact-menu-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.hero-contact-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--accent-soft);
+  font-size: 0.85rem;
+  color: var(--text);
+  cursor: pointer;
+  transition: background-color 200ms ease;
+}
+
+.hero-contact-action:hover {
+  background: color-mix(in srgb, var(--text) 10%, transparent);
+}
+
+.hero-contact-action:focus-visible {
+  outline: 2px solid #0A84FF;
+  outline-offset: 2px;
+}
+
+.hero-contact-action i {
+  font-size: 1rem;
+}
+
+/* The card needs a side column wide enough to hold it. */
+@media (max-width: 1199px) {
+  .hero-stage-contact {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-contact {
+    animation: none;
+  }
+
+  .hero-contact-menu,
+  .hero-contact-menu.is-open,
+  .hero-contact-value {
+    transition: none;
+  }
 }
 
 .hero-stage-dock {
@@ -5574,6 +5785,138 @@ hr {
   display: flex;
   justify-content: center;
   padding-top: 12px;
+}
+
+/* ── Floating skill bubbles ──
+   Liquid-glass circles that surface in the hero's empty space, in waves
+   (placed by HeroBubbles). Each comes up out of the surface where it sits,
+   towards you: a soft round opening spreads from its centre as it swells
+   from small to full size, rippled and blurred (its SVG filter) until it is
+   clear. It bobs as if resting on water, then closes back into the surface
+   the same way. */
+
+@property --surface-reveal {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 120%;
+}
+
+.hero-bubbles {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.hero-bubble {
+  position: absolute;
+  width: var(--size);
+  height: var(--size);
+}
+
+.hero-bubble-defs {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+/* The opening in the surface: a soft-edged circle from the centre. Room
+   around the logo keeps its shadow inside the opening once it is wide. */
+.hero-bubble-surface {
+  position: absolute;
+  inset: -22px;
+  padding: 22px;
+  -webkit-mask-image: radial-gradient(circle, #000 calc(var(--surface-reveal) - 22%), transparent var(--surface-reveal));
+  mask-image: radial-gradient(circle, #000 calc(var(--surface-reveal) - 22%), transparent var(--surface-reveal));
+  animation: surface-open 1100ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.hero-bubble.is-out .hero-bubble-surface {
+  animation: surface-close 1300ms cubic-bezier(0.55, 0, 0.75, 0.2) both;
+}
+
+.hero-bubble-bob {
+  display: block;
+  width: 100%;
+  height: 100%;
+  animation: bubble-bob 3.6s ease-in-out var(--bob-delay) infinite alternate;
+}
+
+.hero-bubble-chip {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  color: var(--text);
+  font-size: calc(var(--size) * 0.44);
+  animation: bubble-emerge 1300ms both;
+}
+
+.hero-bubble.is-out .hero-bubble-chip {
+  animation: bubble-sink 1300ms both;
+}
+
+.hero-bubble-chip svg {
+  width: calc(var(--size) * 0.4);
+  height: calc(var(--size) * 0.4);
+}
+
+@keyframes surface-open {
+  from { --surface-reveal: 0%; }
+  to { --surface-reveal: 120%; }
+}
+
+@keyframes surface-close {
+  from { --surface-reveal: 120%; }
+  to { --surface-reveal: 0%; }
+}
+
+/* Swells up out of the surface, a little past full size, and settles. */
+@keyframes bubble-emerge {
+  0% {
+    transform: scale(0.6);
+    animation-timing-function: cubic-bezier(0.25, 0.8, 0.35, 1);
+  }
+  55% {
+    transform: scale(1.06);
+    animation-timing-function: ease-in-out;
+  }
+  78% {
+    transform: scale(0.98);
+  }
+  100% {
+    transform: none;
+  }
+}
+
+/* A small swell, then back down into the surface. */
+@keyframes bubble-sink {
+  0% {
+    transform: none;
+    animation-timing-function: ease-out;
+  }
+  18% {
+    transform: scale(1.03);
+    animation-timing-function: cubic-bezier(0.55, 0, 0.8, 0.35);
+  }
+  100% {
+    transform: scale(0.6);
+  }
+}
+
+@keyframes bubble-bob {
+  from { transform: translateY(-1.5px); }
+  to { transform: translateY(1.5px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-bubble-surface,
+  .hero-bubble-bob,
+  .hero-bubble-chip {
+    animation: none;
+  }
 }
 
 /* ── Typewriter heading ── */
@@ -5815,14 +6158,12 @@ hr {
 }
 
 .hero-player-btn:active,
-.hero-folder:active,
 .hero-dock-item:active {
   transform: scale(0.92);
 }
 
 .hero-record:focus-visible,
 .hero-player-btn:focus-visible,
-.hero-folder:focus-visible,
 .hero-dock-item:focus-visible {
   outline: 2px solid #0A84FF;
   outline-offset: 3px;
@@ -5878,70 +6219,6 @@ hr {
 @keyframes eq-bounce {
   0%, 100% { transform: scaleY(0.25); }
   50% { transform: scaleY(1); }
-}
-
-/* ── Project folders: icon over label ── */
-
-.hero-folders ul {
-  display: flex;
-  flex-direction: column;
-  gap: clamp(8px, 2.2vh, 22px);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.hero-folders li {
-  opacity: 0;
-  transform: translateX(16px);
-  animation: folder-in 700ms var(--ease-premium) forwards;
-  animation-delay: var(--folder-delay);
-}
-
-.hero-folder {
-  display: grid;
-  justify-items: center;
-  gap: 4px;
-  width: 128px;
-  padding: 6px 4px;
-  border-radius: 14px;
-  text-align: center;
-  color: var(--text);
-  transition: background-color 300ms var(--ease-premium);
-}
-
-/* 20% under the first folder size. */
-.hero-folder-icon {
-  display: block;
-  width: clamp(36px, min(3.6vw, 6vh), 58px);
-  height: auto;
-  transition: transform 520ms cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.hero-folder-label {
-  display: grid;
-  max-width: 100%;
-  font-size: clamp(0.78rem, min(0.9vw, 1.7vh), 0.9rem);
-  font-weight: 500;
-  line-height: 1.3;
-  white-space: nowrap;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .hero-folder:hover {
-    background: var(--accent-soft);
-  }
-
-  .hero-folder:hover .hero-folder-icon {
-    transform: translateY(-3px) scale(1.08);
-  }
-}
-
-@keyframes folder-in {
-  to {
-    opacity: 1;
-    transform: none;
-  }
 }
 
 /* ── Dock ── */
@@ -6030,13 +6307,13 @@ hr {
     grid-template-columns: 120px minmax(0, 1fr) 120px;
   }
 
-  .hero-folder {
-    width: 120px;
+  /* The side column is too narrow for the extra left margin. */
+  .hero-stage-player {
+    margin-left: 0;
   }
 }
 
-/* Phone: one column. Title, portrait, folders as a swipeable row, a compact
-   player, then the dock. Still one screen tall where the phone allows. */
+/* Phone: one column. Title, portrait, a compact player, then the dock. Still one screen tall where the phone allows. */
 @media (max-width: 760px) {
   .hero-stage {
     display: flex;
@@ -6068,49 +6345,11 @@ hr {
     margin-top: 0;
   }
 
-  .hero-stage-folders {
-    order: 2;
-    flex: none;
-    align-self: stretch;
-    max-height: none;
-    /* Bleed the swipe row to the screen edges (.page side padding). */
-    margin: 0 -34px;
-  }
-
-  .hero-folders ul {
-    flex-direction: row;
-    gap: 4px;
-    overflow-x: auto;
-    padding: 4px 34px;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-  }
-
-  .hero-folders ul::-webkit-scrollbar {
-    display: none;
-  }
-
-  .hero-folders li {
-    flex: 0 0 auto;
-    scroll-snap-align: start;
-    transform: translateY(10px);
-  }
-
-  .hero-folder {
-    width: 104px;
-  }
-
-  .hero-folder-icon {
-    width: 44px;
-  }
-
-  .hero-folder-label {
-    font-size: 0.78rem;
-  }
-
   .hero-stage-player {
     order: 3;
     align-self: center;
+    margin-top: 0;
+    margin-left: 0;
   }
 
   .hero-player {
@@ -6140,14 +6379,6 @@ hr {
   .hero-stage {
     --page-pad-top: 30px;
   }
-
-  .hero-stage-folders {
-    margin: 0 -16px;
-  }
-
-  .hero-folders ul {
-    padding-inline: 16px;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -6165,7 +6396,6 @@ hr {
     animation: none;
   }
 
-  .hero-folders li,
   .hero-dock {
     animation: none;
     opacity: 1;
@@ -6214,7 +6444,7 @@ hr {
 
   position: relative;
   width: 100%;
-  padding: 64px 0;
+  padding: 90px 0;
   scroll-margin-top: 100px;
   /* The centre glow spills past the edges; never let it scroll the page. */
   overflow-x: clip;
@@ -6697,7 +6927,7 @@ hr {
 
 @media (max-width: 640px) {
   .em-section {
-    padding: 48px 0;
+    padding: 67px 0;
   }
 
   .em-title {
@@ -6730,7 +6960,7 @@ hr {
   width: 100%;
   max-width: 1160px;
   margin: 0 auto;
-  padding: 64px 24px;
+  padding: 90px 24px;
   scroll-margin-top: 100px;
 }
 
@@ -6877,7 +7107,7 @@ hr {
 
 @media (max-width: 640px) {
   .sw-section {
-    padding: 48px 0;
+    padding: 67px 0;
   }
 
   .sw-card-title {
@@ -6906,7 +7136,7 @@ hr {
   --pd-icon-fg: #0A0A0A;
   --pd-ease: cubic-bezier(0.22, 1, 0.36, 1);
   position: relative;
-  padding: 40px 0 64px;
+  padding: 56px 0 64px;
   overflow-x: clip;
 }
 
@@ -7197,7 +7427,7 @@ hr {
 
 @media (max-width: 760px) {
   .pd-section {
-    padding: 24px 0 48px;
+    padding: 34px 0 48px;
   }
 
   .pd-compact-steps {
@@ -7256,7 +7486,7 @@ hr {
   max-width: 1160px;
   margin: 0 auto;
   /* Bottom: 40% under the original 72px. */
-  padding: 24px 24px 43px;
+  padding: 34px 24px 60px;
 }
 
 .tools-grid-title {
@@ -7370,7 +7600,7 @@ hr {
 
 @media (max-width: 640px) {
   .tools-grid-section {
-    padding: 16px 0 34px;
+    padding: 22px 0 48px;
   }
 
   .tools-grid {
