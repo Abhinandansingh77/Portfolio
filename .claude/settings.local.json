@@ -1,7 +1,11 @@
 {
   "permissions": {
     "allow": [
-      "mcp__Claude_in_Chrome__computer"
+      "mcp__Claude_in_Chrome__computer",
+      "Read(//Users/thisismine/Portfolio/**)",
+      "Bash(python3 -)",
+      "Bash(npx vite *)",
+      "Bash(npm run *)"
     ]
   }
 }
