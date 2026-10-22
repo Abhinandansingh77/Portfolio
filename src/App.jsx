@@ -5,6 +5,7 @@ import abhiLogo from "../Assets/abhi logo.svg";
 import { AmbientWater, FluidOverlay, HeroLiquid } from "./FluidEffects.jsx";
 import { EngineeringMap } from "./EngineeringSection.jsx";
 import { ProcessSection } from "./ProcessSection.jsx";
+import { AboutSection } from "./AboutSection.jsx";
 import cardinalHealthVerticalImg from "../Assets/Featured work cardinal health img vertical.webp";
 import discoveryPlusVerticalImg from "../Assets/Featured work discovery plus img Vertical.webp";
 import brightlineVerticalImg from "../Assets/Featured work bright line img vertical.webp";
@@ -2047,6 +2048,7 @@ function HomePage() {
 
       <ProcessSection />
 
+      <AboutSection />
 
       <Reveal className="mobile-resume-cta-wrap" delay={40}>
         <a

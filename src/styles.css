@@ -7380,3 +7380,128 @@ hr {
     font-size: 13px;
   }
 }
+
+/* ── About me ──
+   A tall section with a pinned panel. The heading fades in letter by letter
+   as it arrives (after the Deformo hero title); scrolling on lifts it and
+   slides each paragraph up into place (scrubbed in AboutSection.jsx). */
+
+.about-section {
+  --about-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  position: relative;
+  height: 240vh;
+  height: 240svh;
+}
+
+/* Like the hero: flex: 1 from .page-view > section would override the
+   fixed height. */
+.page-view > .about-section {
+  flex: none;
+}
+
+.about-pin {
+  position: sticky;
+  top: 0;
+  display: grid;
+  place-items: center;
+  height: 100vh;
+  height: 100svh;
+  padding: 0 24px;
+  box-sizing: border-box;
+}
+
+.about-inner {
+  width: 100%;
+  max-width: 980px;
+  text-align: center;
+}
+
+.about-title {
+  margin: 0;
+  font-size: clamp(2.4rem, 6.4vw, 5.25rem);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.045em;
+  color: var(--text);
+  will-change: transform;
+}
+
+.about-line {
+  display: block;
+}
+
+.about-line.is-muted {
+  color: var(--text-secondary);
+}
+
+.about-word {
+  white-space: nowrap;
+}
+
+/* Each character waits its turn, so a soft edge of half-faded letters
+   sweeps left to right across the heading. */
+.about-char {
+  display: inline-block;
+  opacity: 0;
+  transition: opacity 700ms var(--about-ease);
+  transition-delay: calc(var(--c) * 28ms);
+}
+
+.about-section.is-in .about-char {
+  opacity: 1;
+}
+
+.about-body {
+  max-width: 640px;
+  margin: 40px auto 0;
+  display: grid;
+  gap: 20px;
+}
+
+.about-para {
+  margin: 0;
+  font-size: clamp(1.05rem, 1.35vw, 1.25rem);
+  line-height: 1.65;
+  letter-spacing: -0.01em;
+  color: var(--text-secondary);
+  opacity: 0;
+  transform: translate3d(0, 120px, 0);
+  will-change: transform, opacity;
+}
+
+@media (max-width: 760px) {
+  .about-section {
+    height: 220vh;
+    height: 220svh;
+  }
+
+  .about-pin {
+    padding: 0 20px;
+  }
+
+  .about-body {
+    margin-top: 28px;
+    gap: 16px;
+  }
+}
+
+/* Reduced motion: no pinning or scrubbing, everything simply shown. */
+.about-section.is-static {
+  height: auto;
+}
+
+.about-section.is-static .about-pin {
+  position: static;
+  height: auto;
+  padding-block: 96px;
+}
+
+.about-section.is-static .about-char {
+  opacity: 1;
+  transition: none;
+}
+
+.about-section.is-static .about-para {
+  opacity: 1;
+  transform: none;
+}
