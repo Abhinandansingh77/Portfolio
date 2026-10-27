@@ -1,6 +1,7 @@
 import { Fragment, useEffect, useRef, useState } from "react";
 import resumePdf from "../Assets/Abhinandan_Singh_Resume.pdf";
 import { ContactRows } from "./ContactRows.jsx";
+import { CtaIcon } from "./CtaIcon.jsx";
 
 // "About me", after the showreel on forma-design-studio.framer.website: a
 // pinned panel with the body on top, the heading under it and a small card
@@ -285,14 +286,11 @@ export function AboutSection() {
               <a
                 className="about-card-cta"
                 href={resumePdf}
-                download="Abhinandan_Singh_UX_Resume.pdf"
+                download="Abhinandan_Singh_Resume.pdf"
                 data-focus
               >
                 Download Resume
-                <span className="about-card-cta-icon" aria-hidden="true">
-                  <i className="ri-arrow-down-line" />
-                  <i className="ri-arrow-down-line" />
-                </span>
+                <CtaIcon icon="ri-arrow-down-line" direction="down" />
               </a>
             </div>
           </div>

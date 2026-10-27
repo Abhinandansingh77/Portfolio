@@ -43,9 +43,14 @@
      below its content. */
   --section-gap: 120px;
 
-  /* Brand black (nav bar, dark buttons). The site is black and white; the
-     hero's availability dot is the only colour. */
-  --ink: #1E1E1E;
+  /* Brand palette. --brand is the one colour: CTAs, the hero intro, the
+     Creative Stack screen and the closing card. --dark is the site's black
+     (text, nav bar, dark surfaces). */
+  --brand: #F85921;
+  --brand-deep: #D9440F;
+  --on-brand: #FFFFFF;
+  --dark: #2C2C2C;
+  --ink: var(--dark);
 }
 
 /* Light theme, for testing: add ?theme=light to the URL. Same token names,
@@ -58,12 +63,12 @@
   --surface-hover: #EFEFEF;
   --border: rgba(0, 0, 0, 0.1);
   --border-strong: rgba(0, 0, 0, 0.18);
-  --text: #111111;
-  --text-secondary: #555555;
-  --text-soft: #222222;
-  --accent: #111111;
-  --accent-hover: #000000;
-  --on-accent: #FFFFFF;
+  --text: var(--dark);
+  --text-secondary: #5E5E5E;
+  --text-soft: #3A3A3A;
+  --accent: var(--brand);
+  --accent-hover: var(--brand-deep);
+  --on-accent: var(--on-brand);
   --accent-soft: rgba(0, 0, 0, 0.05);
   --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.04);
   --shadow-lift: 0 24px 60px rgba(0, 0, 0, 0.08);
@@ -962,16 +967,33 @@ button {
   flex-wrap: wrap;
 }
 
+.footer-sign {
+  display: grid;
+  gap: 4px;
+}
+
+.footer-tagline {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text);
+}
+
 .footer-copyright {
   font-size: 0.88rem;
   color: var(--text-subtle);
   margin: 0;
 }
 
+.footer-socials-sep {
+  color: var(--border-strong);
+}
+
 .footer-right-actions {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 24px;
+  gap: 16px 24px;
 }
 
 .back-to-top-btn {
@@ -995,7 +1017,7 @@ button {
 .footer-socials {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 10px;
   font-size: 0.88rem;
   font-weight: 500;
   color: var(--text-subtle);
@@ -4281,14 +4303,7 @@ hr {
 /* Primary View Visuals button */
 
 .project-visuals-button-primary {
-  background: var(--accent);
-  color: var(--on-accent);
-  border-color: var(--accent);
-}
-
-.project-visuals-button-primary:hover {
-  background: var(--accent-hover);
-  border-color: var(--accent-hover);
+  border-color: transparent;
 }
 
 /* PDF Viewer overlay */
@@ -5117,6 +5132,13 @@ hr {
   object-fit: contain;
 }
 
+.edu-mark-initial {
+  background: var(--brand);
+  color: var(--on-brand);
+  font-size: 1rem;
+  font-weight: 650;
+}
+
 .edu-copy h3 {
   margin: 0;
   font-size: 0.96rem;
@@ -5282,21 +5304,11 @@ hr {
   gap: 10px;
   width: fit-content;
   min-height: 46px;
-  padding: 0 24px;
+  padding: 0 6px 0 22px;
   border-radius: var(--radius-pill);
-  background: var(--text);
-  color: var(--on-accent);
   font-size: 0.9rem;
   font-weight: 600;
   letter-spacing: -0.01em;
-  transition:
-    transform 240ms var(--ease-premium),
-    background 240ms ease;
-}
-
-.contact-resume-button:hover {
-  transform: translateY(-2px);
-  background: var(--accent-hover);
 }
 
 .contact-quick-details {
@@ -7736,9 +7748,10 @@ hr {
   width: var(--card-w);
   height: var(--card-h);
   margin: calc(var(--card-h) / -2) 0 0 calc(var(--card-w) / -2);
-  border: 1px solid var(--border);
+  border: 0;
   border-radius: 24px;
-  background: var(--surface);
+  background: var(--brand);
+  color: var(--on-brand);
   overflow: hidden;
   opacity: 0;
   pointer-events: none;
@@ -7783,7 +7796,7 @@ hr {
   font-weight: 500;
   line-height: 1.08;
   letter-spacing: -0.035em;
-  color: var(--text);
+  color: var(--on-brand);
 }
 
 .about-card-sub {
@@ -7791,7 +7804,7 @@ hr {
   margin: 0;
   font-size: clamp(0.98rem, 1.3vw, 1.15rem);
   line-height: 1.75;
-  color: var(--text-soft);
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .about-card-foot {
@@ -7809,11 +7822,17 @@ hr {
 .about-card .hero-contact-value {
   gap: 10px;
   font-size: clamp(1rem, 1.3vw, 1.15rem);
+  color: var(--on-brand);
+}
+
+.about-card .hero-contact-value:focus-visible {
+  outline-color: var(--on-brand);
 }
 
 .about-card .hero-contact-value i {
   display: inline-block;
   font-size: 1.15rem;
+  color: rgba(255, 255, 255, 0.85);
   transform-origin: 50% 70%;
 }
 
@@ -7854,55 +7873,40 @@ hr {
   min-height: 48px;
   padding: 0 7px 0 22px;
   border-radius: 999px;
-  background: var(--text);
-  color: var(--bg);
+  background:
+    linear-gradient(var(--dark), var(--dark)) no-repeat 0 0 / 0% 100%,
+    #FFFFFF;
+  color: var(--dark);
   font-size: 0.95rem;
   font-weight: 500;
   text-decoration: none;
   white-space: nowrap;
-  transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1), opacity 200ms ease;
+  transition:
+    background-size 520ms var(--ease-premium),
+    color 320ms ease,
+    transform 260ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 320ms ease,
+    opacity 200ms ease;
 }
 
 .about-card-cta:hover {
+  background-size: 100% 100%, auto;
+  color: #FFFFFF;
   transform: translateY(-2px);
 }
 
 .about-card-cta:focus-visible {
-  outline: 2px solid var(--text);
+  outline: 2px solid var(--on-brand);
   outline-offset: 3px;
 }
 
-/* Two arrows stacked in a disc: on hover the first drops out of the bottom
-   as the second drops in from the top. */
-.about-card-cta-icon {
-  display: grid;
-  place-items: center;
+/* The card's icon disc is brand on the white button. */
+.about-card-cta .cta-icon {
   width: 34px;
   height: 34px;
-  border-radius: 50%;
-  background: var(--bg);
-  color: var(--text);
+  background: var(--brand);
+  color: var(--on-brand);
   font-size: 1.05rem;
-  overflow: hidden;
-}
-
-.about-card-cta-icon i {
-  grid-area: 1 / 1;
-  transition: transform 460ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.about-card-cta-icon i + i {
-  transform: translateY(-150%);
-}
-
-.about-card-cta:hover .about-card-cta-icon i:first-child,
-.about-card-cta:focus-visible .about-card-cta-icon i:first-child {
-  transform: translateY(150%);
-}
-
-.about-card-cta:hover .about-card-cta-icon i + i,
-.about-card-cta:focus-visible .about-card-cta-icon i + i {
-  transform: none;
 }
 
 .about-sr {
@@ -7985,7 +7989,7 @@ hr {
 
 @media (prefers-reduced-motion: reduce) {
   .about-card .hero-contact-value i,
-  .about-card-cta-icon i {
+  .about-card .cta-icon i {
     animation: none !important;
     transition: none;
   }
@@ -8097,7 +8101,7 @@ button.hero-dock-item {
     color 0.5s ease;
 }
 
-/* Over Creative Stack's dark screen the bar turns white. Everything in it
+/* Over Creative Stack's brand screen the bar turns white. Everything in it
    takes the bar's colour, so it all follows. */
 .nav-on-dark .tn-bar,
 .nav-on-dark .tn-menu {
@@ -8106,7 +8110,7 @@ button.hero-dock-item {
 }
 
 .tn.is-expanded .tn-bar {
-  width: min(calc(100vw - 48px), 1392px);
+  width: min(calc((100vw - 48px) * 0.7), 974px);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
 }
 
@@ -8492,14 +8496,14 @@ button.hero-dock-item {
   margin: 0 0 33px;
   font-size: 14px;
   font-weight: 500;
-  color: var(--text);
+  color: var(--brand);
 }
 
 .hx-dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #22C55E;
+  background: var(--brand);
 }
 
 .hx-title {
@@ -8512,6 +8516,10 @@ button.hero-dock-item {
   line-height: 1;
   letter-spacing: -0.045em;
   color: var(--text);
+  /* The keyboard's width. Its offset and the gap between the lines follow
+     it, scaled about the foot of the first line, so it can shrink on its
+     own to fit a phone and still sit between the lines. */
+  --kb-w: 11.28em;
 }
 
 .hx-line {
@@ -8527,7 +8535,7 @@ button.hero-dock-item {
 /* Room for the keyboard between the lines; it sits behind the keyboard. */
 .hx-line-bottom {
   z-index: 1;
-  margin-top: 2.72em;
+  margin-top: calc(var(--kb-w) * 0.2411);
 }
 
 /* The keyboard image has empty margins round the board, so it is wider than
@@ -8535,9 +8543,9 @@ button.hero-dock-item {
 .hx-kb {
   position: absolute;
   z-index: 2;
-  top: -0.36em;
+  top: calc(1em - var(--kb-w) * 0.1206);
   left: 50%;
-  width: 11.28em;
+  width: var(--kb-w);
   transform: translateX(-48.4%);
   perspective: 1000px;
   pointer-events: none;
@@ -8652,6 +8660,7 @@ button.hero-dock-item {
   }
 
   .hx-title {
+    --kb-w: min(11.28em, calc(100vw - 32px));
     font-size: clamp(34px, 11vw, 46px);
   }
 
@@ -8813,20 +8822,13 @@ button.hero-dock-item {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  height: 36px;
-  padding: 0 16px;
+  height: 38px;
+  padding: 0 4px 0 16px;
   border: 0;
   border-radius: 999px;
-  background: var(--ink);
-  color: #FFFFFF;
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
-  transition: background-color 200ms ease;
-}
-
-.ws-cta:hover {
-  background: #000000;
 }
 
 .ws-center {
@@ -8871,26 +8873,13 @@ button.hero-dock-item {
   align-items: center;
   gap: 10px;
   height: 48px;
-  padding: 0 26px;
-  border: 1px solid var(--border-strong);
+  padding: 0 6px 0 24px;
+  border: 0;
   border-radius: 999px;
-  background: var(--surface-elevated);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
-  color: var(--text);
   font-size: 16px;
   font-weight: 600;
   white-space: nowrap;
   cursor: pointer;
-  transition:
-    background-color 200ms ease,
-    color 200ms ease,
-    border-color 200ms ease;
-}
-
-.ws-all:hover {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: var(--on-accent);
 }
 
 /* Phones and reduced motion: a plain list. */
@@ -8970,7 +8959,7 @@ button.hero-dock-item {
 
 /* ==========================================================================
    Creative Stack (CreativeStack.jsx)
-   Pinned while scrolled. The image's clip, zoom and darkening, the words'
+   Pinned while scrolled. The image's clip, zoom and brand fill, the words'
    offsets and scale, and each topic letter's place are set from scroll.
    ========================================================================== */
 
@@ -9018,8 +9007,8 @@ button.hero-dock-item {
 .cs-shade {
   position: absolute;
   inset: 0;
-  background: #000000;
-  opacity: calc(var(--cs-dark, 0) * 0.8);
+  background: var(--brand);
+  opacity: var(--cs-dark, 0);
 }
 
 .cs-words {
@@ -9054,7 +9043,7 @@ button.hero-dock-item {
   transform: translate(var(--cs-push-x, 14px), -50%) scale(var(--cs-word-scale, 1));
 }
 
-/* The dark screen: one topic in the middle at a time. */
+/* The brand screen: one topic in the middle at a time. */
 .cs-panel {
   position: absolute;
   inset: 0;
@@ -9109,7 +9098,7 @@ button.hero-dock-item {
   overflow: hidden;
   font-size: clamp(15px, 1.2vw, 18px);
   line-height: 1.5;
-  color: rgba(255, 255, 255, 0.75);
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .cs-topic-text-inner {
@@ -9141,7 +9130,7 @@ button.hero-dock-item {
   }
 }
 
-/* Reduced motion: the dark image with the topics listed, unpinned. */
+/* Reduced motion: the brand screen with the topics listed, unpinned. */
 .cs.is-static .cs-stage {
   --cs-inset-y: 0px;
   --cs-inset-x: 0px;
@@ -9303,4 +9292,697 @@ button.hero-dock-item {
   position: relative;
   width: var(--ap-size);
   height: var(--ap-size);
+}
+
+/* ==========================================================================
+   CTAs
+   One motion for every call to action, after the closing card's Download
+   Resume: on hover a fill sweeps in from the left, the button lifts, and
+   the icon in its disc slides out the way it points as its
+   twin slides in (CtaIcon.jsx).
+   - Primary: brand orange, white text; a deeper orange sweeps in.
+   - Secondary (View case study): dark outline; brand orange sweeps in.
+   - The closing card's CTA: white on the brand card; dark sweeps in.
+   The hero's dotted Download Resume keeps its own quieter style. Declared
+   last so it wins over the per-section button rules above.
+   ========================================================================== */
+
+.cta-icon {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  overflow: hidden;
+  font-size: 1rem;
+  line-height: 1;
+  transition:
+    background-color 320ms ease,
+    color 320ms ease;
+}
+
+.cta-icon i {
+  grid-area: 1 / 1;
+  transition: transform 460ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.cta-icon-right i + i { transform: translateX(-150%); }
+.cta-icon-down i + i { transform: translateY(-150%); }
+.cta-icon-up-right i + i { transform: translate(-150%, 150%); }
+
+:hover > .cta-icon-right i:first-child,
+:focus-visible > .cta-icon-right i:first-child { transform: translateX(150%); }
+:hover > .cta-icon-down i:first-child,
+:focus-visible > .cta-icon-down i:first-child { transform: translateY(150%); }
+:hover > .cta-icon-up-right i:first-child,
+:focus-visible > .cta-icon-up-right i:first-child { transform: translate(150%, -150%); }
+
+:hover > .cta-icon i + i,
+:focus-visible > .cta-icon i + i {
+  transform: none;
+}
+
+/* Lift uses `translate`, so it adds to any transform a button already has
+   (View All Projects is centred with one). */
+.ws-all,
+.ws-cta,
+.contact-resume-button,
+.project-visuals-button-primary {
+  translate: 0 0;
+  transition:
+    background-size 520ms var(--ease-premium),
+    translate 260ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 320ms ease,
+    border-color 320ms ease,
+    color 320ms ease;
+}
+
+.ws-all:hover,
+.ws-cta:hover,
+.contact-resume-button:hover,
+.project-visuals-button-primary:hover {
+  translate: 0 -2px;
+  background-size: 100% 100%, auto;
+}
+
+/* Primary */
+.ws-all,
+.contact-resume-button,
+.project-visuals-button-primary {
+  background:
+    linear-gradient(var(--brand-deep), var(--brand-deep)) no-repeat 0 0 / 0% 100%,
+    var(--brand);
+  color: var(--on-brand);
+}
+
+.ws-all .cta-icon,
+.contact-resume-button .cta-icon,
+.project-visuals-button-primary .cta-icon {
+  background: #FFFFFF;
+  color: var(--brand);
+}
+
+.ws-all .cta-icon { width: 36px; height: 36px; }
+.contact-resume-button .cta-icon { width: 34px; height: 34px; }
+.project-visuals-button-primary { padding-right: 5px; }
+
+.ws-all:hover,
+.contact-resume-button:hover,
+.project-visuals-button-primary:hover {
+  color: var(--on-brand);
+}
+
+.ws-all:hover .cta-icon,
+.contact-resume-button:hover .cta-icon,
+.project-visuals-button-primary:hover .cta-icon {
+  color: var(--brand-deep);
+}
+
+/* Secondary: a dark outline that fills with the brand on hover. */
+.ws-cta {
+  border: 1.5px solid var(--dark);
+  background:
+    linear-gradient(var(--brand), var(--brand)) no-repeat 0 0 / 0% 100%,
+    transparent;
+  color: var(--dark);
+}
+
+.ws-cta .cta-icon {
+  width: 28px;
+  height: 28px;
+  background: var(--dark);
+  color: #FFFFFF;
+  font-size: 0.95rem;
+}
+
+.ws-cta:hover {
+  border-color: var(--brand);
+  color: var(--on-brand);
+}
+
+.ws-cta:hover .cta-icon {
+  background: #FFFFFF;
+  color: var(--brand);
+}
+
+.ws-all:focus-visible,
+.ws-cta:focus-visible,
+.contact-resume-button:focus-visible,
+.project-visuals-button-primary:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ws-all,
+  .ws-cta,
+  .contact-resume-button,
+  .project-visuals-button-primary,
+  .about-card-cta,
+  .cta-icon,
+  .cta-icon i {
+    transition: none;
+  }
+
+  .ws-all:hover,
+  .ws-cta:hover,
+  .contact-resume-button:hover,
+  .project-visuals-button-primary:hover,
+  .about-card-cta:hover {
+    translate: none;
+    transform: none;
+  }
+}
+
+/* ==========================================================================
+   Brand headings
+   Section headings across the site are brand orange. The hero headline and
+   Creative Stack's words stay dark; the about panel's second line stays
+   muted.
+   ========================================================================== */
+
+.px-title,
+.ws-title,
+.about-title,
+.section-label h2,
+.section-kicker,
+.contact-content h2 {
+  color: var(--brand);
+}
+
+/* ==========================================================================
+   About page (AboutPage.jsx)
+   Intro, What I Do (pinned while Experience slides up over it), Skills on
+   the brand colour (Selected Work's sweep), Education & Learning.
+   ========================================================================== */
+
+.about-page > section,
+.about-page > .ab-curtain {
+  flex: none;
+}
+
+.ab-title {
+  margin: 0;
+  font-family: "Instrument Serif", Georgia, serif;
+  font-size: clamp(40px, 4.2vw, 60px);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  text-align: center;
+  color: var(--brand);
+}
+
+/* ── Intro ── */
+
+.ab-intro {
+  display: grid;
+  grid-template-columns: minmax(200px, 280px) minmax(0, 1fr);
+  column-gap: clamp(32px, 6vw, 96px);
+  align-items: start;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: clamp(110px, 16vh, 150px) 0 calc(var(--section-gap) / 2);
+}
+
+.ab-intro-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* A bare arrow here, without the round button. */
+.ab-intro-label .work-back-button {
+  width: 28px;
+  height: 28px;
+  border: 0;
+  border-radius: 0;
+  background: none;
+}
+
+.ab-intro-label .work-back-button:hover {
+  background: none;
+}
+
+.ab-intro-kicker {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.ab-portrait {
+  display: block;
+  width: 100%;
+  max-width: 260px;
+  height: auto;
+  margin-top: 28px;
+  -webkit-mask-image: linear-gradient(to bottom, #000 72%, transparent);
+  mask-image: linear-gradient(to bottom, #000 72%, transparent);
+}
+
+.ab-intro-lead {
+  max-width: 17em;
+  margin: 0;
+  font-family: "Instrument Serif", Georgia, serif;
+  font-size: clamp(2rem, 3.6vw, 3.3rem);
+  font-weight: 400;
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  color: var(--brand);
+}
+
+.ab-intro-body {
+  max-width: 520px;
+  margin: 40px 0 0;
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--text-soft);
+}
+
+/* ── What I Do, and Experience over it ── */
+
+.ab-curtain {
+  position: relative;
+}
+
+/* `top` is set from script so it pins once its bottom is on screen. */
+.ab-curtain.is-pinned > .ab-do {
+  position: sticky;
+  top: 0;
+  z-index: 0;
+}
+
+.ab-do {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  gap: clamp(36px, 6vh, 56px);
+  padding: calc(var(--section-gap) / 2) 0;
+  background: var(--bg);
+}
+
+.ab-do-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 28px);
+  width: 100%;
+  max-width: 1200px;
+}
+
+/* After genstudio's "Why Gen Studio" boxes: on hover the brand colour
+   rises through the box and the text turns white. */
+.ab-do-card {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+  min-height: 190px;
+  padding: clamp(24px, 2.4vw, 36px);
+  overflow: hidden;
+  border: 1px solid #E6E6E6;
+  border-radius: 6px;
+  background: #F7F7F7;
+  transition: border-color 360ms ease;
+}
+
+.ab-do-card:hover {
+  border-color: var(--brand);
+}
+
+.ab-do-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--brand);
+  transform: scaleY(0);
+  transform-origin: 50% 100%;
+  transition: transform 560ms var(--ease-premium);
+}
+
+.ab-do-card:hover::before {
+  transform: scaleY(1);
+}
+
+.ab-do-name {
+  margin: 0;
+  font-size: clamp(1.2rem, 1.6vw, 1.5rem);
+  font-weight: 650;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  transition: color 360ms ease;
+}
+
+.ab-do-text {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-soft);
+  transition: color 360ms ease;
+}
+
+.ab-do-card:hover .ab-do-name,
+.ab-do-card:hover .ab-do-text {
+  color: #FFFFFF;
+}
+
+/* What I Do holds, whole, for a stretch of scroll before Experience
+   arrives. */
+.ab-curtain.is-pinned > .ab-xp {
+  margin-top: 30svh;
+}
+
+/* Opaque, so it reads as a sheet laid over What I Do. Its heading fades up
+   as it comes in (--ab-xp-in, from script). */
+.ab-xp {
+  --ab-xp-in: 1;
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  gap: clamp(40px, 7vh, 72px);
+  padding: clamp(72px, 12vh, 120px) 0 calc(var(--section-gap) / 2);
+  background: var(--bg);
+}
+
+.ab-xp-head {
+  opacity: var(--ab-xp-in);
+  transform: translateY(calc((1 - var(--ab-xp-in)) * 40px));
+}
+
+.ab-xp-list {
+  width: 100%;
+  max-width: 980px;
+}
+
+/* Round bullets. */
+.ab-xp .xp-points li {
+  padding-left: 20px;
+  color: var(--text-soft);
+}
+
+.ab-xp .xp-points li::before {
+  top: 0.62em;
+  left: 2px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text-secondary);
+}
+
+/* ── Skills ──
+   Full width on the brand colour. As in Selected Work, the heading pins
+   under the nav and each category is a window (--sk-row-h tall, clipped)
+   onto a pinned full-screen layer, so a line sweeps up the screen swapping
+   one category for the next. */
+
+.ab-sk {
+  --sk-nav: 96px;
+  --sk-head-h: 100px;
+  --sk-row-h: 90svh;
+  --sk-content-top: calc(var(--sk-nav) + var(--sk-head-h));
+  --sk-card-h: clamp(260px, calc(100svh - var(--sk-content-top) - 150px), 400px);
+  position: relative;
+  padding-top: 72px;
+  background: var(--brand);
+  color: #FFFFFF;
+}
+
+.about-page > .ab-sk {
+  margin-inline: calc((100% - (100vw - var(--scrollbar-width, 0px))) / 2);
+}
+
+.ab-sk-head {
+  position: sticky;
+  top: var(--sk-nav);
+  z-index: 2;
+  height: var(--sk-head-h);
+  text-align: center;
+}
+
+.ab-sk-title {
+  color: #FFFFFF;
+}
+
+.ab-sk-row {
+  position: relative;
+  z-index: 1;
+  height: var(--sk-row-h);
+  overflow: clip;
+}
+
+.ab-sk-track {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -100svh;
+  height: calc(200svh + var(--sk-row-h));
+}
+
+.ab-sk-pin {
+  position: sticky;
+  top: 0;
+  box-sizing: border-box;
+  height: 100svh;
+  padding: var(--sk-content-top) 24px 0;
+}
+
+.ab-sk-stage {
+  display: grid;
+  justify-items: center;
+  gap: 24px;
+}
+
+/* The category rolls up through its mask once the row is uncovered. */
+.ab-sk-name {
+  margin: 0;
+  overflow: hidden;
+  padding-bottom: 0.1em;
+  font-size: clamp(26px, 2.8vw, 40px);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  text-align: center;
+  color: #FFFFFF;
+}
+
+.ab-sk-name-inner {
+  display: block;
+  transform: translateY(110%);
+}
+
+.ab-sk-pin.is-shown .ab-sk-name-inner {
+  transform: none;
+  transition: transform 1.25s var(--ease-premium);
+}
+
+.ab-sk-card {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-content: center;
+  gap: 14px;
+  box-sizing: border-box;
+  width: min(540px, calc(100vw - 48px));
+  min-height: var(--sk-card-h);
+  margin: 0;
+  padding: clamp(20px, 2.4vw, 32px);
+  border-radius: 12px;
+  background: #FFFFFF;
+  list-style: none;
+}
+
+.ab-sk-tile {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: #F5F5F5;
+  font-size: 1.02rem;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.ab-sk-mark {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 10px;
+  background: #FFFFFF;
+}
+
+.ab-sk-mark img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
+.ab-sk-mark img.is-crop {
+  object-fit: cover;
+  object-position: 0 50%;
+}
+
+.ab-sk-mark i {
+  font-size: 26px;
+  line-height: 1;
+  color: var(--text);
+}
+
+/* Phones and reduced motion: the categories listed. */
+.ab-sk.is-static {
+  padding: 72px 20px;
+}
+
+.ab-sk.is-static .ab-sk-head {
+  position: static;
+  height: auto;
+  margin-bottom: 40px;
+}
+
+.ab-sk-list {
+  display: grid;
+  justify-items: center;
+  gap: 48px;
+}
+
+.ab-sk-list-item {
+  display: grid;
+  justify-items: center;
+  gap: 20px;
+}
+
+.ab-sk.is-static .ab-sk-card {
+  min-height: 0;
+}
+
+/* ── Education & Learning ── */
+
+.ab-edu {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  gap: clamp(36px, 6vh, 56px);
+  padding: var(--section-gap) 0 calc(var(--section-gap) / 2);
+}
+
+.ab-edu-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  width: 100%;
+  max-width: 1200px;
+}
+
+@media (max-width: 1000px) {
+  .ab-edu-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .ab-intro {
+    grid-template-columns: 1fr;
+    row-gap: 32px;
+  }
+
+  .ab-portrait {
+    max-width: 220px;
+  }
+
+  .ab-do-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Phones: tighter spacing, and two compact columns of skills. */
+@media (max-width: 640px) {
+  .ab-intro {
+    padding-top: 8px;
+    row-gap: 28px;
+  }
+
+  .ab-portrait {
+    max-width: 200px;
+    margin-top: 20px;
+  }
+
+  .ab-intro-lead {
+    font-size: clamp(1.8rem, 8vw, 2.2rem);
+  }
+
+  .ab-intro-body {
+    margin-top: 24px;
+  }
+
+  .ab-do,
+  .ab-xp,
+  .ab-edu {
+    gap: 32px;
+    padding: 64px 0;
+  }
+
+  .ab-do-card {
+    min-height: 0;
+    padding: 24px 22px;
+  }
+
+  .ab-sk.is-static {
+    padding: 64px 16px;
+  }
+
+  .ab-sk.is-static .ab-sk-head {
+    margin-bottom: 32px;
+  }
+
+  .ab-sk-list {
+    gap: 40px;
+  }
+
+  .ab-sk-name {
+    font-size: clamp(22px, 6.4vw, 28px);
+  }
+
+  .ab-sk-card {
+    gap: 10px;
+    width: 100%;
+    max-width: 460px;
+    padding: 14px;
+  }
+
+  .ab-sk-tile {
+    gap: 10px;
+    padding: 10px;
+    font-size: 0.88rem;
+    line-height: 1.25;
+  }
+
+  .ab-sk-mark {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+  }
+
+  .ab-sk-mark img {
+    width: 22px;
+    height: 22px;
+  }
+
+  .ab-sk-mark i {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 560px) {
+  .ab-edu-grid {
+    grid-template-columns: 1fr;
+  }
 }

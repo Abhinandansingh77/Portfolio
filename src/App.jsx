@@ -8,6 +8,10 @@ import { TopNav } from "./TopNav.jsx";
 import { HeroKeyboard } from "./HeroKeyboard.jsx";
 import { WorkShowcase } from "./WorkShowcase.jsx";
 import { CreativeStack } from "./CreativeStack.jsx";
+import { CtaIcon } from "./CtaIcon.jsx";
+import { Reveal } from "./Reveal.jsx";
+import { LogoRail } from "./LogoRail.jsx";
+import { AboutPage } from "./AboutPage.jsx";
 import { ApproachStack } from "./ApproachStack.jsx";
 import { usePointerFollow } from "./usePointerFollow.js";
 import { PixelsSection } from "./PixelsSection.jsx";
@@ -16,9 +20,6 @@ import cardinalHealthVerticalImg from "../Assets/Featured work cardinal health i
 import discoveryPlusVerticalImg from "../Assets/Featured work discovery plus img Vertical.webp";
 import brightlineVerticalImg from "../Assets/Featured work bright line img vertical.webp";
 import almahaVerticalImg from "../Assets/Featured work al maha img vertical.webp";
-import cromaLogo from "../Assets/Croma optimized.png";
-import njoyLogo from "../Assets/Njoy art.png";
-import kashiLogo from "../Assets/Kashi vidyapith.png";
 import discoveryLogo from "../Assets/Discovery logo optimized.png";
 import almahaLogo from "../Assets/AL maha logo.png";
 import almahaPreview from "../Assets/Al maha Preview img.jpg";
@@ -63,128 +64,6 @@ const navItems = [
   { label: "Project", href: "/projects" },
   { label: "About", href: "/resume" },
   { label: "Contact", href: "/contact" },
-];
-
-const valuePillars = [
-  {
-    title: "Product Strategy & UX",
-    description:
-      "User research, workflow analysis, information architecture, usability testing, product discovery, and UX optimization.",
-  },
-  {
-    title: "Product Design & Systems",
-    description:
-      "End-to-end product design across web, mobile, TV, dashboards, and scalable design systems.",
-  },
-  {
-    title: "AI-Enabled Design Workflow",
-    description:
-      "AI-assisted ideation, prompt engineering, research synthesis, content generation, workflow acceleration, and design exploration.",
-  },
-];
-
-const experienceItems = [
-  {
-    range: "Mar 2024 - Apr 2026",
-    company: "Cardinal Health",
-    role: "Senior Product Designer",
-    points: [
-      "Led UX/product design for Order Express, a large-scale healthcare procurement platform used by hospitals and pharmacies",
-      "Designed ordering workflows, dashboards, inventory systems, financial tracking experiences, and scalable design systems",
-      "+28% order completion, -35% developer handoff time, and full WCAG 2.1 AA compliance",
-    ],
-  },
-  {
-    range: "Sep 2022 - Jan 2024",
-    company: "Robosoft Technologies",
-    role: "Senior UX Designer",
-    points: [
-      "Designed OTT and consumer digital products including Discovery+, Willow TV, and Al Maha Island",
-      "Led cross-device UX across TV, mobile, and desktop ecosystems",
-      "+40% faster new screen design and improved discovery & engagement flows",
-    ],
-  },
-  {
-    range: "Oct 2021 - Sep 2022",
-    company: "Deloitte",
-    role: "UX/UI Designer",
-    points: [
-      "Designed enterprise dashboards and workflow systems for Fortune 500 environments",
-      "Translated business complexity into usable product experiences",
-    ],
-  },
-  {
-    range: "Jan 2020 - Oct 2021",
-    company: "eClerx",
-    role: "Visual Designer",
-    points: [
-      "Created digital experiences for Dell, Sephora, DFS, and Radisson",
-      "Delivered across campaign, landing page, and dashboard ecosystems",
-    ],
-  },
-];
-
-const educationItems = [
-  {
-    range: "Aug 2019 - Jan 2020",
-    school: "Croma Campus",
-    degree: "UI/UX Design",
-    logo: cromaLogo,
-  },
-  {
-    range: "Mar 2017 - Jan 2018",
-    school: "Njoy Arts",
-    degree: "Graphic Design",
-    logo: njoyLogo,
-  },
-  {
-    range: "Jun 2013 - Jul 2016",
-    school: "M.G. Kashi Vidyapith, Varanasi",
-    degree: "Bachelor of Arts",
-    logo: kashiLogo,
-  },
-];
-
-const skillCategories = [
-  {
-    category: "Product Design",
-    items: ["Product Thinking", "User Journey Mapping", "UX Strategy", "Information Architecture", "Interaction Design", "Workflow Optimization", "Product Discovery"],
-  },
-  {
-    category: "UX Research",
-    items: ["User Interviews", "Usability Testing", "A/B Testing", "Competitive Benchmarking", "Heuristic Evaluation", "Journey Mapping"],
-  },
-  {
-    category: "Design Systems",
-    items: ["Component Libraries", "Design Tokens", "Responsive Systems", "Figma Dev Handoff", "Documentation", "Accessibility (WCAG 2.1 AA)"],
-  },
-  {
-    category: "Enterprise UX",
-    items: ["Dashboard Design", "Complex Workflows", "Multi-role Systems", "B2B Product Design", "Data-heavy Interfaces"],
-  },
-  {
-    category: "AI Design & Product Skills",
-    items: ["AI Workflow Design", "AI Content Ideation", "AI-Assisted UX Research", "Prompt Engineering", "Rapid Design Exploration", "AI Feature Concepting", "Conversational UX", "Human-AI Interaction Thinking"],
-  },
-];
-
-const toolCategories = [
-  {
-    category: "Design",
-    items: ["Figma", "Miro", "Photoshop", "Illustrator", "Keynote"],
-  },
-  {
-    category: "Prototyping",
-    items: ["Figma Prototyping", "Interactive Flows", "Motion Concepts"],
-  },
-  {
-    category: "Dev Collaboration",
-    items: ["Figma Dev Mode", "Zeplin", "Design Specs", "Component Documentation"],
-  },
-  {
-    category: "AI Stack",
-    items: ["ChatGPT", "Claude", "Cursor", "Gemini", "Perplexity", "Figma AI", "Midjourney"],
-  },
 ];
 
 const projectItems = [
@@ -984,8 +863,8 @@ const contactChannels = [
   {
     icon: "linkedin",
     label: "LinkedIn",
-    value: "linkedin.com/in/abhinandansingh77",
-    href: "https://www.linkedin.com/in/abhinandansingh77/",
+    value: "linkedin.com/in/abhinandansingh07",
+    href: "https://www.linkedin.com/in/abhinandansingh07/",
     action: "Connect on LinkedIn",
     external: true,
   },
@@ -1116,56 +995,6 @@ function navigateTo(href, onDone) {
   onDone?.();
 }
 
-function Reveal({ as: Tag = "div", className = "", delay = 0, children }) {
-  const ref = useRef(null);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const node = ref.current;
-    if (!node) {
-      setIsVisible(true);
-      return undefined;
-    }
-
-    if (typeof IntersectionObserver === "undefined") {
-      setIsVisible(true);
-      return undefined;
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.unobserve(node);
-        }
-      },
-      { threshold: 0.01, rootMargin: "200px 0px 200px 0px" },
-    );
-
-    observer.observe(node);
-
-    // Immediate fallback trigger so content is never invisible
-    const timer = setTimeout(() => {
-      setIsVisible(true);
-    }, delay + 50);
-
-    return () => {
-      clearTimeout(timer);
-      observer.disconnect();
-    };
-  }, [delay]);
-
-  return (
-    <Tag
-      ref={ref}
-      className={`reveal ${isVisible ? "is-visible" : ""} ${className}`.trim()}
-      style={{ transitionDelay: `${delay}ms` }}
-    >
-      {children}
-    </Tag>
-  );
-}
-
 function SiteHeader({ menuOpen, setMenuOpen }) {
   const menuButtonRef = useRef(null);
   const navRef = useRef(null);
@@ -1257,7 +1086,7 @@ function SiteHeader({ menuOpen, setMenuOpen }) {
           <a
             className="dark-pill-cta-btn"
             href={resumePdf}
-            download="Abhinandan_Singh_UX_Resume.pdf"
+            download="Abhinandan_Singh_Resume.pdf"
           >
             Resume
             <DownloadResumeIcon />
@@ -1309,7 +1138,7 @@ function SiteHeader({ menuOpen, setMenuOpen }) {
         <a
           className="menu-link menu-link-cta"
           href={resumePdf}
-          download="Abhinandan_Singh_UX_Resume.pdf"
+          download="Abhinandan_Singh_Resume.pdf"
           tabIndex={menuOpen ? 0 : -1}
           onClick={() => setMenuOpen(false)}
         >
@@ -1585,9 +1414,10 @@ function Footer() {
   return (
     <footer className="site-footer-minimal">
       <div className="footer-content">
-        <p className="footer-copyright">
-          © 2026 Abhinandan Singh.
-        </p>
+        <div className="footer-sign">
+          <p className="footer-tagline">Built with curiosity and code.</p>
+          <p className="footer-copyright">© 2026 Abhinandan Singh.</p>
+        </div>
 
         <div className="footer-right-actions">
           <button type="button" className="back-to-top-btn" onClick={scrollToTop}>
@@ -1595,11 +1425,16 @@ function Footer() {
           </button>
 
           <div className="footer-socials">
-            <a href="https://www.linkedin.com/in/abhinandansingh77/" target="_blank" rel="noreferrer" aria-label="LinkedIn">
-              LinkedIn
+            <a href="https://www.linkedin.com/in/abhinandansingh07/" target="_blank" rel="noreferrer" aria-label="LinkedIn">
+              LinkedIn <span aria-hidden="true">↗</span>
             </a>
+            <span className="footer-socials-sep" aria-hidden="true">·</span>
             <a href="https://www.behance.net/abhinandan77" target="_blank" rel="noreferrer" aria-label="Behance">
-              Behance
+              Behance <span aria-hidden="true">↗</span>
+            </a>
+            <span className="footer-socials-sep" aria-hidden="true">·</span>
+            <a href="https://github.com/singh-abhinandan" target="_blank" rel="noreferrer" aria-label="GitHub">
+              GitHub <span aria-hidden="true">↗</span>
             </a>
           </div>
         </div>
@@ -1641,41 +1476,6 @@ const toolLogos = [
   { name: "Framer", src: toolFramer },
   { name: "Zeplin", src: toolZeplin },
 ];
-
-function LogoRail({ items, ariaLabel }) {
-  // Two identical sets so the -50% scroll loops seamlessly.
-  const track = [...items, ...items];
-
-  return (
-    <div className="client-logo-rail">
-      <ul className="client-logo-track" aria-label={ariaLabel}>
-        {track.map((logo, index) => {
-          const isOriginal = index < items.length;
-          return (
-            <li
-              className="client-logo-slot"
-              key={`${logo.name}-${index}`}
-              aria-hidden={isOriginal ? undefined : "true"}
-            >
-              {logo.src ? (
-                <img
-                  className="client-logo-img"
-                  src={logo.src}
-                  alt={isOriginal ? logo.name : ""}
-                  loading="lazy"
-                  decoding="async"
-                  style={logo.width ? { maxWidth: `${logo.width}px` } : undefined}
-                />
-              ) : (
-                <span className="client-logo-wordmark">{logo.name}</span>
-              )}
-            </li>
-          );
-        })}
-      </ul>
-    </div>
-  );
-}
 
 function ClientLogoRail() {
   return <LogoRail items={clientLogos} ariaLabel="Clients and brands" />;
@@ -2047,7 +1847,7 @@ function HeroDock() {
       </a>
       <a
         className="hero-dock-item lg"
-        href="https://github.com/Abhinandansingh77"
+        href="https://github.com/singh-abhinandan"
         target="_blank"
         rel="noreferrer"
         aria-label="GitHub"
@@ -2058,7 +1858,7 @@ function HeroDock() {
       <a
         className="hero-dock-item lg"
         href={resumePdf}
-        download="Abhinandan_Singh_UX_Resume.pdf"
+        download="Abhinandan_Singh_Resume.pdf"
         aria-label="Download resume"
         data-tip="Resume"
       >
@@ -2438,7 +2238,7 @@ function HomeResumeLink() {
   const ref = useRef(null);
   usePointerFollow(ref, driftResume, RESUME_FOLLOW);
   return (
-    <a ref={ref} className="hx-resume" href={resumePdf} download="Abhinandan_Singh_UX_Resume.pdf">
+    <a ref={ref} className="hx-resume" href={resumePdf} download="Abhinandan_Singh_Resume.pdf">
       <i className="ri-download-2-line" aria-hidden="true" />
       Download Resume
     </a>
@@ -2513,171 +2313,8 @@ function HomePage() {
 
 function ResumePage() {
   return (
-    <div className="page-view">
-      <section className="resume-section">
-        <Reveal className="section-kicker-header">
-          <button
-            type="button"
-            className="work-back-button"
-            onClick={() => navigateTo("/")}
-            aria-label="Back to Home"
-          >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="19" y1="12" x2="5" y2="12" />
-              <polyline points="12 19 5 12 12 5" />
-            </svg>
-          </button>
-          <span className="section-kicker">Resume</span>
-        </Reveal>
-
-        <Reveal className="about-resume-block">
-          <div className="section-label">
-            <h2>About Me</h2>
-          </div>
-          <div className="about-resume-copy">
-            <p>
-              I&apos;m a Senior Product Designer with 6+ years of experience designing
-              scalable digital products across healthcare, OTT streaming, e-commerce,
-              enterprise systems, and consumer platforms.
-            </p>
-            <p>
-              My work spans complex B2B healthcare workflows like Cardinal Health&apos;s
-              Order Express, global streaming experiences such as Discovery+, and
-              high-conversion mobile experiences in food ordering and entertainment
-              booking.
-            </p>
-            <p>
-              I specialize in simplifying complexity through UX strategy, product thinking,
-              interaction design, and scalable design systems.
-            </p>
-            <p>
-              From user research and workflow mapping to high-fidelity execution and
-              developer handoff, I focus on building products that are intuitive,
-              accessible, and designed for measurable impact.
-            </p>
-            <p>
-              Today, I also integrate AI into design workflows for research acceleration,
-              ideation, content generation, and rapid problem solving.
-            </p>
-          </div>
-        </Reveal>
-
-        <div className="section-divider" />
-
-        <Reveal className="what-i-do-block">
-          <div className="section-label">
-            <h2>What I Do</h2>
-          </div>
-          <div className="value-grid">
-            {valuePillars.map((pillar, index) => (
-              <Reveal as="article" key={pillar.title} className="value-card" delay={index * 70}>
-                <h3>{pillar.title}</h3>
-                <p>{pillar.description}</p>
-              </Reveal>
-            ))}
-          </div>
-        </Reveal>
-
-        <div className="section-divider section-divider-after-what-i-do" />
-
-        <Reveal className="timeline-block">
-          <div className="section-label">
-            <h2>Work Experience</h2>
-          </div>
-          <div className="xp-list">
-            {experienceItems.map((item, index) => (
-              <Reveal
-                as="article"
-                key={`${item.company}-${item.range}`}
-                className="xp-item"
-                delay={index * 80}
-              >
-                <p className="xp-range">{item.range}</p>
-                <div className="xp-track" aria-hidden="true">
-                  <span className="xp-dot" />
-                  <span className="xp-line" />
-                </div>
-                <div className="xp-body">
-                  <h3 className="xp-role">{item.role}</h3>
-                  <p className="xp-company">{item.company}</p>
-                  <ul className="xp-points">
-                    {item.points.map((point) => (
-                      <li key={point}>{point}</li>
-                    ))}
-                  </ul>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </Reveal>
-
-        <div className="section-divider" />
-
-        <Reveal className="timeline-block">
-          <div className="section-label">
-            <h2>Education &amp; Learning</h2>
-          </div>
-          <div className="edu-grid">
-            {educationItems.map((item, index) => (
-              <Reveal
-                as="article"
-                key={`${item.school}-${item.range}`}
-                className="edu-card"
-                delay={index * 70}
-              >
-                <span className="edu-mark">
-                  <img src={item.logo} alt="" loading="lazy" decoding="async" />
-                </span>
-                <div className="edu-copy">
-                  <h3>{item.school}</h3>
-                  <p>{item.degree}</p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </Reveal>
-
-        <div className="section-divider" />
-
-        <Reveal className="timeline-block skills-block">
-          <div className="section-label">
-            <h2>Skills</h2>
-          </div>
-          <div className="skills-categories">
-            {skillCategories.map((cat, index) => (
-              <Reveal as="article" key={cat.category} className="skill-category" delay={index * 60}>
-                <h3>{cat.category}</h3>
-                <div className="skill-tags">
-                  {cat.items.map((item) => (
-                    <span key={item} className="skill-tag">{item}</span>
-                  ))}
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </Reveal>
-
-        <div className="section-divider" />
-
-        <Reveal className="timeline-block tools-block">
-          <div className="section-label">
-            <h2>Tools</h2>
-          </div>
-          <div className="skills-categories">
-            {toolCategories.map((cat, index) => (
-              <Reveal as="article" key={cat.category} className="skill-category" delay={index * 60}>
-                <h3>{cat.category}</h3>
-                <div className="skill-tags">
-                  {cat.items.map((item) => (
-                    <span key={item} className="skill-tag">{item}</span>
-                  ))}
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </Reveal>
-      </section>
-
+    <div className="page-view about-page">
+      <AboutPage onBack={() => navigateTo("/")} />
       <Footer />
     </div>
   );
@@ -2921,9 +2558,9 @@ function ContactPage() {
         </Reveal>
 
         <Reveal className="contact-resume-bar">
-          <a className="contact-resume-button" href={resumePdf} download>
+          <a className="contact-resume-button" href={resumePdf} download="Abhinandan_Singh_Resume.pdf">
             Download Full Resume (PDF)
-            <DownloadResumeIcon />
+            <CtaIcon icon="ri-arrow-down-line" direction="down" />
           </a>
 
           <dl className="contact-quick-details">
@@ -3361,7 +2998,7 @@ function ProjectDetailsPage({ project, projectSlug, onOpenPdf }) {
                           onClick={() => onOpenPdf(caseStudy.visualsPdf)}
                         >
                           View Visuals
-                          <span aria-hidden="true">↗</span>
+                          <CtaIcon icon="ri-arrow-right-up-line" direction="up-right" />
                         </button>
                       ) : (
                         <a
@@ -3374,7 +3011,7 @@ function ProjectDetailsPage({ project, projectSlug, onOpenPdf }) {
                           rel="noreferrer"
                         >
                           View Visuals
-                          <span aria-hidden="true">↗</span>
+                          <CtaIcon icon="ri-arrow-right-up-line" direction="up-right" />
                         </a>
                       )
                     ) : null}
