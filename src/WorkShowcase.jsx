@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "./EngineeringSection.jsx";
+import { CtaIcon } from "./CtaIcon.jsx";
 
 // Selected work, after the "Reviews" section on genstudio.framer.media.
 //
@@ -79,7 +80,7 @@ function WorkRow({ item, index, onOpen, onViewAll }) {
                   unseen and it reads as one fixed button. */}
               <button type="button" className="ws-all" onClick={onViewAll} tabIndex={index === 0 ? 0 : -1}>
                 View All Projects
-                <i className="ri-arrow-right-line" aria-hidden="true" />
+                <CtaIcon />
               </button>
             </div>
 
@@ -87,7 +88,7 @@ function WorkRow({ item, index, onOpen, onViewAll }) {
               <Line className="ws-cta-line" index={1}>
                 <button type="button" className="ws-cta" onClick={() => onOpen(item.slug)}>
                   View case study
-                  <i className="ri-arrow-right-line" aria-hidden="true" />
+                  <CtaIcon />
                 </button>
               </Line>
             </div>
@@ -137,7 +138,7 @@ export function WorkShowcase({ items, onOpen, onViewAll }) {
                 <p className="ws-meta">{item.category}</p>
                 <button type="button" className="ws-cta" onClick={() => onOpen(item.slug)}>
                   View case study
-                  <i className="ri-arrow-right-line" aria-hidden="true" />
+                  <CtaIcon />
                 </button>
               </div>
             </li>
@@ -146,7 +147,7 @@ export function WorkShowcase({ items, onOpen, onViewAll }) {
         <div className="ws-footer">
           <button type="button" className="ws-all" onClick={onViewAll}>
             View All Projects
-            <i className="ri-arrow-right-line" aria-hidden="true" />
+            <CtaIcon />
           </button>
         </div>
       </section>

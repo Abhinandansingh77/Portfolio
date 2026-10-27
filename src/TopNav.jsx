@@ -136,7 +136,7 @@ export function TopNav({ items, onNavigate, resumeHref, collapsible, pathname })
         <a
           className={`tn-cta ${lens?.index === items.length ? "is-focused" : ""}`.trim()}
           href={resumeHref}
-          download="Abhinandan_Singh_UX_Resume.pdf"
+          download="Abhinandan_Singh_Resume.pdf"
           tabIndex={expanded ? 0 : -1}
           aria-hidden={!expanded}
           aria-label="Download Resume"

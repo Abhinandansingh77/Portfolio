@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import stackImg from "../Assets/creative stack 2560.jpg";
+import stackImg from "../Assets/creative stack.webp";
 import { useMediaQuery } from "./EngineeringSection.jsx";
 
 const STACK = [
@@ -18,9 +18,9 @@ const STACK = [
 ];
 
 // The timeline, in screens of scroll while the stage is pinned. The image
-// opens up from nothing to fill the screen, then darkens; each topic then
-// rolls in letter by letter and, a while later, rolls out as the next one
-// rolls in. Approaches then slides up over the last one.
+// opens up from nothing to fill the screen, then fills with the brand
+// colour; each topic then rolls in letter by letter and, a while later,
+// rolls out as the next one rolls in. Approaches then slides up over the last one.
 const CS_GROW = [0, 1.3];
 const CS_DARK = [1.25, 1.7];
 const CS_FIRST_IN = [1.55, 2.15];
@@ -29,11 +29,9 @@ const CS_SWAP_LEN = 0.6;
 // The last topic holds while Approaches slides up over it, during the last
 // screen of the pin.
 const CS_TRAVEL_SCREENS = 5.9;
-// Where the middle of the nav bar sits, to tell whether it is over the dark
+// Where the middle of the nav bar sits, to tell whether it is over the brand
 // screen (it turns white there).
 const CS_NAV_MID = 49;
-// How far the black layer covers the image once it is full size.
-const CS_DARKEST = 0.8;
 // Half the space between the two words, and how far they shrink as the
 // image pushes them off screen.
 const CS_WORD_GAP = 14;
@@ -69,10 +67,10 @@ function topicPhases(s) {
 // opens up between them and grows to fill the screen, pushing the words out
 // to the sides as they shrink (above and below on phones). The rest follows
 // the "Industries" section on forma-design-studio.framer.website: the image
-// goes dark and the topics take turns in the middle, each title rolling up
-// through a mask letter by letter. All of it is scrubbed by the scroll. While
-// the dark screen is under the nav, the nav turns white (html.nav-on-dark).
-// Reduced motion shows the dark image with the topics listed.
+// fills with the brand colour and the topics take turns in the middle, each
+// title rolling up through a mask letter by letter. All of it is scrubbed by the scroll. While
+// the brand screen is under the nav, the nav turns white (html.nav-on-dark).
+// Reduced motion shows the brand screen with the topics listed.
 export function CreativeStack() {
   const sectionRef = useRef(null);
   const stageRef = useRef(null);
@@ -123,7 +121,10 @@ export function CreativeStack() {
           const pout = easeInCubic(letterProgress(phase.out, i, n));
           const y = (1 - pin) - pout;
           letter.style.transform = `translate3d(0, ${(y * 110).toFixed(2)}%, 0)`;
-          letter.style.opacity = ((0.3 + 0.7 * pin) * (1 - 0.7 * pout)).toFixed(3);
+          // Fully gone at either end of the roll, or descenders of titles
+          // waiting above or below peek through the mask's padding.
+          const shown = clamp01(pin * 5) * clamp01((1 - pout) * 5);
+          letter.style.opacity = ((0.3 + 0.7 * pin) * (1 - 0.7 * pout) * shown).toFixed(3);
         });
         // The line under the title follows a beat later, and leaves first.
         const tin = easeOutCubic(clamp01((phase.in - 0.3) / 0.7));
