@@ -101,13 +101,13 @@ export const AMBIENT_WATER_CONFIG = {
   // Drift speed (lower = calmer).
   speed: 0.16,
   // Glint colour on a dark page (only used if "dark" is in `themes`).
-  tint: [0.78, 0.88, 1.0],
+  tint: [0.9, 0.9, 0.9],
   // Rendered at this share of CSS size and frame rate; it's soft, so cheap.
   resolution: 0.5,
   fps: 30,
-  // Light theme: faint blue-grey glints darkening the white page instead of
+  // Light theme: faint grey glints darkening the white page instead of
   // light added to a dark one.
-  light: { intensity: 0.05, tint: [0.22, 0.34, 0.52] },
+  light: { intensity: 0.05, tint: [0.3, 0.3, 0.3] },
 };
 
 // ---------------------------------------------------------------------------

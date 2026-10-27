@@ -1,13 +1,17 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import heroImg from "../Assets/Hero img.webp";
-import heroImgDark from "../Assets/Hero img-darkMode.webp";
 import abhiLogo from "../Assets/abhi logo.svg";
-import { AmbientWater, FluidOverlay, HeroLiquid } from "./FluidEffects.jsx";
 import { EngineeringMap, useMediaQuery } from "./EngineeringSection.jsx";
-import { ProcessSection } from "./ProcessSection.jsx";
 import { AboutSection } from "./AboutSection.jsx";
 import { ContactRows, contactRows } from "./ContactRows.jsx";
 import { toggleTheme, useTheme } from "./theme.js";
+import { TopNav } from "./TopNav.jsx";
+import { HeroKeyboard } from "./HeroKeyboard.jsx";
+import { WorkShowcase } from "./WorkShowcase.jsx";
+import { CreativeStack } from "./CreativeStack.jsx";
+import { ApproachStack } from "./ApproachStack.jsx";
+import { usePointerFollow } from "./usePointerFollow.js";
+import { PixelsSection } from "./PixelsSection.jsx";
+import { glideTo, jumpToTop, startSmoothScroll } from "./smoothScroll.js";
 import cardinalHealthVerticalImg from "../Assets/Featured work cardinal health img vertical.webp";
 import discoveryPlusVerticalImg from "../Assets/Featured work discovery plus img Vertical.webp";
 import brightlineVerticalImg from "../Assets/Featured work bright line img vertical.webp";
@@ -56,7 +60,7 @@ import mcdonaldsWebpLogo from "../Assets/McDonald's logo.webp";
 
 const navItems = [
   { label: "Home", href: "/" },
-  { label: "Work", href: "/projects" },
+  { label: "Project", href: "/projects" },
   { label: "About", href: "/resume" },
   { label: "Contact", href: "/contact" },
 ];
@@ -1108,7 +1112,7 @@ function navigateTo(href, onDone) {
     window.history.pushState({}, "", href);
   }
   window.dispatchEvent(getNavigationEvent());
-  window.scrollTo({ top: 0, behavior: "auto" });
+  jumpToTop();
   onDone?.();
 }
 
@@ -1408,19 +1412,33 @@ const selectedWork = [
     slug: "cardinal-health-procurement-platform",
     title: "Order Express",
     description: "Healthcare procurement platform",
+    category: "Healthcare · Enterprise product",
+    summary: "Faster bulk ordering for hospitals and pharmacies, built around daily workflows.",
     image: cardinalHealthVerticalImg,
   },
   {
     slug: "discovery-plus",
     title: "Discovery+",
     description: "Streaming and content discovery experience",
+    category: "Media · Streaming platform",
+    summary: "One streaming experience across TV, mobile and web that gets viewers watching sooner.",
     image: discoveryPlusVerticalImg,
   },
   {
     slug: "brightline-future-travel",
     title: "Brightline",
     description: "Connected travel and journey companion",
+    category: "Travel · Connected mobility",
+    summary: "A touchless travel companion that links station, booking and onboard services.",
     image: brightlineVerticalImg,
+  },
+  {
+    slug: "al-maha-island-lusail",
+    title: "AL MAHA Island",
+    description: "Destination and event booking platform",
+    category: "Entertainment · Ticketing platform",
+    summary: "A mobile-first ticketing and event guide that makes planning a visit effortless.",
+    image: almahaVerticalImg,
   },
 ];
 
@@ -1535,9 +1553,10 @@ function EngineeringSection() {
   return (
     <section id="engineering" className="em-section">
       <Reveal className="section-header-center" delay={40}>
-        <h2 className="em-title">Engineering Meets Design</h2>
+        <h2 className="em-title">From pixels to products</h2>
         <p className="em-sub">
-          I bridge the gap between design and development, turning ideas into functional, polished digital products.
+          I bring design thinking and frontend development together to build experiences that look right, feel
+          right, and work right.
         </p>
       </Reveal>
       <EngineeringMap />
@@ -1559,9 +1578,8 @@ function ThemeIcon({ theme }) {
 const themeToggleLabel = (theme) => (theme === "dark" ? "Switch to light mode" : "Switch to dark mode");
 
 function Footer() {
-  const theme = useTheme();
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    glideTo(0);
   };
 
   return (
@@ -1574,16 +1592,6 @@ function Footer() {
         <div className="footer-right-actions">
           <button type="button" className="back-to-top-btn" onClick={scrollToTop}>
             <span>↑ Back to Top</span>
-          </button>
-
-          <button
-            type="button"
-            className="footer-theme-btn"
-            onClick={toggleTheme}
-            aria-label={themeToggleLabel(theme)}
-            title={themeToggleLabel(theme)}
-          >
-            <ThemeIcon theme={theme} />
           </button>
 
           <div className="footer-socials">
@@ -2394,66 +2402,107 @@ function HeroContactCard() {
   );
 }
 
+// Home hero, from the Figma design: the headline's two lines with the
+// keyboard between them, Download Resume upper left, the quote lower left and
+// the contact card lower right. The site nav sits over it (see TopNav), and
+// widens once this section is half scrolled away.
+// The two dotted boxes (Download Resume and the contact card) answer the
+// mouse too, more quietly than the keyboard and the other way: each drifts
+// a few pixels away from the pointer with a slight tilt, and trails further
+// behind, like a card lying deeper on the desk. The resume box moves a
+// little less, so the two never move in step.
+function makeDrift({ x: driftX, y: driftY, tilt, twist }) {
+  return (node, x, y) => {
+    node.style.transform =
+      `perspective(800px) translate3d(${-x * driftX}px, ${-y * driftY}px, 0) ` +
+      `rotateX(${y * tilt}deg) rotateY(${-x * tilt}deg) rotateZ(${-x * twist}deg)`;
+  };
+}
+
+const driftCard = makeDrift({ x: 7, y: 5, tilt: 3, twist: 0.6 });
+const driftResume = makeDrift({ x: 5, y: 4, tilt: 4, twist: -0.5 });
+const CARD_FOLLOW = 0.045;
+const RESUME_FOLLOW = 0.055;
+
+function HomeContactCard() {
+  const ref = useRef(null);
+  usePointerFollow(ref, driftCard, CARD_FOLLOW);
+  return (
+    <div ref={ref} className="hx-contact">
+      <ContactRows className="hx-contact-rows" />
+    </div>
+  );
+}
+
+function HomeResumeLink() {
+  const ref = useRef(null);
+  usePointerFollow(ref, driftResume, RESUME_FOLLOW);
+  return (
+    <a ref={ref} className="hx-resume" href={resumePdf} download="Abhinandan_Singh_UX_Resume.pdf">
+      <i className="ri-download-2-line" aria-hidden="true" />
+      Download Resume
+    </a>
+  );
+}
+
+function HomeHero() {
+  return (
+    <section className="hx" data-nav-hero>
+      <Reveal className="hx-resume-wrap" delay={200}>
+        <HomeResumeLink />
+      </Reveal>
+
+      <div className="hx-center">
+        <Reveal delay={40}>
+          <p className="hx-intro">
+            <span className="hx-dot" aria-hidden="true" />
+            I&rsquo;m Abhinandan Singh, a Product Engineer
+          </p>
+        </Reveal>
+        <Reveal delay={120}>
+          <h1 className="hx-title" aria-label="Design-Minded, Code Driven">
+            <span className="hx-line hx-line-top">Design-Minded</span>
+            <HeroKeyboard />
+            <span className="hx-line hx-line-bottom">Code Driven</span>
+          </h1>
+        </Reveal>
+      </div>
+
+      <Reveal className="hx-quote-wrap" delay={320}>
+        <p className="hx-quote">&ldquo;I turn ideas into thoughtful, functional digital experiences.&rdquo;</p>
+      </Reveal>
+
+      <Reveal className="hx-contact-wrap" delay={320}>
+        <HomeContactCard />
+      </Reveal>
+    </section>
+  );
+}
+
 function HomePage() {
-  const theme = useTheme();
   return (
     <div className="page-view">
-      <section className="hero-stage">
-        <HeroBubbles />
-        <Reveal className="hero-stage-player" delay={260}>
-          <HeroMusicPlayer />
-        </Reveal>
+      {/* The hero stays pinned while the next section slides up over it
+          (genstudio's curtain); the wrapper ends the pin after that section. */}
+      <div className="hero-curtain">
+        <HomeHero />
+        <PixelsSection />
+      </div>
 
-        <div className="hero-centered-container">
-          {/* Main Title */}
-          <Reveal className="hero-title-wrap" delay={40}>
-            <HeroTypedTitle />
-          </Reveal>
+      {/* Tools are off the home page for now; ToolsGridSection is kept for later. */}
 
-          {/* Subheadline */}
-          <Reveal className="hero-sub-wrap" delay={120}>
-            <p className="hero-centered-sub">
-              I build responsive web experiences with clean code, combining frontend<br className="wide-only-break" />{" "}
-              development with strong UI/UX design skills.
-            </p>
-          </Reveal>
+      <WorkShowcase
+        items={selectedWork}
+        onOpen={(slug) => navigateTo(`/projects/${slug}`)}
+        onViewAll={() => navigateTo("/projects")}
+      />
 
-          {/* Centered Visual Image */}
-          <Reveal className="hero-portrait-centered-wrap" delay={200}>
-            {/* A dark-shirt portrait for the dark theme. */}
-            <img
-              src={theme === "dark" ? heroImgDark : heroImg}
-              alt="Abhinandan Singh, Product Engineer"
-              className="hero-centered-portrait"
-              fetchpriority="high"
-              decoding="async"
-            />
-          </Reveal>
+      <CreativeStack />
 
-          {/* Re-captures the heading and portrait in the new colours. */}
-          <HeroLiquid
-            key={theme}
-            textSelector=".hero-centered-title, .hero-centered-sub"
-            imgSelector=".hero-centered-portrait"
-          />
-        </div>
-
-        <Reveal className="hero-stage-contact" delay={320}>
-          <HeroContactCard />
-        </Reveal>
-
-        <div className="hero-stage-dock">
-          <HeroDock />
-        </div>
-      </section>
-
-      <EngineeringSection />
-
-      <ToolsGridSection />
-
-      <SelectedWorkSection />
-
-      <ProcessSection />
+      {/* Approaches slides up over Creative Stack's last topic, the way From
+          pixels to products comes over the hero. Design to Development
+          (ProcessSection.jsx) is off the page for now, its code kept. */}
+      <ApproachStack />
 
       <AboutSection />
 
@@ -3070,7 +3119,7 @@ function scrollToCaseSection(id) {
   }
 
   const top = target.getBoundingClientRect().top + window.scrollY - CASE_NAV_SCROLL_OFFSET;
-  window.scrollTo({ top: Math.max(top, 0), behavior: "smooth" });
+  glideTo(Math.max(top, 0));
 }
 
 /* Tracks which case study section is currently under the reading line. */
@@ -4979,12 +5028,13 @@ function ProjectDetailsPage({ project, projectSlug, onOpenPdf }) {
 }
 
 export default function App() {
-  const theme = useTheme();
   const [{ pathname, projectSlug }, setRouteState] = useState(getRouteState);
   const [menuOpen, setMenuOpen] = useState(false);
   const [isEntering, setIsEntering] = useState(false);
   const [pdfSrc, setPdfSrc] = useState(null);
   const selectedProject = projectItems.find((item) => item.slug === projectSlug) ?? null;
+
+  useEffect(() => startSmoothScroll(), []);
 
   useEffect(() => {
     const handlePopState = () => {
@@ -5054,14 +5104,13 @@ export default function App() {
         </div>
       </div>
 
-      {/* The effects take their look from the theme when they start. */}
-      <AmbientWater key={`water-${theme}`} />
-      <FluidOverlay key={`overlay-${theme}`} />
-      {/* Header navigation is off for now; the hero dock covers it. */}
+      {/* The same nav on every page: a pill of links at the top that widens
+          into the full bar once you scroll. */}
+      <TopNav items={navItems} onNavigate={navigateTo} resumeHref={resumePdf} collapsible pathname={pathname} />
 
       <main
         key={`${pathname}-${projectSlug ?? ""}`}
-        className="content page-stage"
+        className={`content page-stage ${pathname === "/" ? "" : "has-nav-space"}`.trim()}
         aria-hidden={menuOpen}
         inert={menuOpen ? "" : undefined}
       >

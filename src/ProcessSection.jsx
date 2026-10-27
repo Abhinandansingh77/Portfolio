@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-// "From Design to Development": the process as floating "message" cards and
+// "Design to Development": the process as floating "message" cards and
 // the tools as small glass tiles around one big heading, on a faint grid.
 // Laid out after the team-page reference: a text-selection highlight on the
 // heading, chat-style cards, and captioned tiles where the portraits were.
@@ -15,11 +15,11 @@ const STEPS = [
 function FigmaMark() {
   return (
     <svg viewBox="0 0 38 57" width="26" height="39" aria-hidden="true">
-      <path fill="#1ABCFE" d="M19 28.5a9.5 9.5 0 1 1 19 0 9.5 9.5 0 0 1-19 0z" />
-      <path fill="#0ACF83" d="M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5a9.5 9.5 0 1 1-19 0z" />
-      <path fill="#FF7262" d="M19 0v19h9.5a9.5 9.5 0 1 0 0-19H19z" />
-      <path fill="#F24E1E" d="M0 9.5A9.5 9.5 0 0 0 9.5 19H19V0H9.5A9.5 9.5 0 0 0 0 9.5z" />
-      <path fill="#A259FF" d="M0 28.5A9.5 9.5 0 0 0 9.5 38H19V19H9.5A9.5 9.5 0 0 0 0 28.5z" />
+      <path fill="currentColor" opacity="0.55" d="M19 28.5a9.5 9.5 0 1 1 19 0 9.5 9.5 0 0 1-19 0z" />
+      <path fill="currentColor" opacity="0.85" d="M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5a9.5 9.5 0 1 1-19 0z" />
+      <path fill="currentColor" opacity="0.55" d="M19 0v19h9.5a9.5 9.5 0 1 0 0-19H19z" />
+      <path fill="currentColor" d="M0 9.5A9.5 9.5 0 0 0 9.5 19H19V0H9.5A9.5 9.5 0 0 0 0 9.5z" />
+      <path fill="currentColor" opacity="0.7" d="M0 28.5A9.5 9.5 0 0 0 9.5 38H19V19H9.5A9.5 9.5 0 0 0 0 28.5z" />
     </svg>
   );
 }
@@ -74,7 +74,7 @@ function StepCard({ step }) {
 function Heading() {
   return (
     <h2 className="pd-title">
-      From Design to{" "}
+      Design to{" "}
       <span className="pd-select">
         <span className="pd-select-bg" aria-hidden="true" />
         <span className="pd-handle is-start" aria-hidden="true" />
