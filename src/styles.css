@@ -532,9 +532,9 @@ button {
   transform: translateY(34px);
   filter: blur(8px);
   transition:
-    opacity 1.2s var(--ease-premium),
-    transform 1.2s var(--ease-premium),
-    filter 1.2s var(--ease-premium);
+    opacity 1.5s var(--ease-premium),
+    transform 1.5s var(--ease-premium),
+    filter 1.5s var(--ease-premium);
 }
 
 .reveal.is-visible {
@@ -1167,10 +1167,7 @@ button {
 
 .contact-section {
   padding-top: 17px;
-  /* Pairs with the tools rail's own 64px top padding: 26 + 64 = 90px, down
-     30% from the 128px the two full paddings used to stack up to. */
-  padding-bottom: 26px;
-  flex: 1;
+  padding-bottom: 64px;
 }
 
 .project-detail-section {
@@ -3563,25 +3560,40 @@ button {
   text-transform: none;
 }
 
-.work-back-button {
+/* Back arrows at the top of every page: the bare icon, no circle. The box
+   keeps a comfortable hit area; hover nudges it left in the brand colour. */
+.work-back-button,
+.kicker-back-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: 1px solid var(--line);
-  background: var(--surface-soft);
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  background: none;
   color: var(--text);
   cursor: pointer;
-  transition: transform 220ms var(--ease-premium), background-color 220ms ease, border-color 220ms ease, color 220ms ease;
+  transition: transform 220ms var(--ease-premium), color 220ms ease;
 }
 
-.work-back-button:hover {
+.work-back-button svg,
+.kicker-back-button svg {
+  width: 24px;
+  height: 24px;
+}
+
+.work-back-button:hover,
+.kicker-back-button:hover {
   transform: translateX(-3px);
-  background: var(--surface-strong);
-  border-color: var(--accent);
-  color: var(--accent);
+  color: var(--brand);
+}
+
+.work-back-button:focus-visible,
+.kicker-back-button:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
 }
 
 .resume-section .section-kicker {
@@ -3759,21 +3771,111 @@ hr {
   align-items: start;
 }
 
-/* Works page tab bar: leans on the "Works" heading's bottom margin for the
-   space above it. */
+/* ── Works page ──
+   The header holds the title on the left and the tabs on the right, on one
+   line. While the cards sweep (see ProjectsPage), it pins just under the nav
+   (--works-head-top), and each card pins just under it
+   (--works-content-top), seen through its row's window (.works-row), as
+   Selected Work does on the home page. The first card scrolls up with the
+   header until both settle; every later card is already pinned when its
+   window rises, so a line sweeps up through a still card. */
 
-.works-tabs-wrap {
-  margin-top: 0;
+.works-section {
+  --works-head-top: 96px;
+  --works-gap: 32px;
+  --works-content-top: calc(var(--works-head-top) + var(--works-head-h, 0px) + var(--works-gap));
+  --works-row-h: calc(var(--works-card-h, 600px) + 240px);
 }
 
-/* Block flow (not grid) so each sticky card can travel within the whole list
-   rather than being trapped in its own grid area. */
+/* Under the cards, so the last one slides up over it on its way out. */
+.works-head {
+  position: sticky;
+  top: var(--works-head-top);
+  z-index: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: var(--works-gap);
+}
+
+.works-head .section-kicker-header {
+  margin-bottom: 0;
+}
+
+.works-tabs-wrap {
+  margin: 0;
+}
 
 .projects-list {
   display: block;
 }
 
-.project-row + .project-row {
+.works-row {
+  position: relative;
+  z-index: 1;
+  height: var(--works-row-h);
+  overflow: clip;
+}
+
+.works-track {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -100vh;
+  height: calc(200vh + 100%);
+}
+
+.works-row:first-child .works-track {
+  top: 0;
+  height: calc(100vh + 100%);
+}
+
+/* The last card lets go at the end of its row and scrolls away whole, so the
+   page never ends on a half-wiped card. */
+.works-row:last-child .works-track {
+  height: calc(100vh + 100%);
+}
+
+.works-row:first-child:last-child .works-track {
+  height: 100%;
+}
+
+.works-pin {
+  position: sticky;
+  top: var(--works-content-top);
+}
+
+/* The windows are clear and sit over the header, so only the card itself
+   takes the pointer; the tabs and back arrow stay clickable. */
+.works-row,
+.works-track,
+.works-pin {
+  pointer-events: none;
+}
+
+.works-pin > .project-row {
+  pointer-events: auto;
+}
+
+/* Plain list: phones, short screens, reduced motion, and until measured. */
+.works-section.is-static .works-head {
+  position: relative;
+  top: auto;
+}
+
+.works-section.is-static .works-row {
+  height: auto;
+  overflow: visible;
+}
+
+.works-section.is-static .works-track,
+.works-section.is-static .works-pin {
+  position: static;
+  height: auto;
+}
+
+.works-section.is-static .works-row + .works-row {
   margin-top: 120px;
 }
 
@@ -3781,12 +3883,9 @@ hr {
    the title + description line. */
 
 .project-row {
+  position: relative;
   display: grid;
   gap: 32px;
-  /* Each card pins below the sticky header while the next one scrolls over it,
-     stacking them. Cards paint in DOM order, so later cards cover earlier. */
-  position: sticky;
-  top: 96px;
   padding: 40px;
   background: var(--surface-soft);
   border-radius: var(--radius-card);
@@ -3796,13 +3895,29 @@ hr {
     box-shadow 420ms var(--ease-premium);
 }
 
-/* A pinned card taller than the viewport would hide its own lower half, so
-   fall back to normal flow on short viewports. Stays positioned so the
-   full-card link still anchors to it. */
+/* The card's text rolls up through its masks (.ws-line, shared with Selected
+   Work) and the preview settles from a slight zoom, the first time the card
+   is uncovered. */
+.project-row.is-shown .ws-line-inner {
+  transform: none;
+  transition: transform 1.5s var(--ease-premium) calc(var(--ws-i) * 130ms);
+}
 
-@media (max-height: 780px) {
-.project-row {
-    position: relative;
+.project-row:not(.is-shown) .project-preview-image {
+  transform: scale(calc(var(--preview-scale, 1.01) * 1.08));
+}
+
+.project-row.is-shown .project-preview-image {
+  transition:
+    filter 520ms var(--ease-smooth),
+    transform 1.4s var(--ease-premium);
+}
+
+@media (prefers-reduced-motion: reduce) {
+.project-row .ws-line-inner,
+.project-row:not(.is-shown) .project-preview-image {
+    transform: none;
+    transition: none;
   }
 }
 
@@ -3882,7 +3997,7 @@ hr {
   height: 100%;
   object-fit: cover;
   filter: var(--image-filter);
-  transform: scale(1.01);
+  transform: scale(var(--preview-scale, 1.01));
   transition:
     filter 520ms var(--ease-smooth),
     transform 720ms var(--ease-premium);
@@ -4319,29 +4434,11 @@ hr {
   }
 }
 
-/* Back arrow in Case Study kicker */
+/* Back arrow in Case Study kicker (styled with .work-back-button). */
 
 .kicker-back-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
   margin-right: 12px;
-  border: 1px solid var(--border);
-  border-radius: 50%;
-  background: transparent;
-  color: var(--text);
-  font-size: 1.1rem;
-  cursor: pointer;
   vertical-align: middle;
-  transition: background 200ms ease, border-color 200ms ease, transform 200ms ease;
-}
-
-.kicker-back-button:hover {
-  background: var(--surface-hover);
-  border-color: var(--border-strong);
-  transform: translateX(-2px);
 }
 
 /* Primary View Visuals button */
@@ -4418,17 +4515,19 @@ hr {
 }
 
 @media (max-width: 834px) {
-/* On portrait tablet and mobile, smooth natural scrolling flow for project cards */
+/* On portrait tablet and mobile the cards are a plain list (.is-static). */
 
 .project-row {
-    position: relative;
-    top: auto;
     gap: 24px;
     padding: 24px;
   }
 
-.project-row + .project-row {
+.works-section.is-static .works-row + .works-row {
     margin-top: 40px;
+  }
+
+.works-head {
+    flex-wrap: wrap;
   }
 
 .project-preview-wrap {
@@ -4513,10 +4612,12 @@ hr {
   max-width: 100%;
 }
 
-/* Section rhythm. Blocks inside a section sit 28px either side of a hairline;
-   whole sections sit --case-gap either side of their divider, so the two
-   levels read apart. Back-to-back summary sections with no divider between
-   them continue the card rhythm instead. */
+/* Section rhythm: every section boundary is --case-gap above and below a
+   hairline, whether that line is a divider or (between back-to-back summary
+   sections) a top border. Blocks inside a section sit 28px either side of
+   their own hairline, so the two levels read apart. A section's last block
+   drops its trailing margin, so the gap above each line is the same as the
+   gap below it. */
 
 .case-study-main {
   --case-gap: 64px;
@@ -4527,12 +4628,16 @@ hr {
   margin-bottom: 0;
 }
 
+.case-study-main > section :last-child {
+  margin-bottom: 0;
+}
+
 .case-study-main > .case-section-proof-intro {
   margin-top: 60px;
 }
 
 .case-study-main > .case-section-proof-intro + section {
-  margin-top: 40px;
+  margin-top: var(--case-gap);
 }
 
 .case-study-main > .project-summary-divider {
@@ -4540,8 +4645,8 @@ hr {
 }
 
 .case-study-main > .case-section-summary + .case-section-summary {
-  margin-top: 28px;
-  padding-top: 28px;
+  margin-top: var(--case-gap);
+  padding-top: var(--case-gap);
   border-top: 1px solid var(--border);
 }
 
@@ -5273,21 +5378,64 @@ hr {
   max-width: 760px;
 }
 
+/* ── Curtain ──
+   The heading pins while the sheet (cards, resume bar, footer) slides up
+   over it, opaque, as From pixels to products does over the home hero. The
+   cards sit 80px under the intro; the sheet is at least a screen tall (less
+   the nav), so once it is up it covers the hero. */
+.contact-curtain {
+  position: relative;
+}
+
+/* Pins just under the nav (the .has-nav-space offset), so the nav never
+   covers the heading. */
+.contact-hero {
+  position: sticky;
+  top: 96px;
+  z-index: 0;
+  padding-bottom: 0;
+}
+
+.contact-sheet {
+  --ct-in: 0;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 96px);
+  min-height: calc(100svh - 96px);
+  background: var(--bg);
+}
+
+.contact-sheet-body {
+  flex: 1;
+  padding-top: 80px;
+}
+
+.contact-sheet-body > * {
+  opacity: calc(0.4 + var(--ct-in) * 0.6);
+  transform: translateY(calc((1 - var(--ct-in)) * 56px));
+}
+
+.contact-sheet-body > .contact-resume-bar {
+  transform: translateY(calc((1 - var(--ct-in)) * 96px));
+}
+
 .contact-channels {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
-  margin-top: 48px;
 }
 
 .contact-channel-card {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 26px 24px 22px;
+  padding: 26px 24px 24px;
   border-radius: 18px;
   border: 1px solid var(--border);
   background: var(--surface);
+  will-change: transform;
 }
 
 .contact-channel-icon {
@@ -5315,8 +5463,19 @@ hr {
   color: var(--text-subtle);
 }
 
+.contact-channel-value-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  width: 100%;
+  margin-bottom: 24px;
+}
+
 .contact-channel-value {
-  margin: 0 0 20px;
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  padding-top: 5px;
   font-size: 0.98rem;
   font-weight: 500;
   line-height: 1.45;
@@ -5325,46 +5484,46 @@ hr {
   overflow-wrap: anywhere;
 }
 
-.contact-channel-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: auto;
-}
-
-.contact-channel-action,
+/* Copy: a quiet icon button beside the value; the icon turns to a tick in
+   the success tone once copied. */
 .contact-channel-copy {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  min-height: var(--cta-height);
-  padding: 0 var(--cta-padding-x);
-  border-radius: var(--radius-pill);
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
   border: 1px solid var(--border);
-  background: transparent;
-  color: var(--text);
-  font-size: 0.82rem;
-  font-weight: var(--cta-font-weight);
+  border-radius: 10px;
+  background: var(--bg);
+  color: var(--text-secondary);
+  font-size: 1rem;
   cursor: pointer;
   transition:
-    background 220ms ease,
+    background-color 220ms ease,
     border-color 220ms ease,
     color 220ms ease;
 }
 
-.contact-channel-action {
-  border-color: transparent;
-  background: var(--text);
-  color: var(--on-accent);
-}
-
-.contact-channel-action:hover {
-  background: var(--accent-hover);
-}
-
 .contact-channel-copy:hover {
   border-color: var(--border-strong);
-  background: var(--accent-soft);
+  color: var(--text);
+}
+
+.contact-channel-copy.is-copied {
+  border-color: var(--tone-green-border);
+  background: var(--tone-green-bg);
+  color: var(--tone-green-text);
+}
+
+.contact-channel-copy:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+}
+
+/* The shared outline CTA (.ws-cta), pinned to the card's foot. */
+.contact-channel-action {
+  margin-top: auto;
 }
 
 /* ── Resume + quick reference bar ── */
@@ -5429,6 +5588,24 @@ hr {
   }
 }
 
+/* Phones: no pin, so the cards are a short scroll away. */
+@media (max-width: 768px) {
+.contact-hero {
+    position: relative;
+    top: auto;
+  }
+
+.contact-sheet {
+    min-height: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+.contact-channel-card {
+    will-change: auto;
+  }
+}
+
 @media (max-width: 860px) {
   /* Declared after the shared CTA scale block, which re-asserts inline-flex on
      every button and would otherwise win on source order. */
@@ -5463,7 +5640,8 @@ hr {
     min-height: 44px;
   }
 
-  .kicker-back-button {
+  .kicker-back-button,
+  .work-back-button {
     width: 44px;
     height: 44px;
   }
@@ -7742,8 +7920,8 @@ hr {
 
 .about-section {
   position: relative;
-  height: 420vh;
-  height: 420svh;
+  height: 484vh;
+  height: 484svh;
 }
 
 /* Like the hero: flex: 1 from .page-view > section would override the
@@ -7909,6 +8087,49 @@ hr {
 
 .about-card .hero-contact-value:focus-visible {
   outline-color: var(--on-brand);
+}
+
+/* Copy icon beside each value, white on the brand card; it fills white with
+   a brand tick once copied. */
+.about-card .hero-contact-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hero-contact-copy {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--on-brand);
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition:
+    background-color 220ms ease,
+    border-color 220ms ease,
+    color 220ms ease;
+}
+
+.hero-contact-copy:hover {
+  border-color: var(--on-brand);
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.hero-contact-copy.is-copied {
+  border-color: var(--on-brand);
+  background: var(--on-brand);
+  color: var(--brand);
+}
+
+.hero-contact-copy:focus-visible {
+  outline: 2px solid var(--on-brand);
+  outline-offset: 2px;
 }
 
 .about-card .hero-contact-value i {
@@ -8486,9 +8707,9 @@ button.hero-dock-item {
   color: var(--text);
 }
 
-/* The design's box: about 6:7. */
+/* The design's box (about 6:7): 40% down on the 648px it was. */
 .px-reel {
-  width: min(540px, 100%);
+  width: min(389px, 100%);
 }
 
 .px-reel-frame {
@@ -8764,7 +8985,7 @@ button.hero-dock-item {
 .ws {
   --ws-nav: 126px;
   --ws-head-h: 150px;
-  --ws-row-h: 90svh;
+  --ws-row-h: 110svh;
   /* Top of the card, and its height: what's left of the screen under the
      heading, less room for the button below it. */
   --ws-content-top: calc(var(--ws-nav) + var(--ws-head-h) + 16px);
@@ -8866,7 +9087,7 @@ button.hero-dock-item {
 
 .ws-pin.is-shown .ws-line-inner {
   transform: none;
-  transition: transform 1.25s var(--ease-premium) calc(var(--ws-i) * 110ms);
+  transition: transform 1.5s var(--ease-premium) calc(var(--ws-i) * 130ms);
 }
 
 .ws-num {
@@ -9508,6 +9729,18 @@ button.hero-dock-item {
   color: var(--brand);
 }
 
+/* On the dark theme the outline and disc use the text colour, so the button
+   still reads on dark surfaces. */
+:root:not([data-theme="light"]) .ws-cta:not(:hover) {
+  border-color: var(--text);
+  color: var(--text);
+}
+
+:root:not([data-theme="light"]) .ws-cta:not(:hover) .cta-icon {
+  background: var(--text);
+  color: var(--bg);
+}
+
 .ws-all:focus-visible,
 .ws-cta:focus-visible,
 .contact-resume-button:focus-visible,
@@ -9594,18 +9827,6 @@ button.hero-dock-item {
   gap: 10px;
 }
 
-/* A bare arrow here, without the round button. */
-.ab-intro-label .work-back-button {
-  width: 28px;
-  height: 28px;
-  border: 0;
-  border-radius: 0;
-  background: none;
-}
-
-.ab-intro-label .work-back-button:hover {
-  background: none;
-}
 
 .ab-intro-kicker {
   margin: 0;
@@ -9788,7 +10009,7 @@ button.hero-dock-item {
 .ab-sk {
   --sk-nav: 96px;
   --sk-head-h: 100px;
-  --sk-row-h: 90svh;
+  --sk-row-h: 110svh;
   --sk-content-top: calc(var(--sk-nav) + var(--sk-head-h));
   --sk-card-h: clamp(260px, calc(100svh - var(--sk-content-top) - 150px), 400px);
   position: relative;

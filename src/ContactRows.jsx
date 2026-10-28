@@ -4,7 +4,8 @@ import { useEffect, useRef, useState } from "react";
 // dims and underlines it and opens a small menu above it (send or copy); focus
 // and tap open it too, for keyboards and touch. The menu eases up from slightly
 // small and low, and closes when the pointer leaves, on an outside tap, on
-// Escape, or once an action is done. Shared by the hero and about cards.
+// Escape, or once an action is done. Shared by the hero and about cards; with
+// `inlineCopy` each row also gets a copy icon of its own beside the value.
 export const contactRows = [
   {
     id: "email",
@@ -28,11 +29,37 @@ export const contactRows = [
   },
 ];
 
+// Copies text, falling back to a hidden textarea where the async clipboard
+// is unavailable (it needs a focused document and a secure origin).
+export async function copyText(text) {
+  try {
+    await navigator.clipboard.writeText(text);
+    return true;
+  } catch {
+    /* Fall through to the textarea. */
+  }
+
+  const field = document.createElement("textarea");
+  field.value = text;
+  field.setAttribute("readonly", "");
+  field.style.position = "fixed";
+  field.style.opacity = "0";
+  document.body.appendChild(field);
+  field.select();
+  try {
+    return document.execCommand("copy");
+  } catch {
+    return false;
+  } finally {
+    document.body.removeChild(field);
+  }
+}
+
 const CONTACT_COPIED_FOR = 1200;
 // Grace period before a hover menu closes, so the pointer can cross into it.
 const CONTACT_CLOSE_DELAY = 160;
 
-export function ContactRows({ className = "" }) {
+export function ContactRows({ className = "", inlineCopy = false }) {
   const listRef = useRef(null);
   const closeTimer = useRef(0);
   const [open, setOpen] = useState(null);
@@ -77,12 +104,8 @@ export function ContactRows({ className = "" }) {
   }, [copied]);
 
   const copy = async (row) => {
-    try {
-      await navigator.clipboard.writeText(row.value);
-      setCopied(row.id);
-    } catch {
-      setOpen(null);
-    }
+    if (await copyText(row.value)) setCopied(row.id);
+    else setOpen(null);
   };
 
   return (
@@ -129,6 +152,17 @@ export function ContactRows({ className = "" }) {
               <i className={row.icon} aria-hidden="true" />
               {row.value}
             </button>
+            {inlineCopy ? (
+              <button
+                type="button"
+                className={`hero-contact-copy ${copied === row.id ? "is-copied" : ""}`.trim()}
+                onClick={() => copy(row)}
+                aria-label={copied === row.id ? "Copied" : `Copy ${row.label.toLowerCase()}`}
+                title={copied === row.id ? "Copied" : `Copy ${row.label.toLowerCase()}`}
+              >
+                <i className={copied === row.id ? "ri-check-line" : "ri-file-copy-line"} aria-hidden="true" />
+              </button>
+            ) : null}
           </li>
         );
       })}

@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import abhiLogo from "../Assets/abhi logo.svg";
 import { EngineeringMap, useMediaQuery } from "./EngineeringSection.jsx";
 import { AboutSection } from "./AboutSection.jsx";
-import { ContactRows, contactRows } from "./ContactRows.jsx";
+import { ContactRows, contactRows, copyText } from "./ContactRows.jsx";
 import { toggleTheme, useTheme } from "./theme.js";
 import { TopNav } from "./TopNav.jsx";
 import { HeroKeyboard } from "./HeroKeyboard.jsx";
@@ -461,7 +461,7 @@ const mcdeliveryCaseStudy = {
 
 const cardinalHealthCaseStudy = {
   hideVisualsLink: true,
-  projectTitle: "Order Express — A home for zero-error medicine ordering",
+  projectTitle: "Order Express: A home for zero-error medicine ordering",
   projectTagline:
     "A design case study of simplifying procurement for 100,000+ healthcare professionals.",
   heroSubtitle:
@@ -851,7 +851,7 @@ const contactChannels = [
     value: contactEmail,
     href: `mailto:${contactEmail}`,
     action: "Send an Email",
-    copyable: true,
+    copyLabel: "Copy email address",
   },
   {
     icon: "phone",
@@ -859,6 +859,7 @@ const contactChannels = [
     value: phoneRow.value,
     href: phoneRow.actions.find((action) => action.kind === "link").href,
     action: "Call Direct",
+    copyLabel: "Copy phone number",
   },
   {
     icon: "linkedin",
@@ -866,6 +867,8 @@ const contactChannels = [
     value: "linkedin.com/in/abhinandansingh07",
     href: "https://www.linkedin.com/in/abhinandansingh07/",
     action: "Connect on LinkedIn",
+    copyLabel: "Copy LinkedIn profile link",
+    copyText: "https://www.linkedin.com/in/abhinandansingh07/",
     external: true,
   },
 ];
@@ -1458,25 +1461,6 @@ const clientLogos = [
   { name: "Bharat Petroleum", src: bharatPetroleumLogo, width: 44 },
 ];
 
-// Entries without a `src` fall back to a wordmark.
-const toolLogos = [
-  { name: "ChatGPT", src: toolChatgpt },
-  { name: "Gemini", src: toolGemini },
-  { name: "Claude", src: toolClaude },
-  { name: "Cursor", src: toolCursor },
-  { name: "Antigravity", src: toolAntigravity },
-  { name: "Perplexity", src: toolPerplexity },
-  { name: "Midjourney", src: toolMidjourney },
-  { name: "Figma", src: toolFigma },
-  { name: "Photoshop", src: toolPhotoshop },
-  { name: "Illustrator", src: toolIllustrator },
-  { name: "Canva", src: toolCanva },
-  { name: "Miro", src: toolMiro },
-  { name: "Webflow", src: toolWebflow },
-  { name: "Framer", src: toolFramer },
-  { name: "Zeplin", src: toolZeplin },
-];
-
 function ClientLogoRail() {
   return <LogoRail items={clientLogos} ariaLabel="Clients and brands" />;
 }
@@ -1639,17 +1623,6 @@ function ToolsGridSection() {
             {expanded ? "Show Less" : "View All"}
           </button>
         )}
-      </Reveal>
-    </section>
-  );
-}
-
-function ToolsRailSection() {
-  return (
-    <section className="tools-rail-section">
-      <Reveal className="tools-rail-wrap" delay={40}>
-        <h5 className="tools-rail-title">Tools</h5>
-        <LogoRail items={toolLogos} ariaLabel="Tools used daily" />
       </Reveal>
     </section>
   );
@@ -2320,78 +2293,70 @@ function ResumePage() {
   );
 }
 
-function ProjectsPage() {
-  const [activeTab, setActiveTab] = useState(worksTabs[0].id);
-  const currentTab = worksTabs.find((tab) => tab.id === activeTab) ?? worksTabs[0];
+// Works page cards, animated like Selected Work on the home page: the header
+// (title and tabs) stays put, and each card is pinned just under it, seen only
+// through its row's own window, which scrolls normally. So the cards stay
+// still while a line sweeps up through them, uncovering the next project
+// beneath, and each card's text rolls up through a mask the first time it is
+// uncovered. The script measures the header and card so each card pins just
+// under the header; phones, screens too short for the card and reduced motion
+// get a plain list.
+function WorksRow({ item, index }) {
+  const cardRef = useRef(null);
+  const [shown, setShown] = useState(false);
+
+  // The row's clip counts for the observer, so this fires as the sweep
+  // uncovers the card, not when the pinned layer merely sits under it.
+  useEffect(() => {
+    const card = cardRef.current;
+    if (!card || shown) return undefined;
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) setShown(true);
+      },
+      { threshold: 0.35 },
+    );
+    io.observe(card);
+    return () => io.disconnect();
+  }, [shown]);
 
   return (
-    <div className="page-view">
-      <section className="projects-section">
-        <Reveal className="section-kicker-header">
-          <button
-            type="button"
-            className="work-back-button"
-            onClick={() => navigateTo("/")}
-            aria-label="Back to Home"
-          >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="19" y1="12" x2="5" y2="12" />
-              <polyline points="12 19 5 12 12 5" />
-            </svg>
-          </button>
-          <span className="section-kicker">Creative Works</span>
-        </Reveal>
+    <div className="works-row">
+      <div className="works-track">
+        <div className="works-pin">
+          <article ref={cardRef} className={`project-row ${shown ? "is-shown" : ""}`.trim()}>
+            <div className="project-preview-wrap">
+              <img
+                className="project-preview-image"
+                src={item.preview}
+                alt={`${item.titleAlt} preview`}
+                loading={index === 0 ? undefined : "lazy"}
+                decoding="async"
+                style={{
+                  "--preview-scale": item.previewScale,
+                  objectPosition: item.previewPosition,
+                }}
+              />
+            </div>
 
-        <Reveal className="featured-work-tabs-wrap works-tabs-wrap" delay={100}>
-          <div className="featured-work-tabs" role="tablist" aria-label="Work categories">
-            {worksTabs.map((tab) => (
-              <button
-                key={tab.id}
-                type="button"
-                role="tab"
-                id={`works-tab-${tab.id}`}
-                aria-selected={tab.id === activeTab}
-                aria-controls={`works-panel-${tab.id}`}
-                className={`featured-work-tab${tab.id === activeTab ? " is-active" : ""}`}
-                onClick={() => setActiveTab(tab.id)}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </div>
-        </Reveal>
+            <div className="project-meta-row">
+              <span className="ws-line">
+                <span className="ws-line-inner" style={{ "--ws-i": 0 }}>
+                  <img className="project-title-image" src={item.titleImage} alt={item.titleAlt} loading="lazy" decoding="async" />
+                </span>
+              </span>
 
-        <div
-          className="projects-list"
-          role="tabpanel"
-          id={`works-panel-${currentTab.id}`}
-          aria-labelledby={`works-tab-${currentTab.id}`}
-        >
-          {currentTab.items.map((item, index) => (
-            <Reveal as="article" key={item.index} className="project-row" delay={index * 90}>
-              <div className="project-preview-wrap">
-                <img
-                  className="project-preview-image"
-                  src={item.preview}
-                  alt={`${item.titleAlt} preview`}
-                  loading="lazy"
-                  decoding="async"
-                  style={{
-                    transform: item.previewScale ? `scale(${item.previewScale})` : undefined,
-                    objectPosition: item.previewPosition,
-                  }}
-                />
-              </div>
+              {item.domainTags && (
+                <span className="ws-line">
+                  <span className="ws-line-inner" style={{ "--ws-i": 1 }}>
+                    <span className="project-domain-tags">{item.domainTags}</span>
+                  </span>
+                </span>
+              )}
+            </div>
 
-              <div className="project-meta-row">
-                <img className="project-title-image" src={item.titleImage} alt={item.titleAlt} loading="lazy" decoding="async" />
-
-                {item.domainTags && (
-                  <p className="project-domain-tags">{item.domainTags}</p>
-                )}
-              </div>
-
-              <p className="project-row-summary">
+            <p className="project-row-summary ws-line">
+              <span className="ws-line-inner" style={{ "--ws-i": 2 }}>
                 {item.projectTitle && (
                   <>
                     <strong className="project-row-summary-title">{item.projectTitle}</strong>
@@ -2399,17 +2364,121 @@ function ProjectsPage() {
                   </>
                 )}
                 {item.description}
-              </p>
+              </span>
+            </p>
 
-              {/* Covers the whole card so the "View" cursor matches what is
-                  actually clickable. */}
-              <button
-                type="button"
-                className="project-row-link"
-                onClick={() => navigateTo(`/projects/${item.slug}`)}
-                aria-label={`View ${item.title} case study`}
-              />
-            </Reveal>
+            {/* Covers the whole card so the "View" cursor matches what is
+                actually clickable. */}
+            <button
+              type="button"
+              className="project-row-link"
+              onClick={() => navigateTo(`/projects/${item.slug}`)}
+              aria-label={`View ${item.title} case study`}
+            />
+          </article>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ProjectsPage() {
+  const [activeTab, setActiveTab] = useState(worksTabs[0].id);
+  const currentTab = worksTabs.find((tab) => tab.id === activeTab) ?? worksTabs[0];
+  const sectionRef = useRef(null);
+  const headRef = useRef(null);
+  const listRef = useRef(null);
+  const [isStatic, setIsStatic] = useState(true);
+
+  // Pin only when the card fits under the pinned header on screen; otherwise
+  // its lower half would never be seen.
+  useEffect(() => {
+    const section = sectionRef.current;
+    const head = headRef.current;
+    if (!section || !head) return undefined;
+    const media = window.matchMedia?.("(prefers-reduced-motion: reduce), (max-width: 834px)");
+    let frame = 0;
+
+    const measure = () => {
+      frame = 0;
+      const card = listRef.current?.querySelector(".project-row");
+      const styles = getComputedStyle(section);
+      const headHeight = head.offsetHeight;
+      const cardHeight = card?.offsetHeight ?? 0;
+      section.style.setProperty("--works-head-h", `${headHeight}px`);
+      section.style.setProperty("--works-card-h", `${cardHeight}px`);
+      const contentTop =
+        parseFloat(styles.getPropertyValue("--works-head-top")) + headHeight + parseFloat(styles.getPropertyValue("--works-gap"));
+      const fits = contentTop + cardHeight <= window.innerHeight - 12;
+      setIsStatic(!card || media?.matches || !fits);
+    };
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(measure);
+    };
+
+    measure();
+    const ro = new ResizeObserver(schedule);
+    ro.observe(head);
+    const card = listRef.current?.querySelector(".project-row");
+    if (card) ro.observe(card);
+    window.addEventListener("resize", schedule);
+    media?.addEventListener?.("change", schedule);
+    return () => {
+      cancelAnimationFrame(frame);
+      ro.disconnect();
+      window.removeEventListener("resize", schedule);
+      media?.removeEventListener?.("change", schedule);
+    };
+  }, [activeTab]);
+
+  return (
+    <div className="page-view">
+      <section ref={sectionRef} className={`projects-section works-section ${isStatic ? "is-static" : ""}`.trim()}>
+        <div ref={headRef} className="works-head">
+          <Reveal className="section-kicker-header">
+            <button
+              type="button"
+              className="work-back-button"
+              onClick={() => navigateTo("/")}
+              aria-label="Back to Home"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12" />
+                <polyline points="12 19 5 12 12 5" />
+              </svg>
+            </button>
+            <span className="section-kicker">Creative Works</span>
+          </Reveal>
+
+          <Reveal className="featured-work-tabs-wrap works-tabs-wrap" delay={100}>
+            <div className="featured-work-tabs" role="tablist" aria-label="Work categories">
+              {worksTabs.map((tab) => (
+                <button
+                  key={tab.id}
+                  type="button"
+                  role="tab"
+                  id={`works-tab-${tab.id}`}
+                  aria-selected={tab.id === activeTab}
+                  aria-controls={`works-panel-${tab.id}`}
+                  className={`featured-work-tab${tab.id === activeTab ? " is-active" : ""}`}
+                  onClick={() => setActiveTab(tab.id)}
+                >
+                  {tab.label}
+                </button>
+              ))}
+            </div>
+          </Reveal>
+        </div>
+
+        <div
+          ref={listRef}
+          className="projects-list"
+          role="tabpanel"
+          id={`works-panel-${currentTab.id}`}
+          aria-labelledby={`works-tab-${currentTab.id}`}
+        >
+          {currentTab.items.map((item, index) => (
+            <WorksRow key={item.index} item={item} index={index} />
           ))}
 
           {currentTab.items.length === 0 && (
@@ -2419,8 +2488,6 @@ function ProjectsPage() {
           )}
         </div>
       </section>
-
-      <ToolsRailSection />
 
       <Footer />
     </div>
@@ -2459,124 +2526,165 @@ function ContactChannelIcon({ name }) {
   );
 }
 
+// The contact cards drift away from the pointer with a slight tilt, like the
+// home hero's dotted boxes. Each card moves a little differently, so the
+// three never move in step.
+const contactCardDrifts = [
+  makeDrift({ x: 6, y: 4, tilt: 3, twist: 0.5 }),
+  makeDrift({ x: 5, y: 5, tilt: 3.5, twist: -0.4 }),
+  makeDrift({ x: 7, y: 4, tilt: 2.5, twist: 0.6 }),
+];
+const CONTACT_CARD_FOLLOWS = [0.05, 0.042, 0.056];
+const CONTACT_COPIED_MS = 1600;
+
+function ContactChannelCard({ channel, index, copied, onCopy }) {
+  const ref = useRef(null);
+  usePointerFollow(ref, contactCardDrifts[index], CONTACT_CARD_FOLLOWS[index]);
+
+  return (
+    <article ref={ref} className="contact-channel-card">
+      <span className="contact-channel-icon">
+        <ContactChannelIcon name={channel.icon} />
+      </span>
+      <p className="contact-channel-label">{channel.label}</p>
+      <div className="contact-channel-value-row">
+        <p className="contact-channel-value">{channel.value}</p>
+        <button
+          type="button"
+          className={`contact-channel-copy ${copied ? "is-copied" : ""}`.trim()}
+          onClick={onCopy}
+          aria-label={copied ? "Copied" : channel.copyLabel}
+          title={copied ? "Copied" : channel.copyLabel}
+        >
+          <i className={copied ? "ri-check-line" : "ri-file-copy-line"} aria-hidden="true" />
+        </button>
+      </div>
+      <a
+        className="ws-cta contact-channel-action"
+        href={channel.href}
+        target={channel.external ? "_blank" : undefined}
+        rel={channel.external ? "noreferrer" : undefined}
+      >
+        {channel.action}
+        <CtaIcon icon="ri-arrow-right-up-line" direction="up-right" />
+      </a>
+    </article>
+  );
+}
+
+// Contact: the heading pins while a sheet with the cards, resume bar and
+// footer slides up over it, as From pixels to products does over the home
+// hero. The sheet's contents rise and fade in, scrubbed by the scroll
+// (--ct-in, 0 to 1, eased).
 function ContactPage() {
-  const [copied, setCopied] = useState(false);
+  const sheetRef = useRef(null);
+  const [copiedLabel, setCopiedLabel] = useState(null);
 
   useEffect(() => {
-    if (!copied) {
+    if (!copiedLabel) return undefined;
+    const timer = window.setTimeout(() => setCopiedLabel(null), CONTACT_COPIED_MS);
+    return () => window.clearTimeout(timer);
+  }, [copiedLabel]);
+
+  useEffect(() => {
+    const sheet = sheetRef.current;
+    if (!sheet) return undefined;
+    if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) {
+      sheet.style.setProperty("--ct-in", "1");
       return undefined;
     }
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const vh = window.innerHeight;
+      // Done by the time the sheet's top is 55% up the screen, so cards
+      // already on screen at load rest exactly 80px under the intro.
+      const t = Math.min(1, Math.max(0, (vh - sheet.getBoundingClientRect().top) / (vh * 0.45)));
+      sheet.style.setProperty("--ct-in", (t * t * (3 - 2 * t)).toFixed(4));
+    };
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+    };
+  }, []);
 
-    const timer = window.setTimeout(() => setCopied(false), 2000);
-    return () => window.clearTimeout(timer);
-  }, [copied]);
-
-  const copyEmail = async () => {
-    try {
-      await navigator.clipboard.writeText(contactEmail);
-      setCopied(true);
-      return;
-    } catch {
-      /* The async clipboard needs a focused document and a secure origin. */
-    }
-
-    const field = document.createElement("textarea");
-    field.value = contactEmail;
-    field.setAttribute("readonly", "");
-    field.style.position = "fixed";
-    field.style.opacity = "0";
-    document.body.appendChild(field);
-    field.select();
-
-    try {
-      setCopied(document.execCommand("copy"));
-    } catch {
-      setCopied(false);
-    } finally {
-      document.body.removeChild(field);
-    }
+  const copyChannel = async (channel) => {
+    if (await copyText(channel.copyText ?? channel.value)) setCopiedLabel(channel.label);
   };
 
   return (
-    <div className="page-view">
-      <section className="contact-section">
-        <Reveal className="section-kicker-header">
-          <button
-            type="button"
-            className="work-back-button"
-            onClick={() => navigateTo("/")}
-            aria-label="Back to Home"
-          >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="19" y1="12" x2="5" y2="12" />
-              <polyline points="12 19 5 12 12 5" />
-            </svg>
-          </button>
-          <span className="section-kicker">Contact</span>
-        </Reveal>
+    <div className="page-view contact-page">
+      <div className="contact-curtain">
+        <section className="contact-section contact-hero">
+          <Reveal className="section-kicker-header">
+            <button
+              type="button"
+              className="work-back-button"
+              onClick={() => navigateTo("/")}
+              aria-label="Back to Home"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12" />
+                <polyline points="12 19 5 12 12 5" />
+              </svg>
+            </button>
+            <span className="section-kicker">Contact</span>
+          </Reveal>
 
-        <Reveal className="contact-content">
-          <span className="availability-pill" aria-label="Availability status">
-            <span className="availability-dot" />
-            Available for Senior Roles
-          </span>
-          <h2>Let&apos;s build something impactful together.</h2>
+          <Reveal className="contact-content">
+            <span className="availability-pill" aria-label="Availability status">
+              <span className="availability-dot" />
+              Open to Opportunities
+            </span>
+            <h2>Let&apos;s build something meaningful.</h2>
 
-          <p className="contact-intro">
-            Whether you need a Senior Product Designer to lead complex enterprise systems,
-            streamline high-velocity mobile workflows, or accelerate execution using AI tools,
-            I&apos;m always open to discussing new opportunities.
-          </p>
-        </Reveal>
+            <p className="contact-intro">
+              I build digital experiences through frontend development, product thinking, and UI/UX design.
+            </p>
+          </Reveal>
+        </section>
 
-        <Reveal className="contact-channels">
-          {contactChannels.map((channel) => (
-            <article key={channel.label} className="contact-channel-card">
-              <span className="contact-channel-icon">
-                <ContactChannelIcon name={channel.icon} />
-              </span>
-              <p className="contact-channel-label">{channel.label}</p>
-              <p className="contact-channel-value">{channel.value}</p>
-              <div className="contact-channel-actions">
-                {channel.copyable ? (
-                  <button type="button" className="contact-channel-copy" onClick={copyEmail}>
-                    {copied ? "Copied" : "Copy Email"}
-                  </button>
-                ) : null}
-                <a
-                  className="contact-channel-action"
-                  href={channel.href}
-                  target={channel.external ? "_blank" : undefined}
-                  rel={channel.external ? "noreferrer" : undefined}
-                >
-                  {channel.action}
-                  <span aria-hidden="true">↗</span>
-                </a>
-              </div>
-            </article>
-          ))}
-        </Reveal>
+        <div ref={sheetRef} className="contact-sheet">
+          <div className="contact-section contact-sheet-body">
+            <div className="contact-channels">
+              {contactChannels.map((channel, index) => (
+                <ContactChannelCard
+                  key={channel.label}
+                  channel={channel}
+                  index={index}
+                  copied={copiedLabel === channel.label}
+                  onCopy={() => copyChannel(channel)}
+                />
+              ))}
+            </div>
 
-        <Reveal className="contact-resume-bar">
-          <a className="contact-resume-button" href={resumePdf} download="Abhinandan_Singh_Resume.pdf">
-            Download Full Resume (PDF)
-            <CtaIcon icon="ri-arrow-down-line" direction="down" />
-          </a>
+            <div className="contact-resume-bar">
+              <a className="contact-resume-button" href={resumePdf} download="Abhinandan_Singh_Resume.pdf">
+                Download Resume
+                <CtaIcon icon="ri-download-2-line" direction="down" />
+              </a>
 
-          <dl className="contact-quick-details">
-            {contactQuickDetails.map((detail) => (
-              <div key={detail.label} className="contact-quick-detail">
-                <dt>{detail.label}</dt>
-                <dd>{detail.value}</dd>
-              </div>
-            ))}
-          </dl>
-        </Reveal>
-      </section>
+              <dl className="contact-quick-details">
+                {contactQuickDetails.map((detail) => (
+                  <div key={detail.label} className="contact-quick-detail">
+                    <dt>{detail.label}</dt>
+                    <dd>{detail.value}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          </div>
 
-      <ToolsRailSection />
-
-      <Footer />
+          <Footer />
+        </div>
+      </div>
     </div>
   );
 }
@@ -2973,7 +3081,10 @@ function ProjectDetailsPage({ project, projectSlug, onOpenPdf }) {
       <section className="project-detail-section">
         <Reveal as="p" className="section-kicker">
           <button type="button" className="kicker-back-button" onClick={() => navigateTo("/projects")} aria-label="Back to Works">
-            <span aria-hidden="true">←</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <line x1="19" y1="12" x2="5" y2="12" />
+              <polyline points="12 19 5 12 12 5" />
+            </svg>
           </button>
           Case Study
         </Reveal>

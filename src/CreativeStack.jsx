@@ -29,6 +29,10 @@ const CS_SWAP_LEN = 0.6;
 // The last topic holds while Approaches slides up over it, during the last
 // screen of the pin.
 const CS_TRAVEL_SCREENS = 5.9;
+// The timeline above plays over this many real screens per screen, so the
+// whole sequence takes more scroll; the last screen (Approaches) stays one.
+const CS_PACE = 1.25;
+const CS_SECTION_SCREENS = (CS_TRAVEL_SCREENS - 1) * CS_PACE + 1;
 // Where the middle of the nav bar sits, to tell whether it is over the brand
 // screen (it turns white there).
 const CS_NAV_MID = 49;
@@ -92,7 +96,7 @@ export function CreativeStack() {
       frame = 0;
       const vw = stage.clientWidth;
       const vh = stage.clientHeight;
-      const s = (-section.getBoundingClientRect().top / Math.max(1, vh)) || 0;
+      const s = (-section.getBoundingClientRect().top / Math.max(1, vh * CS_PACE)) || 0;
       const narrow = vw <= 760;
 
       // The image keeps the screen's shape as it grows from nothing.
@@ -159,7 +163,7 @@ export function CreativeStack() {
     <section
       ref={sectionRef}
       className={`cs ${reduced ? "is-static" : ""}`.trim()}
-      style={reduced ? undefined : { height: `calc(100svh + ${CS_TRAVEL_SCREENS * 100}svh)` }}
+      style={reduced ? undefined : { height: `calc(100svh + ${CS_SECTION_SCREENS * 100}svh)` }}
       aria-labelledby="creative-stack-title"
     >
       <div ref={stageRef} className="cs-stage">
