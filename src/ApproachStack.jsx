@@ -10,7 +10,7 @@ const STEPS = [
 // Screens of scroll while the stage is pinned, and where each change from
 // one card to the next starts and ends, as a share of that scroll. The
 // stretches in between hold still.
-const AP_TRAVEL_SCREENS = 2.6;
+const AP_TRAVEL_SCREENS = 3.2;
 const AP_SWAPS = [
   [0.14, 0.44],
   [0.56, 0.86],

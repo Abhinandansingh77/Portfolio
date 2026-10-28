@@ -30,6 +30,9 @@ const FOCUS_START = 2.3;
 const FOCUS_STAGGER = 0.08;
 const FOCUS_SPAN = 0.4;
 
+// The timeline plays over this many real screens per screen of it, so it
+// takes more scroll (.about-section is 1 + 3.2 × PACE screens tall).
+const PACE = 1.2;
 // How quickly the shown progress catches up with the scroll, per second.
 const SMOOTHING = 9;
 // Jumps bigger than this (in screens) are taken at once, not glided.
@@ -192,7 +195,7 @@ export function AboutSection() {
     // independent, and stop asking for frames once it has caught up.
     const tick = (now) => {
       frame = 0;
-      const target = -section.getBoundingClientRect().top / window.innerHeight;
+      const target = -section.getBoundingClientRect().top / (window.innerHeight * PACE);
       const dt = last ? Math.min((now - last) / 1000, 1 / 20) : 1 / 60;
       if (current === null || Math.abs(target - current) > SNAP) {
         current = target;
@@ -281,7 +284,7 @@ export function AboutSection() {
             </div>
             <div className="about-card-foot">
               <div className="about-card-links" data-focus>
-                <ContactRows />
+                <ContactRows inlineCopy />
               </div>
               <a
                 className="about-card-cta"

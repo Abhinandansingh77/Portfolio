@@ -5,18 +5,19 @@ import "lenis/dist/lenis.css";
 // trackpad input eases towards where it is headed, so everything tied to
 // the scroll (the pinned hero, the reel growing) glides instead of jumping.
 // Touch keeps the device's own scrolling. Off with reduced motion.
-// LERP is the share of the remaining distance covered each frame (lower
-// glides longer); WHEEL scales each wheel step, so a notch travels a little
-// less and every scroll-driven animation plays out more slowly.
-const LERP = 0.065;
-const WHEEL = 0.85;
+// DURATION is how long each scroll glides, in seconds, on Lenis's default
+// ease-out curve: genstudio's setting (its Smooth Scroll at intensity 20).
+// WHEEL scales each wheel step, so a notch travels a little less and every
+// scroll-driven animation plays out more slowly.
+const DURATION = 2;
+const WHEEL = 0.8;
 
 let lenis = null;
 
 export function startSmoothScroll() {
   if (typeof window === "undefined" || lenis) return () => {};
   if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return () => {};
-  lenis = new Lenis({ lerp: LERP, wheelMultiplier: WHEEL, smoothWheel: true, autoRaf: true, allowNestedScroll: true, anchors: true });
+  lenis = new Lenis({ duration: DURATION, wheelMultiplier: WHEEL, smoothWheel: true, autoRaf: true, allowNestedScroll: true, anchors: true });
   return () => {
     lenis?.destroy();
     lenis = null;

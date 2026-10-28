@@ -25,9 +25,9 @@ const shots = [
   { img: 1, zoom: 1, at: "50% 50%" },
   { img: 5, zoom: 1.9, at: "56% 46%" },
 ];
-// The reference cuts every 4 frames at 30fps (133ms); a touch slower here,
-// as there are fewer shots.
-const SHOT_MS = 160;
+// The reference cuts every 4 frames at 30fps (133ms); slower here, so each
+// shot can be taken in.
+const SHOT_MS = 220;
 
 function PixelsReel({ reelRef }) {
   const layerRefs = useRef([]);
@@ -134,8 +134,8 @@ export function PixelsSection() {
         const t = Math.min(1, Math.max(0, (vh - top) / (vh * span)));
         return (t * t * (3 - 2 * t)).toFixed(4);
       };
-      if (headerRef.current) section.style.setProperty("--px-head", enter(headerRef.current, 0.6));
-      if (reelRef.current) section.style.setProperty("--px-in", enter(reelRef.current, 1.1));
+      if (headerRef.current) section.style.setProperty("--px-head", enter(headerRef.current, 0.8));
+      if (reelRef.current) section.style.setProperty("--px-in", enter(reelRef.current, 1.4));
     };
     const schedule = () => {
       if (!frame) frame = requestAnimationFrame(update);
