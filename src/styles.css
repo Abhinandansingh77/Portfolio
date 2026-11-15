@@ -529,12 +529,12 @@ button {
 
 .reveal {
   opacity: 0;
-  transform: translateY(34px);
-  filter: blur(8px);
+  transform: translateY(26px);
+  filter: blur(6px);
   transition:
-    opacity 1.5s var(--ease-premium),
-    transform 1.5s var(--ease-premium),
-    filter 1.5s var(--ease-premium);
+    opacity 1.1s var(--ease-premium),
+    transform 1.1s var(--ease-premium),
+    filter 1.1s var(--ease-premium);
 }
 
 .reveal.is-visible {
@@ -4602,7 +4602,7 @@ hr {
 }
 
 /* Every block in the column shares one width. Without this the summary grids,
-   the Discovery/Al Maha/Cardinal inners and the dividers each fall back to
+   the Discovery/Al Maha inners and the dividers each fall back to
    their own 70%-of-parent caps and land on three different edges. */
 
 .case-study-main .case-section-summary .project-detail-grid,
@@ -4791,232 +4791,844 @@ hr {
 }
 
 /* ==========================================================================
-   Cardinal Health case study sections
+   Cardinal Health · Order Express case study (OrderExpressCaseStudy.jsx)
+   One editorial column: a hero, then rows with a label on the left and the
+   content on the right, separated by hairlines.
    ========================================================================== */
 
-.cardinal-context-grid {
+.oe-case {
+  --oe-label-col: 300px;
+  --oe-row-gap: 56px;
+  display: block;
+  padding-bottom: 40px;
+}
+
+.oe-hero {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 14px;
+  grid-template-columns: minmax(0, 1fr) minmax(340px, 0.82fr);
+  gap: 48px;
+  align-items: stretch;
+  padding: 18px 0 72px;
 }
 
-.cardinal-context-card {
-  padding: 20px;
-  border-radius: 14px;
-  border: 1px solid var(--border);
-  background: var(--surface);
+.oe-hero-copy {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
 }
 
-.cardinal-context-card h4 {
-  margin: 0 0 8px;
-  font-size: 0.98rem;
+.oe-logo {
+  display: block;
+  align-self: flex-start;
+  width: auto;
+  height: 40px;
+  margin: 0 0 22px;
+}
+
+.oe-title {
+  margin: 0 0 14px;
+  font-size: clamp(1.7rem, 3.85vw, 3rem);
   font-weight: 600;
-  letter-spacing: -0.01em;
+  line-height: 1.05;
+  letter-spacing: -0.035em;
   color: var(--text);
 }
 
-.cardinal-context-card p {
-  margin: 0;
-  font-size: 0.88rem;
-  line-height: 1.6;
+.oe-tagline {
+  margin: 0 0 16px;
+  max-width: 24ch;
+  font-size: clamp(1.25rem, 2.1vw, 1.7rem);
+  font-weight: 500;
+  line-height: 1.28;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.oe-hero-description {
+  margin: 0 0 40px;
+  max-width: 52ch;
+  font-size: 1rem;
+  line-height: 1.65;
   color: var(--text-secondary);
 }
 
-.cardinal-pillar-list {
-  display: grid;
-  gap: 14px;
+.oe-facts {
+  margin: 0;
+  border-bottom: 1px solid var(--border);
 }
 
-.cardinal-pillar {
-  padding: 24px;
-  border-radius: 16px;
+.oe-fact {
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1fr);
+  gap: 16px;
+  padding: 14px 0;
+  border-top: 1px solid var(--border);
+}
+
+.oe-fact dt,
+.oe-product-facts dt {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.oe-fact dd {
+  margin: 0;
+  font-size: 0.92rem;
+  font-weight: 500;
+  line-height: 1.45;
+  color: var(--text);
+}
+
+/* Ghost CTA under the facts: outline only, fills faintly on hover. */
+.oe-live-link {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 8px;
+  height: var(--cta-height);
+  margin-top: 22px;
+  padding: 0 5px 0 18px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  font-size: var(--cta-font-size);
+  font-weight: var(--cta-font-weight);
+  letter-spacing: -0.01em;
+  color: var(--text);
+  transition:
+    background-color 240ms ease,
+    border-color 240ms ease;
+}
+
+.oe-live-link:hover {
+  border-color: var(--text);
+  background: color-mix(in srgb, var(--text) 6%, transparent);
+}
+
+.oe-live-link:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 3px;
+}
+
+.oe-hero-media {
+  position: relative;
+  min-height: 440px;
+  overflow: hidden;
+  border-radius: var(--radius-card);
+  background: var(--surface-elevated);
+}
+
+.oe-hero-media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Label-left, content-right rows */
+
+.oe-row {
+  display: grid;
+  grid-template-columns: var(--oe-label-col) minmax(0, 1fr);
+  gap: 48px;
+  padding: var(--oe-row-gap) 0;
+  border-top: 1px solid var(--border);
+}
+
+.oe-row-label {
+  margin: 0;
+  max-width: 14ch;
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  color: var(--text);
+}
+
+.oe-row-body {
+  min-width: 0;
+  max-width: 760px;
+}
+
+.oe-lead {
+  margin: 0 0 18px;
+  font-size: clamp(1.3rem, 2.3vw, 1.75rem);
+  font-weight: 500;
+  line-height: 1.34;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.oe-text {
+  margin: 0;
+  max-width: 60ch;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+.oe-text + .oe-text {
+  margin-top: 14px;
+}
+
+.oe-product-facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin: 36px 0 0;
+}
+
+.oe-product-facts > div {
+  padding: 18px 20px;
   border: 1px solid var(--border);
+  border-radius: 14px;
   background: var(--surface);
 }
 
-.cardinal-pillar-badge {
-  display: inline-block;
-  margin-bottom: 12px;
-  padding: 5px 11px;
-  border-radius: 999px;
-  background: var(--surface-hover);
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
+.oe-product-facts dd {
+  margin: 8px 0 0;
+  font-size: 0.98rem;
+  font-weight: 500;
+  line-height: 1.45;
+  color: var(--text);
+}
+
+/* The three disciplines */
+
+.oe-discipline-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.oe-discipline-number {
+  font-size: 0.82rem;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
   color: var(--text-secondary);
 }
 
-.cardinal-pillar h4 {
-  margin: 0 0 8px;
+.oe-discipline-name {
+  margin: 0;
   font-size: 1.06rem;
   font-weight: 600;
   letter-spacing: -0.01em;
   color: var(--text);
 }
 
-.cardinal-pillar > p {
-  margin: 0 0 14px;
-  font-size: 0.92rem;
-  line-height: 1.65;
-  color: var(--text-secondary);
+.oe-tag {
+  padding: 4px 11px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
+  background: var(--surface-elevated);
+  font-size: 0.74rem;
+  font-weight: 500;
+  color: var(--text-soft);
 }
 
-.cardinal-pillar-points {
-  display: grid;
-  gap: 8px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.cardinal-pillar-points li {
-  position: relative;
-  padding-left: 20px;
-  font-size: 0.88rem;
-  line-height: 1.55;
-  color: var(--text);
-}
-
-.cardinal-pillar-points li::before {
-  content: "";
-  position: absolute;
-  left: 3px;
-  top: 8px;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--text-secondary);
-}
-
-.cardinal-compare-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
-}
-
-.cardinal-compare-card {
-  padding: 22px;
-  border-radius: 14px;
-  border: 1px solid;
-}
-
-.cardinal-compare-card.is-before {
-  background: var(--tone-red-bg);
-  border-color: var(--tone-red-border);
-}
-
-.cardinal-compare-card.is-after {
-  background: var(--tone-green-bg);
+.oe-tag.is-engineering {
   border-color: var(--tone-green-border);
-}
-
-.cardinal-compare-tag {
-  display: block;
-  margin-bottom: 8px;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.cardinal-compare-card.is-before .cardinal-compare-tag {
-  color: var(--tone-red-text);
-}
-
-.cardinal-compare-card.is-after .cardinal-compare-tag {
+  background: var(--tone-green-bg);
   color: var(--tone-green-text);
 }
 
-.cardinal-compare-card h4 {
-  margin: 0 0 14px;
-  font-size: 0.98rem;
+.oe-discipline-heading {
+  margin: 0 0 22px;
+  font-size: clamp(1.4rem, 2.5vw, 1.9rem);
   font-weight: 600;
-  line-height: 1.45;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
   color: var(--text);
 }
 
-.cardinal-compare-card ul {
+.oe-points {
   display: grid;
-  gap: 9px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 32px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.cardinal-compare-card li {
-  position: relative;
-  padding-left: 16px;
-  font-size: 0.86rem;
-  line-height: 1.55;
-  color: var(--text);
+.oe-points li {
+  padding: 13px 0;
+  border-top: 1px solid var(--border);
+  font-size: 0.94rem;
+  line-height: 1.5;
+  color: var(--text-soft);
 }
 
-.cardinal-compare-card li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 8px;
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
+/* Product areas */
+
+.oe-areas {
+  margin: 0;
 }
 
-.cardinal-compare-card.is-before li::before {
-  background: var(--tone-red-solid);
-}
-
-.cardinal-compare-card.is-after li::before {
-  background: var(--tone-green-solid);
-}
-
-.cardinal-ai-grid {
+.oe-area {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 14px;
+  grid-template-columns: 200px minmax(0, 1fr);
+  gap: 24px;
+  padding: 16px 0;
+  border-top: 1px solid var(--border);
 }
 
-.cardinal-ai-card {
-  padding: 22px;
-  border-radius: 14px;
-  border: 1px solid var(--border);
-  background: var(--surface);
+.oe-area:first-child {
+  padding-top: 4px;
+  border-top: none;
 }
 
-.cardinal-ai-num {
-  display: block;
-  margin-bottom: 10px;
-  font-size: 1.5rem;
-  font-weight: 700;
-  letter-spacing: -0.03em;
-  color: var(--text-secondary);
-  line-height: 1;
+.oe-area:last-child {
+  padding-bottom: 0;
 }
 
-.cardinal-ai-card h4 {
-  margin: 0 0 8px;
+.oe-area dt {
   font-size: 0.98rem;
   font-weight: 600;
   letter-spacing: -0.01em;
   color: var(--text);
 }
 
-.cardinal-ai-card p {
+.oe-area dd {
   margin: 0;
+  font-size: 0.96rem;
+  line-height: 1.55;
+  color: var(--text-secondary);
+}
+
+/* Design → Develop → Refine */
+
+.oe-steps {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 28px;
+  padding: 0;
+  list-style: none;
+}
+
+.oe-step {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.oe-step-name {
+  padding: 10px 20px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-strong);
+  background: var(--surface);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+.oe-step-arrow {
+  width: 40px;
+  height: 12px;
+  flex: 0 0 auto;
+  color: var(--text-secondary);
+}
+
+/* Results */
+
+.oe-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  padding: var(--oe-row-gap) 0;
+  border-top: 1px solid var(--border);
+}
+
+.oe-metric {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 28px;
+  min-height: 168px;
+  padding: 22px;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.oe-metric-value {
+  font-size: clamp(2.2rem, 4.2vw, 3.3rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--text);
+}
+
+.oe-metric-value.is-text {
+  font-size: clamp(1.5rem, 2.6vw, 2.1rem);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+.oe-metric-value.is-positive {
+  color: var(--tone-green-solid);
+}
+
+.oe-metric-label {
   font-size: 0.88rem;
+  line-height: 1.4;
+  color: var(--text-secondary);
+}
+
+/* ==========================================================================
+   Shared case study template (ProjectDetailsPage in App.jsx): Discovery+,
+   Brightline, McDelivery, Al Maha. The hero reuses Order Express's (.oe-hero);
+   below it, each section is a small uppercase label over its content, with
+   a hairline between sections. The project-specific sections (personas,
+   journey maps and so on) keep their own layouts and pick up the label.
+   ========================================================================== */
+
+.cs2-hero {
+  padding-bottom: 56px;
+}
+
+.cs2-hero .oe-title {
+  max-width: 20ch;
+  font-size: clamp(1.7rem, 3.3vw, 2.6rem);
+}
+
+.cs2-hero .oe-tagline {
+  max-width: 44ch;
+  font-size: clamp(1.05rem, 1.5vw, 1.22rem);
+  line-height: 1.42;
+  letter-spacing: -0.012em;
+}
+
+.cs2-hero .oe-hero-description {
+  margin-bottom: 16px;
+}
+
+/* The same gap above the facts whether or not there is a description. */
+.cs2-hero .oe-facts {
+  margin-top: 16px;
+}
+
+.cs2-logo {
+  height: 34px;
+  max-width: 180px;
+  object-fit: contain;
+  object-position: left center;
+}
+
+.cs2-hero-cta {
+  margin-top: 24px;
+}
+
+.case-study-main .project-summary-divider {
+  margin: 48px 0;
+}
+
+/* Sections and the project-specific groups each bring a divider; where two
+   meet, one is enough. */
+.case-study-main .project-summary-divider + .project-summary-divider {
+  display: none;
+}
+
+.cs2-section {
+  margin: 0;
+}
+
+.cs2-eyebrow,
+.case-study-main .discovery-section-label,
+.case-study-main .almaha-section-number {
+  display: block;
+  margin: 0 0 18px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+/* Impact */
+
+.cs2-impact-heading {
+  margin: 0;
+  font-size: clamp(1.6rem, 2.9vw, 2.4rem);
+  font-weight: 600;
+  line-height: 1.16;
+  letter-spacing: -0.035em;
+  color: var(--text);
+}
+
+.cs2-metrics {
+  display: grid;
+  margin-top: 32px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.cs2-metric {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: 148px;
+  padding: 22px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+}
+
+.cs2-metric-value {
+  font-size: clamp(2rem, 3.4vw, 2.8rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--text);
+}
+
+.cs2-metric-value.is-text {
+  font-size: clamp(1.25rem, 1.9vw, 1.55rem);
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+}
+
+.cs2-metric-label {
+  font-size: 0.88rem;
+  line-height: 1.4;
+  color: var(--text-secondary);
+}
+
+.cs2-metric-label span {
+  display: block;
+}
+
+/* Text sections */
+
+.cs2-lead {
+  max-width: 62ch;
+  margin: 0;
+  font-size: clamp(1.12rem, 1.65vw, 1.38rem);
+  line-height: 1.5;
+  letter-spacing: -0.015em;
+  color: var(--text);
+}
+
+.cs2-callout {
+  padding: 28px 32px;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--brand);
+  border-radius: 4px var(--radius-card) var(--radius-card) 4px;
+  background: var(--surface);
+}
+
+.cs2-callout p {
+  max-width: 68ch;
+  margin: 0;
+  font-size: 1.02rem;
+  line-height: 1.68;
+  color: var(--text);
+}
+
+.cs2-intro {
+  margin: 0 0 16px;
+  font-size: 0.98rem;
   line-height: 1.6;
   color: var(--text-secondary);
 }
 
-@media (max-width: 900px) {
-.cardinal-context-grid,
-.cardinal-ai-grid,
-.cardinal-compare-grid {
+.cs2-subhead {
+  margin: 32px 0 14px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+/* Lists: numbered rows, plain rows, ticked rows. All two columns. */
+
+.cs2-numbered,
+.cs2-points,
+.cs2-checks {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 32px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cs2-numbered li {
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr);
+  align-items: baseline;
+  padding: 15px 0;
+  border-top: 1px solid var(--border);
+}
+
+.cs2-number {
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--text-secondary);
+}
+
+.cs2-numbered p {
+  margin: 0;
+  font-size: 0.96rem;
+  line-height: 1.5;
+  color: var(--text);
+}
+
+.cs2-points li {
+  padding: 13px 0;
+  border-top: 1px solid var(--border);
+  font-size: 0.94rem;
+  line-height: 1.5;
+  color: var(--text-soft);
+}
+
+.cs2-checks {
+  gap: 12px 32px;
+}
+
+.cs2-checks li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.96rem;
+  line-height: 1.5;
+  color: var(--text);
+}
+
+.cs2-checks i {
+  flex: none;
+  font-size: 1.1rem;
+  line-height: 1.35;
+  color: var(--tone-green-solid);
+}
+
+/* Cards: process steps and improvements */
+
+.cs2-steps,
+.cs2-cards {
+  display: grid;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cs2-steps {
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+}
+
+.cs2-cards {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.cs2-step,
+.cs2-card {
+  padding: 22px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--surface);
+}
+
+.cs2-step-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+
+.cs2-step-icon {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--surface-elevated);
+  color: var(--text);
+}
+
+.cs2-step-icon svg {
+  width: 17px;
+  height: 17px;
+}
+
+.cs2-step h3,
+.cs2-card h3 {
+  margin: 0 0 8px;
+  font-size: 1.02rem;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+.cs2-step p,
+.cs2-card p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+/* The closing statement, on the site's dark. */
+
+.cs2-section.cs2-closing-wrap {
+  margin-top: 56px;
+}
+
+.cs2-closing {
+  padding: clamp(28px, 4vw, 44px);
+  border-radius: var(--radius-card);
+  background: var(--dark);
+}
+
+.cs2-closing .cs2-eyebrow {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.cs2-closing p {
+  max-width: 44ch;
+  margin: 0;
+  font-size: clamp(1.15rem, 1.9vw, 1.5rem);
+  font-weight: 500;
+  line-height: 1.42;
+  letter-spacing: -0.02em;
+  color: #FFFFFF;
+}
+
+@media (max-width: 760px) {
+  .case-study-main .project-summary-divider {
+    margin: 36px 0;
+  }
+
+  .cs2-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .cs2-metric {
+    min-height: 124px;
+    padding: 18px;
+  }
+
+  .cs2-numbered,
+  .cs2-points,
+  .cs2-checks,
+  .cs2-cards {
     grid-template-columns: 1fr;
+  }
+
+  .cs2-callout {
+    padding: 22px;
   }
 }
 
-/* Confidentiality note, AI aside, and learnings list */
+/* Confidentiality note: a badge, then the text running on beside it. */
+
+.oe-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px 20px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.oe-note-badge {
+  flex: 0 0 auto;
+  margin: 0;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-hover);
+  font-size: 0.66rem;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--text-secondary);
+}
+
+.oe-note p {
+  margin: 0;
+  font-size: 0.86rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 1020px) {
+.oe-case {
+    --oe-label-col: 220px;
+  }
+
+.oe-hero {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding-bottom: 56px;
+  }
+
+.oe-hero-media {
+    min-height: 0;
+    aspect-ratio: 16 / 10;
+  }
+
+.oe-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+.oe-case {
+    --oe-row-gap: 40px;
+  }
+
+.oe-row {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+.oe-note {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+.oe-row-label {
+    max-width: none;
+  }
+
+.oe-points,
+.oe-product-facts {
+    grid-template-columns: 1fr;
+  }
+
+.oe-area {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+
+.oe-fact {
+    grid-template-columns: 88px minmax(0, 1fr);
+  }
+
+.oe-metric {
+    min-height: 132px;
+    padding: 18px;
+  }
+
+.oe-step-arrow {
+    width: 24px;
+  }
+}
+
+/* Confidentiality note */
 
 .case-section-disclaimer {
   margin-top: -6px;
@@ -5051,65 +5663,10 @@ hr {
   color: var(--text-secondary) !important;
 }
 
-.cardinal-ai-note {
-  margin: 16px 0 0;
-  padding: 16px 20px;
-  border-radius: 14px;
-  border: 1px solid var(--border);
-  background: var(--surface-soft);
-  font-size: 0.88rem;
-  line-height: 1.65;
-  color: var(--text);
-}
-
-.cardinal-learning-list {
-  display: grid;
-  gap: 14px;
-}
-
-.cardinal-learning-card {
-  display: grid;
-  grid-template-columns: 46px minmax(0, 1fr);
-  gap: 16px;
-  padding: 22px 24px;
-  border-radius: 16px;
-  border: 1px solid var(--border);
-  background: var(--surface);
-}
-
-.cardinal-learning-num {
-  font-size: 1.15rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  color: var(--text-secondary);
-  line-height: 1.4;
-}
-
-.cardinal-learning-card h4 {
-  margin: 0 0 8px;
-  font-size: 1rem;
-  font-weight: 600;
-  line-height: 1.45;
-  letter-spacing: -0.01em;
-  color: var(--text);
-}
-
-.cardinal-learning-card p {
-  margin: 0;
-  font-size: 0.9rem;
-  line-height: 1.65;
-  color: var(--text-secondary);
-}
-
 @media (max-width: 640px) {
 .case-disclaimer {
     flex-direction: column;
     gap: 10px;
-  }
-
-.cardinal-learning-card {
-    grid-template-columns: 1fr;
-    gap: 6px;
   }
 }
 
@@ -8657,24 +9214,50 @@ button.hero-dock-item {
 }
 
 .hero-curtain > .hx,
-.hero-curtain > .px-section {
+.hero-curtain > .px-pin {
   margin-inline: calc((100% - (100vw - var(--scrollbar-width, 0px))) / 2);
 }
 
 /* ── From pixels to products (PixelsSection.jsx) ──
    Slides up over the pinned hero, opaque, so it reads as a sheet laid on
-   top. The heading fades up and the reel grows to full size as it comes in,
-   scrubbed by the scroll (--px-head, --px-in). */
+   top. The heading fades up and the diagram grows to full size as it comes
+   in, scrubbed by the scroll (--px-head, --px-in). Once it fills the screen
+   it holds for --px-hold more of scroll (the section sticks inside the
+   taller .px-pin), then the page moves on. */
+.px-pin {
+  --px-hold: 75svh;
+  position: relative;
+  z-index: 1;
+  height: calc(100svh + var(--px-hold));
+  background: var(--bg);
+}
+
 .px-section {
   --px-head: 0;
   --px-in: 0;
-  position: relative;
-  z-index: 1;
+  position: sticky;
+  top: 0;
   display: grid;
   justify-items: center;
+  align-content: center;
   gap: clamp(32px, 5vh, 56px);
-  padding: clamp(72px, 12vh, 120px) 24px calc(var(--section-gap) / 2);
+  min-height: 100svh;
+  padding: clamp(84px, 11vh, 120px) 24px clamp(32px, 6vh, 60px);
   background: var(--bg);
+}
+
+/* Phones and short windows: the diagram can be taller than the screen, so
+   there is no hold; the section just scrolls through. */
+@media (max-width: 700px), (max-height: 800px) {
+  .px-pin {
+    height: auto;
+  }
+
+  .px-section {
+    position: relative;
+    min-height: 0;
+    padding-bottom: calc(var(--section-gap) / 2);
+  }
 }
 
 .px-header {
@@ -8707,51 +9290,198 @@ button.hero-dock-item {
   color: var(--text);
 }
 
-/* The design's box (about 6:7): 40% down on the 648px it was. */
-.px-reel {
-  width: min(389px, 100%);
-}
-
-.px-reel-frame {
-  position: relative;
-  aspect-ratio: 6 / 7;
-  overflow: hidden;
-  border-radius: calc((1 - var(--px-in)) * 28px + 2px);
-  background: #D9D9D9;
-  transform: scale(calc(0.84 + var(--px-in) * 0.16));
+/* The workflow diagram (PixelsPipeline). No panel: dark boxes straight on
+   the page, joined by dashed connectors. Positions are shares of a
+   760 x 280 grid; the boxes themselves are a fixed 48px (40px for the two
+   side ones). */
+.px-flow {
+  width: min(760px, 100%);
+  transform: scale(calc(0.92 + var(--px-in) * 0.08));
   transform-origin: 50% 0;
 }
 
-/* One layer per image; a cut shows one and hides the rest (no fade). */
-.px-reel-shot {
+.px-flow-canvas {
+  position: relative;
+  aspect-ratio: 760 / 280;
+}
+
+.px-flow-lines {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  visibility: hidden;
+  overflow: visible;
 }
 
-.px-reel-shot.is-on {
-  visibility: visible;
+.px-flow-lines.is-tall {
+  display: none;
 }
 
-/* The fixed caption: one small line in the middle, white, with a faint
-   band behind it so it reads over the light shots too. */
-.px-reel-caption {
+/* Dashed connectors, appearing one after another. */
+.px-flow-line {
+  stroke: color-mix(in srgb, var(--text) 38%, transparent);
+  stroke-width: 1.25;
+  stroke-dasharray: 3 4;
+  vector-effect: non-scaling-stroke;
+  opacity: 0;
+  transition: opacity 900ms ease calc(var(--step) * 420ms + 300ms);
+}
+
+.px-flow.is-drawn .px-flow-line {
+  opacity: 1;
+}
+
+/* The moving circles: a stream of orange dots on each connector. Each
+   slides from the connector's start to its end (--dx/--dy), fading in as it
+   leaves one box and out as it reaches the next, and loops forever; the
+   delays set in the markup space them out one behind another. Real circles
+   moved with transforms, so it runs the same in every browser. The stream
+   as a whole fades in once the connectors are in. */
+.px-flow-dots {
+  opacity: 0;
+  transition: opacity 700ms ease calc(var(--step) * 420ms + 900ms);
+}
+
+.px-flow.is-drawn .px-flow-dots {
+  opacity: 1;
+}
+
+.px-flow-dot {
+  fill: var(--brand);
+  animation: px-flow-move var(--dur) linear infinite;
+}
+
+@keyframes px-flow-move {
+  0% {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+  14%,
+  86% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--dx), var(--dy));
+    opacity: 0;
+  }
+}
+
+/* A node is anchored on its box's centre; the label hangs underneath. */
+.px-flow-node {
+  --box: 48px;
   position: absolute;
-  inset: 0;
+  left: calc(var(--x) * 100%);
+  top: calc(var(--y) * 100%);
+  width: var(--box);
+  height: var(--box);
+  translate: -50% -50%;
+  opacity: 0;
+  scale: 0.86;
+  transition:
+    opacity 700ms ease calc(var(--step) * 420ms),
+    scale 900ms var(--ease-premium) calc(var(--step) * 420ms);
+}
+
+/* The two side boxes. */
+.px-flow-node.is-small {
+  --box: 40px;
+}
+
+.px-flow.is-drawn .px-flow-node {
+  opacity: 1;
+  scale: 1;
+}
+
+.px-flow-box {
   display: grid;
-  place-content: center;
-  margin: 0;
-  background: linear-gradient(to bottom, transparent 38%, rgba(0, 0, 0, 0.18) 50%, transparent 62%);
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  border-radius: calc(var(--box) * 0.25);
+  background: var(--dark);
   color: #FFFFFF;
-  font-size: 0.72rem;
+  font-size: calc(var(--box) * 0.46);
+  line-height: 1;
+  transition:
+    translate 420ms var(--ease-premium),
+    box-shadow 420ms ease;
+}
+
+.px-flow-box svg {
+  display: block;
+  width: auto;
+  height: 46%;
+}
+
+.px-flow-node:hover .px-flow-box {
+  translate: 0 -3px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.16);
+}
+
+/* The last stop is the one brand-coloured box. */
+.px-flow-node.is-live .px-flow-box {
+  background: var(--brand);
+  color: var(--on-brand);
+}
+
+.px-flow-label {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  translate: -50% 0;
+  margin-top: 8px;
+  font-size: 0.8rem;
   font-weight: 500;
-  line-height: 1.15;
-  text-align: center;
-  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.25);
-  pointer-events: none;
+  letter-spacing: -0.005em;
+  white-space: nowrap;
+  color: var(--text);
+}
+
+/* On the wide diagram the side boxes' labels sit beside them, clear of the
+   connectors. */
+@media (min-width: 701px) {
+  .px-flow-node.is-small .px-flow-label {
+    top: 50%;
+    left: 100%;
+    translate: 0 -50%;
+    margin: 0 0 0 10px;
+  }
+}
+
+/* Phones: the same route, top to bottom, on a 400 x 720 grid. */
+@media (max-width: 700px) {
+  .px-flow {
+    width: min(340px, 100%);
+  }
+
+  .px-flow-canvas {
+    aspect-ratio: 400 / 720;
+  }
+
+  .px-flow-lines.is-wide {
+    display: none;
+  }
+
+  .px-flow-lines.is-tall {
+    display: block;
+  }
+
+  .px-flow-node {
+    left: calc(var(--tx) * 100%);
+    top: calc(var(--ty) * 100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .px-flow-line,
+  .px-flow-node {
+    opacity: 1;
+    scale: 1;
+  }
+
+  .px-flow-dots {
+    display: none;
+  }
 }
 
 .hx-resume-wrap {
@@ -8829,6 +9559,39 @@ button.hero-dock-item {
   position: relative;
   display: block;
   white-space: nowrap;
+}
+
+/* Entrance: each line rises out of a mask (the end state leaves room for
+   descenders), the second a beat after the first. */
+.hx-line {
+  animation: hx-line-in 1.1s var(--ease-premium) 0.14s backwards;
+}
+
+.hx-line-bottom {
+  animation-delay: 0.3s;
+}
+
+@keyframes hx-line-in {
+  from {
+    clip-path: inset(0 -0.1em 100% -0.1em);
+    transform: translateY(0.55em);
+  }
+  to {
+    clip-path: inset(-0.25em -0.1em -0.25em -0.1em);
+    transform: none;
+  }
+}
+
+/* The keyboard then settles in from just above, tipped back a little. */
+.hx-kb-img {
+  animation: hx-kb-in 1.4s var(--ease-premium) 0.42s backwards;
+}
+
+@keyframes hx-kb-in {
+  from {
+    opacity: 0;
+    transform: translateY(-34px) scale(0.93) rotateX(22deg);
+  }
 }
 
 .hx-line-top {
@@ -9310,7 +10073,7 @@ button.hero-dock-item {
 .cs-shade {
   position: absolute;
   inset: 0;
-  background: var(--brand);
+  background: var(--dark);
   opacity: var(--cs-dark, 0);
 }
 
@@ -10287,5 +11050,88 @@ button.hero-dock-item {
 @media (max-width: 560px) {
   .ab-edu-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   Cursor ring (CursorFollower.jsx)
+   Trails the pointer; the system cursor stays. The outer element only moves
+   (transform set from JS); the shape inside does the sizing and colour.
+   ========================================================================== */
+
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9995;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 280ms ease;
+  will-change: transform;
+}
+
+.cursor-ring.is-on {
+  opacity: 1;
+}
+
+.cursor-ring.is-typing {
+  opacity: 0;
+}
+
+.cursor-ring-shape {
+  --size: 30px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: grid;
+  place-items: center;
+  width: var(--size);
+  height: var(--size);
+  translate: -50% -50%;
+  border: 1px solid color-mix(in srgb, var(--text) 38%, transparent);
+  border-radius: 50%;
+  background: transparent;
+  transition:
+    width 380ms var(--ease-premium),
+    height 380ms var(--ease-premium),
+    scale 220ms var(--ease-premium),
+    background-color 280ms ease,
+    border-color 280ms ease;
+}
+
+/* Over anything clickable: wider, in the brand colour, faintly filled. */
+.cursor-ring.is-link .cursor-ring-shape {
+  --size: 46px;
+  border-color: color-mix(in srgb, var(--brand) 70%, transparent);
+  background: color-mix(in srgb, var(--brand) 9%, transparent);
+}
+
+/* Over [data-cursor]: a solid disc carrying the element's word. */
+.cursor-ring.is-label .cursor-ring-shape {
+  --size: 68px;
+  border-color: var(--ink);
+  background: var(--ink);
+}
+
+.cursor-ring.is-down .cursor-ring-shape {
+  scale: 0.84;
+}
+
+.cursor-ring-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #FFFFFF;
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+
+.cursor-ring.is-label .cursor-ring-label {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce), (hover: none), (pointer: coarse) {
+  .cursor-ring {
+    display: none;
   }
 }
