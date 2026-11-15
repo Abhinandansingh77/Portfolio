@@ -67,6 +67,7 @@ function WorkRow({ item, index, onOpen, onViewAll }) {
             <div className="ws-center">
               <a
                 className="ws-card"
+                data-cursor="View"
                 href={`/projects/${item.slug}`}
                 aria-label={`${item.title}: view case study`}
                 onClick={(event) => {
@@ -105,7 +106,7 @@ export function WorkShowcase({ items, onOpen, onViewAll }) {
 
   const heading = (
     <header className="ws-head">
-      <h2 className="ws-title">Things I&rsquo;ve helped bring to life.</h2>
+      <h2 className="ws-title">Selected work</h2>
       <p className="ws-sub">
         Selected digital products, interfaces, and
         <br />
@@ -123,6 +124,7 @@ export function WorkShowcase({ items, onOpen, onViewAll }) {
             <li key={item.slug} className="ws-list-item">
               <a
                 className="ws-card"
+                data-cursor="View"
                 href={`/projects/${item.slug}`}
                 aria-label={`${item.title}: view case study`}
                 onClick={(event) => {

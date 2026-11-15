@@ -10,6 +10,8 @@ import { WorkShowcase } from "./WorkShowcase.jsx";
 import { CreativeStack } from "./CreativeStack.jsx";
 import { CtaIcon } from "./CtaIcon.jsx";
 import { Reveal } from "./Reveal.jsx";
+import OrderExpressCaseStudy from "./OrderExpressCaseStudy.jsx";
+import { CursorFollower } from "./CursorFollower.jsx";
 import { LogoRail } from "./LogoRail.jsx";
 import { AboutPage } from "./AboutPage.jsx";
 import { ApproachStack } from "./ApproachStack.jsx";
@@ -457,277 +459,6 @@ const mcdeliveryCaseStudy = {
   ],
   whyThisMatters:
     "This project demonstrates my ability to design high-frequency consumer products where speed, clarity, and conversion directly impact business performance. It highlights my understanding of user behavior in fast decision-making environments.",
-};
-
-const cardinalHealthCaseStudy = {
-  hideVisualsLink: true,
-  projectTitle: "Order Express: A home for zero-error medicine ordering",
-  projectTagline:
-    "A design case study of simplifying procurement for 100,000+ healthcare professionals.",
-  heroSubtitle:
-    "Redesigning a large-scale healthcare procurement backbone built for pharmacies and hospital procurement teams.",
-  disclaimer:
-    "Before we dive in, I want to note that, in compliance with my confidentiality agreement, I've omitted proprietary business data and internal materials from this case study. The insights shared here are my own and don't necessarily represent the views of Cardinal Health.",
-  quickInfo: [
-    { label: "Role", value: "Lead / Senior Product Designer" },
-    { label: "Timeline", value: "6 Months" },
-    { label: "Platform", value: "Web / Enterprise Desktop Application" },
-    {
-      label: "Scope",
-      value: "Workflow Analysis, Information Architecture, UI Systems, AI Prototyping",
-    },
-    {
-      label: "Skills",
-      value: "Figma, React Prototyping, Design Systems, Keyboard Accessibility",
-    },
-  ],
-  sectionHeading:
-    "Eliminating ambiguity and streamlining procurement for 100,000+ healthcare products.",
-  highlightMetrics: [
-    "100K+ Healthcare Products",
-    { value: "+28%", label: "Order Completion", secondLine: "Rate" },
-    { value: "-25%", label: "High-Risk", secondLine: "Errors" },
-    { value: "-35%", label: "Design-to-Dev", secondLine: "Handoff" },
-    "40+ Screens Redesigned",
-    { value: "WCAG 2.1 AA", label: "Accessibility", secondLine: "Compliance", primaryValue: true },
-  ],
-  overview:
-    "Order Express is the ordering and inventory backbone Cardinal Health built for pharmacies and hospital procurement teams - the system that decides whether a hospital ward has the medication it needs, when it needs it. It handles everything from routine restocks to time-critical ICU orders, across a catalog of 100,000+ healthcare products. The platform had grown for over a decade, and every new integration got bolted onto the same interface. By the time I joined it was still doing its job, but at a cost: pharmacy directors and clinical buyers were spending more time fighting the tool than managing their supply chain.",
-  problemStatement:
-    "Cardinal Health's own data pointed to where the friction actually lived. 78% of order delays traced back to confusing error states during bulk CSV uploads, and 42% of support tickets were people trying to locate a split shipment invoice. Both point to the same root problem: the system told users something was wrong after they had already done the work. Every redesign decision after that tried to move the feedback earlier - ideally before the user hit a wall at all.",
-  goals: [
-    "Eliminate ambiguity in high-volume ordering with real-time inventory truth",
-    "Catch errors before submission, not after",
-    "Make complexity legible across 100,000+ SKUs, multiple wards, and approval chains",
-    "Move system feedback earlier in every critical flow",
-    "Ship WCAG 2.1 AA with keyboard-first navigation as a speed feature",
-  ],
-  roleItems: [
-    "Workflow analysis with pharmacy directors and clinical buyers",
-    "Information architecture for ordering, inventory, and reporting",
-    "Wireframing across 40+ screens",
-    "High-fidelity UI design and interaction states",
-    "Design system, status tokens, and documentation",
-    "AI-assisted prototyping and developer handoff",
-    "Close work with product, engineering, support, and compliance",
-  ],
-  contextCards: [
-    {
-      title: "High-Stakes Clinical Environment",
-      description:
-        "Unlike a typical e-commerce checkout, a mistake here isn't a returned package. It's a wrong dosage on a hospital floor, a stockout during a patient emergency, or a compliance flag on a controlled substance.",
-    },
-    {
-      title: "Ten Years of Features, One Screen",
-      description:
-        "Warehouse inventory, drug registries, split-shipment logistics, and multi-level approvals were each bolted onto the same interface over a decade.",
-    },
-    {
-      title: "100,000+ Healthcare Products",
-      description:
-        "Routine restocks and time-critical ICU orders run through the same catalog, for pharmacy directors, clinical buyers, and hospital procurement teams.",
-    },
-  ],
-  researchIntro:
-    "I talked to the people who order under pressure - pharmacy directors, clinical buyers, and health system supply chain managers. Twenty hours of transcripts were synthesised into a friction map that told us exactly where the platform was losing people.",
-  researchStats: [
-    { value: "78%", label: "Order delays from unclear errors" },
-    { value: "42%", label: "Tickets on split invoices" },
-    { value: "20+", label: "Hours of transcripts" },
-    { value: "40+", label: "Screens audited" },
-  ],
-  researchQuotes: [
-    {
-      quote: "Ordering critical medication shouldn't feel like filling out a 1998 tax form.",
-      name: "Pharmacy Director",
-      role: "Regional Acute Care Network",
-      tag: "Pain: legacy workflow",
-      tagClass: "tag-pain",
-    },
-    {
-      quote: "If an item is out of stock, tell me before I spend 20 minutes building an order.",
-      name: "Clinical Buyer",
-      role: "Health System Supply Chain",
-      tag: "Need: live inventory",
-      tagClass: "tag-need",
-    },
-  ],
-  keyFindings: [
-    {
-      label: "Core root problem",
-      text: "The system told users something was wrong after they'd already done the work. Every redesign decision after this tried to move that feedback earlier - ideally, before the user even hit a wall.",
-      variant: "insight-gap",
-    },
-    {
-      label: "Two concrete brief goals",
-      text: "Eliminate ambiguity in high-volume ordering, and make complexity legible. 100,000+ SKUs, multiple wards, multiple approval chains - none of that should require a tutorial.",
-      variant: "insight-opportunity",
-    },
-  ],
-  pillars: [
-    {
-      badge: "Pillar 01",
-      title: "Real-time inventory & smart search",
-      description:
-        "Search now understands intent, not just exact matches - NDC codes, drug names, fuzzy spelling. When something's backordered, the system immediately surfaces a generic equivalent instead of a dead end.",
-      points: [
-        "Fuzzy search that understands NDC codes and drug names",
-        "Live warehouse availability on every result",
-        "Generic equivalents surfaced the moment an item is backordered",
-      ],
-    },
-    {
-      badge: "Pillar 02",
-      title: "A checkout that catches mistakes before you do",
-      description:
-        "Bulk ordering used to be a rigid five-step flow where an error on step two meant starting over. I redesigned it into a single-page drawer with inline, line-item validation - so a pharmacist ordering for three different hospital wards can split, correct, and confirm without ever leaving the page.",
-      points: [
-        "Inline, line-item validation with one-click correction",
-        "Split one cart across ICU, ER, and Surgery on a single screen",
-        "Average order completion dropped to under 8 minutes",
-      ],
-    },
-    {
-      badge: "Pillar 03",
-      title: "A design system built for density, not decoration",
-      description:
-        "This isn't a consumer app - it's dense data tables, status tokens, and multi-role permissions used all day, every day. I built a WCAG 2.1 AA-compliant component library so that “Approved,” “Backordered,” and “Split Ship” mean the same thing everywhere in the product, for every role.",
-      points: [
-        "Status and density tokens shared with the frontend codebase",
-        "One vocabulary for every state, across every role",
-        "Full keyboard navigation and contrast compliance",
-      ],
-    },
-  ],
-  beforeAfter: {
-    label: "Bulk checkout - before vs after",
-    before: {
-      tag: "Before - legacy system",
-      title: "Five-step fragmented modal with hidden errors",
-      points: [
-        "Five separate modals - an error on step two meant starting over",
-        "CSV upload errors wiped the whole cart with no line-item highlighting",
-        "No multi-ward routing - four departments meant four separate orders",
-        "Average completion: 35 to 45 minutes per order",
-      ],
-    },
-    after: {
-      tag: "After - redesigned system",
-      title: "Single-page progressive drawer with real-time error callouts",
-      points: [
-        "Inline validation with one-click auto-correction at line-item level",
-        "Multi-location ward splitting from a single master cart",
-        "Proactive split-shipment calculation with clear delivery ETAs",
-        "Average completion: under 8 minutes",
-      ],
-    },
-  },
-  aiWorkflow: {
-    heading: "Designing at enterprise scale, faster",
-    intro:
-      "Forty-plus screens across a system this complex used to mean weeks of manual spec work. I brought AI-native tools into the process itself.",
-    items: [
-      {
-        title: "Accelerated ideation",
-        description:
-          "Synthesised 20+ hours of user interview transcripts into workflow friction maps instead of doing it by hand.",
-      },
-      {
-        title: "Live interactive prototypes",
-        description:
-          "Built working prototypes in code (not just static mocks) so pharmacists could test real filtering and table behavior, not a simulation of it.",
-      },
-      {
-        title: "Automated token handoff",
-        description:
-          "Generated design tokens directly in developer-ready format, cutting handoff friction by roughly a third.",
-      },
-    ],
-    note: "The tools changed how fast I could get from insight to a testable prototype. They didn't change the judgment calls - which workflow to prioritize, what “done” looks like for a pharmacist mid-shift - that part stayed mine.",
-  },
-  learnings: [
-    {
-      number: "#1",
-      title: "In enterprise, density isn't the enemy. Ambiguity is.",
-      description:
-        "I went in assuming we'd need to simplify by removing information. What users actually wanted was more information, organized with a clear hierarchy - scannable tables beat minimalist cards for this audience.",
-    },
-    {
-      number: "#2",
-      title: "Every “improvement” is a risk when money and medicine are involved.",
-      description:
-        "Small changes - a different error message, a reordered field - could ripple into real clinical workflows. Working closely with support and compliance teams early kept us from shipping something technically better but operationally dangerous.",
-    },
-    {
-      number: "#3",
-      title: "Keyboard access isn't a checkbox here, it's a workflow requirement.",
-      description:
-        "Pharmacy staff building large orders rely on keyboard navigation to move fast. Accessibility work doubled as a speed improvement.",
-    },
-  ],
-  process: [
-    {
-      title: "Workflow Analysis",
-      description:
-        "Mapped end-to-end journeys across ordering, inventory tracking, and billing with procurement teams to locate every friction point.",
-    },
-    {
-      title: "Research & Synthesis",
-      description:
-        "Synthesised 20+ hours of interview transcripts into a prioritised friction map, and traced each pain point back to a root cause.",
-    },
-    {
-      title: "Architecture & Wireframing",
-      description:
-        "Restructured the information architecture and wireframed ordering, inventory, and dashboard flows across 40+ screens.",
-    },
-    {
-      title: "System Design & Validation",
-      description:
-        "Built the component library and validated complex table and checkout flows with live coded prototypes before handoff.",
-    },
-  ],
-  improvements: [
-    {
-      title: "Search That Understands Intent",
-      description:
-        "NDC codes, drug names, and fuzzy spelling all resolve, with live availability on every result.",
-    },
-    {
-      title: "Checkout That Catches Mistakes Early",
-      description:
-        "A single-page drawer with line-item validation replaced the rigid five-step modal flow.",
-    },
-    {
-      title: "One Vocabulary Across Every Role",
-      description:
-        "Status tokens mean the same thing in every module, for every permission level.",
-    },
-    {
-      title: "Keyboard-First Speed",
-      description:
-        "Full keyboard navigation turned an accessibility requirement into a throughput gain for pharmacy staff.",
-    },
-  ],
-  outcome:
-    "The redesign moved the numbers that matter in a procurement system: more completed orders, fewer high-risk mistakes, and a faster path from design to production. It shipped fully WCAG 2.1 AA compliant with complete keyboard navigation support.",
-  expectedImpact: [
-    "+28% order completion rate boost across regional hospital networks",
-    "-25% reduction in high-risk ordering errors: wrong dosage, duplicate orders, invalid NDCs",
-    "-35% faster design-to-development handoff",
-    "Average order completion down from 35-45 minutes to under 8 minutes",
-    "Fully WCAG 2.1 AA compliant with complete keyboard navigation support",
-  ],
-  visualStrategyTitle: "System Thinking",
-  galleryCaptions: [
-    "Ordering flow diagrams showing product search, cart, approval, and checkout decisions",
-    "Inventory flow diagrams for stock tracking, auditing, and reorder behavior",
-    "Dashboard structure wireframes for expenses, invoices, orders, and inventory health",
-    "Component system breakdown for tables, filters, status states, forms, and validation",
-    "Before vs After workflow comparison focused on reducing steps and cognitive load",
-  ],
-  whyThisMatters:
-    "“In enterprise B2B, density is not the enemy - ambiguity is. High-volume workflows thrive on clear visual hierarchy, scannable data tables, and keyboard accessibility.” Designing for critical healthcare operations reinforced that every bit of cognitive friction removed from a procurement screen translates into safer, faster hospital operations.",
 };
 
 const brightlineCaseStudy = {
@@ -2232,13 +1963,13 @@ function HomeHero() {
             I&rsquo;m Abhinandan Singh, a Product Engineer
           </p>
         </Reveal>
-        <Reveal delay={120}>
-          <h1 className="hx-title" aria-label="Design-Minded, Code Driven">
-            <span className="hx-line hx-line-top">Design-Minded</span>
-            <HeroKeyboard />
-            <span className="hx-line hx-line-bottom">Code Driven</span>
-          </h1>
-        </Reveal>
+        {/* The headline has its own entrance (hx-line-in, hx-kb-in): each
+            line rises out of a mask, then the keyboard settles between them. */}
+        <h1 className="hx-title" aria-label="Design-Minded, Code Driven">
+          <span className="hx-line hx-line-top">Design-Minded</span>
+          <HeroKeyboard />
+          <span className="hx-line hx-line-bottom">Code Driven</span>
+        </h1>
       </div>
 
       <Reveal className="hx-quote-wrap" delay={320}>
@@ -2372,6 +2103,7 @@ function WorksRow({ item, index }) {
             <button
               type="button"
               className="project-row-link"
+              data-cursor="View"
               onClick={() => navigateTo(`/projects/${item.slug}`)}
               aria-label={`View ${item.title} case study`}
             />
@@ -2996,9 +2728,8 @@ function ProjectDetailsPage({ project, projectSlug, onOpenPdf }) {
   const isAlMaha = project?.slug === "al-maha-island-lusail";
   const isMcDelivery = project?.slug === "mcdelivery-experience-design";
   const isBrightline = project?.slug === "brightline-future-travel";
-  const caseStudy = isCardinalHealth
-    ? cardinalHealthCaseStudy
-    : isDiscoveryPlus
+  /* Cardinal Health renders its own page (OrderExpressCaseStudy) below. */
+  const caseStudy = isDiscoveryPlus
       ? discoveryPlusCaseStudy
       : isAlMaha
         ? alMahaCaseStudy
@@ -3039,15 +2770,6 @@ function ProjectDetailsPage({ project, projectSlug, onOpenPdf }) {
       );
     }
 
-    if (isCardinalHealth) {
-      items.push(
-        { id: "cs-research", label: "Research", icon: "research" },
-        { id: "cs-pillars", label: "The Solution", icon: "solution" },
-        { id: "cs-ai", label: "AI Workflow", icon: "ai" },
-        { id: "cs-takeaways", label: "Key Learnings", icon: "learnings" },
-      );
-    }
-
     items.push({ id: "cs-process", label: "Design Process", icon: "process" });
 
     if (isDiscoveryPlus || isAlMaha) {
@@ -3070,11 +2792,32 @@ function ProjectDetailsPage({ project, projectSlug, onOpenPdf }) {
     );
 
     return items;
-  }, [caseStudy, isAlMaha, isDiscoveryPlus, isCardinalHealth]);
+  }, [caseStudy, isAlMaha, isDiscoveryPlus]);
 
   const { activeId: activeCaseSection, selectSection } = useActiveCaseSection(
     caseNavItems.map((item) => item.id),
   );
+
+  if (isCardinalHealth) {
+    return (
+      <div className="page-view">
+        <section className="project-detail-section">
+          <Reveal as="p" className="section-kicker">
+            <button type="button" className="kicker-back-button" onClick={() => navigateTo("/projects")} aria-label="Back to Works">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <line x1="19" y1="12" x2="5" y2="12" />
+                <polyline points="12 19 5 12 12 5" />
+              </svg>
+            </button>
+            Case Study
+          </Reveal>
+          <OrderExpressCaseStudy image={project?.preview} />
+        </section>
+
+        <Footer />
+      </div>
+    );
+  }
 
   return (
     <div className="page-view">
@@ -3091,48 +2834,61 @@ function ProjectDetailsPage({ project, projectSlug, onOpenPdf }) {
 
         {caseStudy ? (
           <div className="case-study-intro">
-            <section id="cs-start" className="case-section case-section-hero">
-              <Reveal className="case-hero-layout">
-                <div className="case-hero-main">
-                  <p className="case-hero-eyebrow">{projectName} Case Study</p>
-                  <h1>{caseStudy.projectTitle}</h1>
-                  <p className="case-hero-subtitle">{caseStudy.projectTagline}</p>
-                  {caseStudy.heroSubtitle ? (
-                    <p className="case-hero-supporting">{caseStudy.heroSubtitle}</p>
-                  ) : null}
-                  <div className="project-detail-cta-row">
-                    {!caseStudy.hideVisualsLink ? (
-                      caseStudy.visualsPdf ? (
-                        <button
-                          type="button"
-                          className="project-visuals-button project-visuals-button-primary"
-                          onClick={() => onOpenPdf(caseStudy.visualsPdf)}
-                        >
-                          View Visuals
-                          <CtaIcon icon="ri-arrow-right-up-line" direction="up-right" />
-                        </button>
-                      ) : (
-                        <a
-                          className="project-visuals-button project-visuals-button-primary"
-                          href={
-                            caseStudy.behanceVisualsUrl ??
-                            "https://www.behance.net/gallery/184033075/App-Design"
-                          }
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          View Visuals
-                          <CtaIcon icon="ri-arrow-right-up-line" direction="up-right" />
-                        </a>
-                      )
-                    ) : null}
+            {/* Same hero as the Order Express page (.oe-hero): logo, title,
+                the project's facts as a list, the image alongside. */}
+            <Reveal as="header" id="cs-start" className="oe-hero cs2-hero">
+              <div className="oe-hero-copy">
+                {project?.titleImage ? (
+                  <img className="oe-logo cs2-logo" src={project.titleImage} alt={project.titleAlt ?? projectName} />
+                ) : null}
+                <h1 className="oe-title">{caseStudy.projectTitle}</h1>
+                <p className="oe-tagline">{caseStudy.projectTagline}</p>
+                {caseStudy.heroSubtitle ? (
+                  <p className="oe-hero-description">{caseStudy.heroSubtitle}</p>
+                ) : null}
+
+                <dl className="oe-facts">
+                  {caseStudy.quickInfo.map((item) => (
+                    <div key={item.label} className="oe-fact">
+                      <dt>{item.label}</dt>
+                      <dd>{item.value}</dd>
+                    </div>
+                  ))}
+                </dl>
+
+                {!caseStudy.hideVisualsLink ? (
+                  <div className="project-detail-cta-row cs2-hero-cta">
+                    {caseStudy.visualsPdf ? (
+                      <button
+                        type="button"
+                        className="project-visuals-button project-visuals-button-primary"
+                        onClick={() => onOpenPdf(caseStudy.visualsPdf)}
+                      >
+                        View Visuals
+                        <CtaIcon icon="ri-arrow-right-up-line" direction="up-right" />
+                      </button>
+                    ) : (
+                      <a
+                        className="project-visuals-button project-visuals-button-primary"
+                        href={
+                          caseStudy.behanceVisualsUrl ??
+                          "https://www.behance.net/gallery/184033075/App-Design"
+                        }
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        View Visuals
+                        <CtaIcon icon="ri-arrow-right-up-line" direction="up-right" />
+                      </a>
+                    )}
                   </div>
-                </div>
-                <div className="case-hero-image-wrap">
-                  <img className="case-hero-image" src={project?.preview ?? almahaPreview} alt={`${projectName} hero`} />
-                </div>
-              </Reveal>
-            </section>
+                ) : null}
+              </div>
+
+              <div className="oe-hero-media">
+                <img src={project?.preview ?? almahaPreview} alt={`${projectName} hero`} />
+              </div>
+            </Reveal>
 
             {caseStudy.disclaimer ? (
               <section className="case-section case-section-disclaimer">
@@ -3142,20 +2898,6 @@ function ProjectDetailsPage({ project, projectSlug, onOpenPdf }) {
                 </Reveal>
               </section>
             ) : null}
-
-            <section id="cs-quick-info" className="case-section case-section-quick-info">
-              <Reveal className="project-detail-card">
-                <h3>Quick Info</h3>
-                <div className="project-quick-info">
-                  {caseStudy.quickInfo.map((item) => (
-                    <article key={item.label} className="project-quick-info-item">
-                      <p>{item.label}</p>
-                      <h3>{item.value}</h3>
-                    </article>
-                  ))}
-                </div>
-              </Reveal>
-            </section>
           </div>
         ) : null}
 
@@ -3205,31 +2947,27 @@ function ProjectDetailsPage({ project, projectSlug, onOpenPdf }) {
         {caseStudy ? (
           <>
 
-            <section id="cs-impact" className="case-section case-section-proof-intro">
-              <Reveal className="proof-header">
-                <h3>{caseStudy.sectionHeading ?? "Designing products that balance business growth with user delight."}</h3>
+            <section id="cs-impact" className="cs2-section cs2-impact">
+              <Reveal>
+                <span className="cs2-eyebrow">Impact</span>
+                <h2 className="cs2-impact-heading">
+                  {caseStudy.sectionHeading ?? "Designing products that balance business growth with user delight."}
+                </h2>
               </Reveal>
 
-              <Reveal className="proof-metrics-strip">
+              <Reveal className="cs2-metrics">
                 {caseStudy.highlightMetrics.map((metric) => {
                   const metricText = typeof metric === "string" ? metric : `${metric.value} ${metric.label}`;
                   const [value, ...labelParts] = typeof metric === "string" ? metric.split(" ") : [metric.value, metric.label];
                   const label = labelParts.join(" ");
                   const isNumericMetric = /\d/.test(value);
+                  const secondLine = typeof metric === "string" ? null : metric.secondLine;
                   return (
-                    <div key={metricText} className="proof-metric-item">
-                      <span
-                        className={`proof-metric-value${isNumericMetric ? "" : " proof-metric-value-text"}${
-                          typeof metric === "string" || !metric.primaryValue ? "" : " proof-metric-value-primary"
-                        }`}
-                      >
-                        {value}
-                      </span>
-                      <span className="proof-metric-label">
+                    <div key={metricText} className="cs2-metric">
+                      <span className={`cs2-metric-value${isNumericMetric ? "" : " is-text"}`}>{value}</span>
+                      <span className="cs2-metric-label">
                         {label}
-                        {typeof metric === "string" || !metric.secondLine ? null : (
-                          <span className="proof-metric-label-line">{metric.secondLine}</span>
-                        )}
+                        {secondLine ? <span>{secondLine}</span> : null}
                       </span>
                     </div>
                   );
@@ -3237,37 +2975,51 @@ function ProjectDetailsPage({ project, projectSlug, onOpenPdf }) {
               </Reveal>
             </section>
 
-            <section className="case-section case-section-summary">
-              <Reveal className="project-detail-grid">
-                <article id="cs-overview" className="project-detail-card">
-                  <h3>Overview</h3>
-                  <p>{caseStudy.overview}</p>
-                </article>
+            <div className="project-summary-divider" aria-hidden="true" />
 
-                <article id="cs-challenge" className="project-detail-card">
-                  <h3>Problem Statement</h3>
-                  <p>{caseStudy.problemStatement}</p>
-                </article>
+            <section id="cs-overview" className="cs2-section">
+              <Reveal>
+                <span className="cs2-eyebrow">Overview</span>
+                <p className="cs2-lead">{caseStudy.overview}</p>
+              </Reveal>
+            </section>
 
-                <article id="cs-goals" className="project-detail-card">
-                  <h3>Goals</h3>
-                  <ul>
-                    {caseStudy.goals.map((goal) => (
-                      <li key={goal}>{goal}</li>
-                    ))}
-                  </ul>
-                </article>
+            <div className="project-summary-divider" aria-hidden="true" />
 
-                <article id="cs-role" className="project-detail-card">
-                  <h3>My Role</h3>
-                  <p>I led end-to-end UX/UI design for this initiative, including:</p>
-                  <ul>
-                    {caseStudy.roleItems.map((item) => (
-                      <li key={item}>{item}</li>
-                    ))}
-                  </ul>
-                </article>
+            <section id="cs-challenge" className="cs2-section">
+              <Reveal className="cs2-callout">
+                <span className="cs2-eyebrow">Problem Statement</span>
+                <p>{caseStudy.problemStatement}</p>
+              </Reveal>
+            </section>
 
+            <div className="project-summary-divider" aria-hidden="true" />
+
+            <section id="cs-goals" className="cs2-section">
+              <Reveal>
+                <span className="cs2-eyebrow">Goals</span>
+                <ol className="cs2-numbered">
+                  {caseStudy.goals.map((goal, index) => (
+                    <li key={goal}>
+                      <span className="cs2-number">{String(index + 1).padStart(2, "0")}</span>
+                      <p>{goal}</p>
+                    </li>
+                  ))}
+                </ol>
+              </Reveal>
+            </section>
+
+            <div className="project-summary-divider" aria-hidden="true" />
+
+            <section id="cs-role" className="cs2-section">
+              <Reveal>
+                <span className="cs2-eyebrow">My Role</span>
+                <p className="cs2-intro">I led end-to-end UX/UI design for this initiative, including:</p>
+                <ul className="cs2-points">
+                  {caseStudy.roleItems.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
               </Reveal>
             </section>
 
@@ -3842,186 +3594,25 @@ function ProjectDetailsPage({ project, projectSlug, onOpenPdf }) {
               </>
             ) : null}
 
-            {isCardinalHealth ? (
-              <>
-              <div className="project-summary-divider" aria-hidden="true" />
-              {/* ── Research & Insights ── */}
-              <section id="cs-research" className="discovery-section cardinal-section">
-                <Reveal className="discovery-section-inner">
-                  <span className="discovery-section-label">Research &amp; Insights</span>
-                  <h3 className="discovery-section-heading">
-                    Talking to the people who order under pressure
-                  </h3>
-                  <p className="discovery-section-description">{caseStudy.researchIntro}</p>
+            <div className="project-summary-divider" aria-hidden="true" />
 
-                  <div className="discovery-affinity-stats">
-                    {caseStudy.researchStats.map((stat) => (
-                      <div key={stat.label} className="discovery-affinity-stat">
-                        <span className="discovery-affinity-stat-value">{stat.value}</span>
-                        <span className="discovery-affinity-stat-label">{stat.label}</span>
-                      </div>
-                    ))}
-                  </div>
-
-                  <span className="discovery-subsection-label">The operating context</span>
-                  <div className="cardinal-context-grid">
-                    {caseStudy.contextCards.map((card) => (
-                      <div key={card.title} className="cardinal-context-card">
-                        <h4>{card.title}</h4>
-                        <p>{card.description}</p>
-                      </div>
-                    ))}
-                  </div>
-
-                  <span className="discovery-subsection-label">What users told us</span>
-                  <div className="discovery-quotes-grid">
-                    {caseStudy.researchQuotes.map((q) => (
-                      <div key={q.name} className="discovery-quote-card">
-                        <span className="discovery-quote-mark" aria-hidden="true">&ldquo;</span>
-                        <blockquote>{q.quote}</blockquote>
-                        <div className="discovery-quote-footer">
-                          <span className="discovery-quote-attribution">
-                            <strong>{q.name}</strong> &middot; {q.role}
-                          </span>
-                          <span className={`discovery-quote-tag ${q.tagClass}`}>{q.tag}</span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-
-                  <span className="discovery-subsection-label">Key research findings</span>
-                  <div className="discovery-comp-insights">
-                    {caseStudy.keyFindings.map((finding) => (
-                      <div key={finding.label} className={`discovery-comp-insight ${finding.variant}`}>
-                        <span className="discovery-comp-insight-label">{finding.label}</span>
-                        <p>{finding.text}</p>
-                      </div>
-                    ))}
-                  </div>
-                </Reveal>
-              </section>
-
-              <div className="project-summary-divider" aria-hidden="true" />
-              {/* ── Core Solution Pillars ── */}
-              <section id="cs-pillars" className="discovery-section cardinal-section">
-                <Reveal className="discovery-section-inner">
-                  <span className="discovery-section-label">Core Solution Pillars</span>
-                  <h3 className="discovery-section-heading">
-                    Three pillars, one goal: never let the user hit a dead end
-                  </h3>
-                  <p className="discovery-section-description">
-                    Make stock truth visible at the moment of choice, collapse bulk checkout into one
-                    validated screen, and standardise every surface on a system built for density
-                    rather than decoration.
-                  </p>
-
-                  <div className="cardinal-pillar-list">
-                    {caseStudy.pillars.map((pillar) => (
-                      <article key={pillar.title} className="cardinal-pillar">
-                        <span className="cardinal-pillar-badge">{pillar.badge}</span>
-                        <h4>{pillar.title}</h4>
-                        <p>{pillar.description}</p>
-                        <ul className="cardinal-pillar-points">
-                          {pillar.points.map((point) => (
-                            <li key={point}>{point}</li>
-                          ))}
-                        </ul>
-                      </article>
-                    ))}
-                  </div>
-
-                  <span className="discovery-subsection-label">{caseStudy.beforeAfter.label}</span>
-                  <div className="cardinal-compare-grid">
-                    {[
-                      { ...caseStudy.beforeAfter.before, variant: "is-before" },
-                      { ...caseStudy.beforeAfter.after, variant: "is-after" },
-                    ].map((side) => (
-                      <div key={side.tag} className={`cardinal-compare-card ${side.variant}`}>
-                        <span className="cardinal-compare-tag">{side.tag}</span>
-                        <h4>{side.title}</h4>
-                        <ul>
-                          {side.points.map((point) => (
-                            <li key={point}>{point}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    ))}
-                  </div>
-                </Reveal>
-              </section>
-
-              <div className="project-summary-divider" aria-hidden="true" />
-              {/* ── AI-Accelerated Workflow ── */}
-              <section id="cs-ai" className="discovery-section cardinal-section">
-                <Reveal className="discovery-section-inner">
-                  <span className="discovery-section-label">Working the 2026 Way</span>
-                  <h3 className="discovery-section-heading">{caseStudy.aiWorkflow.heading}</h3>
-                  <p className="discovery-section-description">{caseStudy.aiWorkflow.intro}</p>
-
-                  <div className="cardinal-ai-grid">
-                    {caseStudy.aiWorkflow.items.map((item, index) => (
-                      <article key={item.title} className="cardinal-ai-card">
-                        <span className="cardinal-ai-num">{String(index + 1).padStart(2, "0")}</span>
-                        <h4>{item.title}</h4>
-                        <p>{item.description}</p>
-                      </article>
-                    ))}
-                  </div>
-
-                  {caseStudy.aiWorkflow.note ? (
-                    <p className="cardinal-ai-note">{caseStudy.aiWorkflow.note}</p>
-                  ) : null}
-                </Reveal>
-              </section>
-
-              <div className="project-summary-divider" aria-hidden="true" />
-              {/* ── Key Learnings ── */}
-              <section id="cs-takeaways" className="discovery-section cardinal-section">
-                <Reveal className="discovery-section-inner">
-                  <span className="discovery-section-label">Key Learnings</span>
-                  <h3 className="discovery-section-heading">
-                    What six months in a high-stakes system taught me
-                  </h3>
-
-                  <div className="cardinal-learning-list">
-                    {caseStudy.learnings.map((item) => (
-                      <article key={item.number} className="cardinal-learning-card">
-                        <span className="cardinal-learning-num">{item.number}</span>
-                        <div>
-                          <h4>{item.title}</h4>
-                          <p>{item.description}</p>
-                        </div>
-                      </article>
-                    ))}
-                  </div>
-                </Reveal>
-              </section>
-
-              <div className="project-summary-divider" aria-hidden="true" />
-              </>
-            ) : null}
-
-            <section id="cs-process" className="case-section case-section-summary case-section-summary-extended">
-              <Reveal className="project-detail-grid">
-                <article className="project-detail-card">
-                  <h3>Design Process</h3>
-                  <div className="process-list process-list-compact">
-                    {caseStudy.process.map((step, index) => (
-                      <article key={step.title} className="process-item">
-                        <div className="process-item-marker" aria-hidden="true">
-                          <span className="process-item-dot" />
-                          <span className="process-item-icon">
-                            <ProcessStepIcon index={index} />
-                          </span>
-                        </div>
-                        <div className="process-item-content">
-                          <h4>{step.title}</h4>
-                          <p>{step.description}</p>
-                        </div>
-                      </article>
-                    ))}
-                  </div>
-                </article>
+            <section id="cs-process" className="cs2-section">
+              <Reveal>
+                <span className="cs2-eyebrow">Design Process</span>
+                <ol className="cs2-steps">
+                  {caseStudy.process.map((step, index) => (
+                    <li key={step.title} className="cs2-step">
+                      <span className="cs2-step-head">
+                        <span className="cs2-number">{String(index + 1).padStart(2, "0")}</span>
+                        <span className="cs2-step-icon" aria-hidden="true">
+                          <ProcessStepIcon index={index} />
+                        </span>
+                      </span>
+                      <h3>{step.title}</h3>
+                      <p>{step.description}</p>
+                    </li>
+                  ))}
+                </ol>
               </Reveal>
             </section>
 
@@ -4694,43 +4285,60 @@ function ProjectDetailsPage({ project, projectSlug, onOpenPdf }) {
               </>
             ) : null}
 
-            <section className="case-section case-section-summary case-section-summary-extended">
-              <Reveal className="project-detail-grid">
-                <article id="cs-improvements" className="project-detail-card">
-                  <h3>Key UX Improvements</h3>
-                  <ul>
-                    {caseStudy.improvements.map((item) => (
-                      <li key={item.title}>
-                        <strong>{item.title}:</strong> {item.description}
-                      </li>
-                    ))}
-                  </ul>
-                </article>
+            <div className="project-summary-divider" aria-hidden="true" />
 
-                <article id="cs-outcome" className="project-detail-card">
-                  <h3>Outcome</h3>
-                  <p>{caseStudy.outcome}</p>
-                  <p className="project-detail-subtitle">Key impact areas:</p>
-                  <ul>
-                    {caseStudy.expectedImpact.map((item) => (
-                      <li key={item}>{item}</li>
-                    ))}
-                  </ul>
-                </article>
+            <section id="cs-improvements" className="cs2-section">
+              <Reveal>
+                <span className="cs2-eyebrow">Key UX Improvements</span>
+                <div className="cs2-cards">
+                  {caseStudy.improvements.map((item) => (
+                    <article key={item.title} className="cs2-card">
+                      <h3>{item.title}</h3>
+                      <p>{item.description}</p>
+                    </article>
+                  ))}
+                </div>
+              </Reveal>
+            </section>
 
-                <article id="cs-visuals" className="project-detail-card">
-                  <h3>{caseStudy.visualStrategyTitle ?? "Visual Gallery Captions"}</h3>
-                  <ul>
-                    {caseStudy.galleryCaptions.map((caption) => (
-                      <li key={caption}>{caption}</li>
-                    ))}
-                  </ul>
-                </article>
+            <div className="project-summary-divider" aria-hidden="true" />
 
-                <article id="cs-learnings" className="project-detail-card">
-                  <h3>Why This Work Matters</h3>
-                  <p>{caseStudy.whyThisMatters}</p>
-                </article>
+            <section id="cs-outcome" className="cs2-section">
+              <Reveal>
+                <span className="cs2-eyebrow">Outcome</span>
+                <p className="cs2-lead">{caseStudy.outcome}</p>
+                <p className="cs2-subhead">Key impact areas</p>
+                <ul className="cs2-checks">
+                  {caseStudy.expectedImpact.map((item) => (
+                    <li key={item}>
+                      <i className="ri-check-line" aria-hidden="true" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </Reveal>
+            </section>
+
+            <div className="project-summary-divider" aria-hidden="true" />
+
+            <section id="cs-visuals" className="cs2-section">
+              <Reveal>
+                <span className="cs2-eyebrow">{caseStudy.visualStrategyTitle ?? "Visual Gallery Captions"}</span>
+                <ol className="cs2-numbered">
+                  {caseStudy.galleryCaptions.map((caption, index) => (
+                    <li key={caption}>
+                      <span className="cs2-number">{String(index + 1).padStart(2, "0")}</span>
+                      <p>{caption}</p>
+                    </li>
+                  ))}
+                </ol>
+              </Reveal>
+            </section>
+
+            <section id="cs-learnings" className="cs2-section cs2-closing-wrap">
+              <Reveal className="cs2-closing">
+                <span className="cs2-eyebrow">Why This Work Matters</span>
+                <p>{caseStudy.whyThisMatters}</p>
               </Reveal>
             </section>
           </>
@@ -4854,6 +4462,8 @@ export default function App() {
 
       {/* The same nav on every page: a pill of links at the top that widens
           into the full bar once you scroll. */}
+      <CursorFollower />
+
       <TopNav items={navItems} onNavigate={navigateTo} resumeHref={resumePdf} collapsible pathname={pathname} />
 
       <main
